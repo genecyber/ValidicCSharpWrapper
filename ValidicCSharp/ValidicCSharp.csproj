@@ -47,10 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="Command\Command.cs" />
-    <Compile Include="Command\FromDateFilter.cs" />
-    <Compile Include="Command\SourceFilter.cs" />
-    <Compile Include="Command\ToDateFilter.cs" />
+    <Compile Include="Request\Command.cs" />
+    <Compile Include="Request\FromDateFilter.cs" />
+    <Compile Include="Request\SourceFilter.cs" />
+    <Compile Include="Request\ToDateFilter.cs" />
     <Compile Include="Interfaces\ICommandFilter.cs" />
     <Compile Include="Interfaces\IValidic.cs" />
     <Compile Include="Model\App.cs" />
@@ -63,7 +63,7 @@
     <Compile Include="Model\Organization.cs" />
     <Compile Include="Model\Parameters.cs" />
     <Compile Include="Model\Profile.cs" />
-    <Compile Include="Model\RootObject.cs" />
+    <Compile Include="Model\ValidicResult.cs" />
     <Compile Include="Model\Routine.cs" />
     <Compile Include="Model\Sleep.cs" />
     <Compile Include="Model\StatusCode.cs" />

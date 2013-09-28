@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using ValidicCSharp.Interfaces;
 using ValidicCSharp.Utility;
 
-namespace ValidicCSharp.Command
+namespace ValidicCSharp.Request
 {
     public class Command
     {

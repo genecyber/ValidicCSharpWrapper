@@ -16,3 +16,12 @@ c:\users\shannoncode\documents\visual studio 2012\Projects\ValidicCSharp\Validic
 \\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\bin\Debug\Newtonsoft.Json.xml
 \\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\bin\Debug\nunit.framework.xml
 \\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\obj\Debug\ValidicCSharp.pdb
+C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharp\bin\Debug\ValidicCSharp.dll
+C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharp\bin\Debug\ValidicCSharp.pdb
+C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharp\bin\Debug\nunit.framework.dll
+C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharp\bin\Debug\nunit.framework.xml
+C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharp\obj\Debug\ValidicCSharp.csprojResolveAssemblyReference.cache
+C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharp\obj\Debug\ValidicCSharp.dll
+C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharp\obj\Debug\ValidicCSharp.pdb

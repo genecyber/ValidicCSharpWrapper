@@ -52,6 +52,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ClientTests.cs" />
     <Compile Include="CommandTests.cs" />
     <Compile Include="Mocks\JsonMocks.cs" />
     <Compile Include="ModelTests.cs" />

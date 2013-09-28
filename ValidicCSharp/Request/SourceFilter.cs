@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ValidicCSharp.Interfaces;
 
-namespace ValidicCSharp.Command
+namespace ValidicCSharp.Request
 {
     public class SourceFilter : ICommandFilter
     {

@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using ValidicCSharp.Command;
 using ValidicCSharp.Interfaces;
 using ValidicCSharp.Model;
+using ValidicCSharp.Request;
 
 namespace ValidicCSharp.Utility
 {
     public static class Extensions
     {
-        public static RootObject<T> ToRootObject<T>(this String response, string fromString = null)
+        public static ValidicResult<T> ToResult<T>(this String response, string fromString = null)
         {
             
             var parameter = typeof(T);
@@ -35,7 +35,7 @@ namespace ValidicCSharp.Utility
                     obj = JsonConvert.SerializeObject(JArray.FromObject(root[fromString]));
             }
             var tConverted = JsonConvert.DeserializeObject<T>(obj);
-            var rootObject = new RootObject<T>() { Object = tConverted };
+            var rootObject = new ValidicResult<T>() { Object = tConverted };
             if (summary != null)
                 rootObject.Summary = JsonConvert.DeserializeObject<Summary>(summary.ToString());;
             return rootObject;
@@ -52,25 +52,25 @@ namespace ValidicCSharp.Utility
             return (T)o;
         }
 
-        public static Command.Command GetInformationType(this Command.Command command, CommandType type)
+        public static Request.Command GetInformationType(this Request.Command command, CommandType type)
         {
             command.Type = type;
             return command;
         }
 
-        public static Command.Command AddSourceFilter(this Command.Command command, String sourceToAdd)
+        public static Request.Command AddSourceFilter(this Request.Command command, String sourceToAdd)
         {
             command.Filters.AddSourceFilter(sourceToAdd);
             return command;
         }
 
-        public static Command.Command FromDate(this Command.Command command, string date)
+        public static Request.Command FromDate(this Request.Command command, string date)
         {
             command.Filters.AddFromDateFilter(date);
             return command;
         }
 
-        public static Command.Command ToDate(this Command.Command command, string date)
+        public static Request.Command ToDate(this Request.Command command, string date)
         {
             command.Filters.AddToDateFilter(date);
             return command;

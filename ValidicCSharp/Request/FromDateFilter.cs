@@ -1,7 +1,7 @@
 using System;
 using ValidicCSharp.Interfaces;
 
-namespace ValidicCSharp.Command
+namespace ValidicCSharp.Request
 {
     public class FromDateFilter : ICommandFilter
     {

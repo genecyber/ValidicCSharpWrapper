@@ -2,8 +2,8 @@
 using System.Linq;
 using NUnit.Framework;
 using ValidicCSharp;
-using ValidicCSharp.Command;
 using ValidicCSharp.Model;
+using ValidicCSharp.Request;
 using ValidicCSharp.Utility;
 
 namespace ValidicCSharpTests
@@ -18,7 +18,7 @@ namespace ValidicCSharpTests
         {
             var client = new Client { AccessToken = "ENTERPRISE_KEY" };
             var json = client.ExecuteWebCommand("organizations/51aca5a06dedda916400002b.json?start_date=09-01-01");
-            var org = json.ToRootObject<Organization>();
+            var org = json.ToResult<Organization>();
             
             Assert.IsTrue(org.Summary.Limit == 100);
             Assert.IsTrue(org.Object.As<Organization>().Name == "ACME Corp");
@@ -47,7 +47,7 @@ namespace ValidicCSharpTests
                 .GetUser(UserUnderTest);
 
             var json = client.PerformCommand(command);
-            var user = json.ToRootObject<List<Activity>>("activities");
+            var user = json.ToResult<List<Activity>>("activities");
 
             Assert.IsTrue(user.Object.As<List<Activity>>().First().source == "nikeplus");
             Assert.IsTrue(user.Object.As<List<Activity>>().Count == 100);
@@ -74,7 +74,7 @@ namespace ValidicCSharpTests
                 .GetInformationType(CommandType.Profile);
 
             var json = client.PerformCommand(command);
-            var profile = json.ToRootObject<Profile>();
+            var profile = json.ToResult<Profile>();
 
             Assert.IsTrue(profile.Object.As<Profile>().Gender == GenderType.F);
             Assert.IsTrue(profile.Object.As<Profile>().Applications.Last().name == "managebgl");
@@ -90,7 +90,7 @@ namespace ValidicCSharpTests
                 .FromUser(UserUnderTest);
 
             var json = client.PerformCommand(command);
-            var fitness = json.ToRootObject<List<Fitness>>("fitness");
+            var fitness = json.ToResult<List<Fitness>>();
 
             Assert.IsTrue(fitness.Object.As<List<Fitness>>().First().calories != null);
             Assert.IsTrue(fitness.Summary.Status == StatusCode.Ok);
@@ -107,7 +107,7 @@ namespace ValidicCSharpTests
                 .GetInformationType(CommandType.Fitness)
                 .GetUser(UserUnderTest);
             var json = client.PerformCommand(command);
-            var fitness = json.ToRootObject<List<Fitness>>("fitness");
+            var fitness = json.ToResult<List<Fitness>>();
             Assert.IsTrue(fitness.Object.First()._id != null);
         }
 
@@ -120,7 +120,7 @@ namespace ValidicCSharpTests
                .FromOrganization(OrganizationUnderTest);
             var json = client.PerformCommand(command);
 
-            var users = json.ToRootObject<List<Me>>("users");
+            var users = json.ToResult<List<Me>>("users");
             Assert.True(users.Object.Count == 87);
         }
 
@@ -133,7 +133,7 @@ namespace ValidicCSharpTests
                 .FromUser(UserUnderTest);
                var json = client.PerformCommand(command);
 
-               var routine = json.ToRootObject<List<Routine>>("routine");
+               var routine = json.ToResult<List<Routine>>();
                Assert.True(routine.Object.First()._id != null);
         }
 
@@ -146,7 +146,7 @@ namespace ValidicCSharpTests
                 .FromUser(UserUnderTest);
             var json = client.PerformCommand(command);
 
-            var nutrition = json.ToRootObject<List<Nutrition>>("nutrition");
+            var nutrition = json.ToResult<List<Nutrition>>();
             Assert.True(nutrition.Object.First()._id != null);
         }
 
@@ -160,7 +160,7 @@ namespace ValidicCSharpTests
                 .FromDate("09-01-01");
             var json = client.PerformCommand(command);
 
-            var sleep = json.ToRootObject<List<Sleep>>();
+            var sleep = json.ToResult<List<Sleep>>();
             Assert.True(sleep.Object.First()._id != null);
         }
 
@@ -174,7 +174,7 @@ namespace ValidicCSharpTests
                 .FromDate("09-01-01");
             var json = client.PerformCommand(command);
 
-            var weight = json.ToRootObject<List<Weight>>();
+            var weight = json.ToResult<List<Weight>>();
             Assert.True(weight.Object.First()._id != null);
         }
 
@@ -188,7 +188,7 @@ namespace ValidicCSharpTests
                 .FromDate("09-01-01");
             var json = client.PerformCommand(command);
 
-            var diabetes = json.ToRootObject<List<Diabetes>>();
+            var diabetes = json.ToResult<List<Diabetes>>();
             Assert.True(diabetes.Object.First()._id != null);
         }
 
@@ -202,7 +202,7 @@ namespace ValidicCSharpTests
                 .FromDate("09-01-01");
             var json = client.PerformCommand(command);
 
-            var biometrics = json.ToRootObject<List<Biometrics>>();
+            var biometrics = json.ToResult<List<Biometrics>>();
             Assert.True(biometrics.Object.First()._id != null);
         }
 
@@ -216,7 +216,7 @@ namespace ValidicCSharpTests
                 .FromDate("09-01-01");
             var json = client.PerformCommand(command);
 
-            var tobacco = json.ToRootObject<List<Tobacco_Cessation>>();
+            var tobacco = json.ToResult<List<Tobacco_Cessation>>();
             Assert.True(tobacco.Object.First()._id != null);
         }
 

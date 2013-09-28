@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 using ValidicCSharp;
-using ValidicCSharp.Command;
 using ValidicCSharp.Interfaces;
+using ValidicCSharp.Request;
 using ValidicCSharp.Utility;
 
 namespace ValidicCSharpTests
