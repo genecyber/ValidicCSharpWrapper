@@ -1,0 +1,18 @@
+c:\users\shannoncode\documents\visual studio 2012\Projects\ValidicCSharp\ValidicCSharp\bin\Debug\ValidicCSharp.dll
+c:\users\shannoncode\documents\visual studio 2012\Projects\ValidicCSharp\ValidicCSharp\bin\Debug\ValidicCSharp.pdb
+c:\users\shannoncode\documents\visual studio 2012\Projects\ValidicCSharp\ValidicCSharp\obj\Debug\ValidicCSharp.csprojResolveAssemblyReference.cache
+c:\users\shannoncode\documents\visual studio 2012\Projects\ValidicCSharp\ValidicCSharp\obj\Debug\ValidicCSharp.dll
+c:\users\shannoncode\documents\visual studio 2012\Projects\ValidicCSharp\ValidicCSharp\obj\Debug\ValidicCSharp.pdb
+c:\users\shannoncode\documents\visual studio 2012\Projects\ValidicCSharp\ValidicCSharp\bin\Debug\nunit.framework.dll
+c:\users\shannoncode\documents\visual studio 2012\Projects\ValidicCSharp\ValidicCSharp\bin\Debug\nunit.framework.xml
+c:\users\shannoncode\documents\visual studio 2012\Projects\ValidicCSharp\ValidicCSharp\bin\Debug\Newtonsoft.Json.dll
+c:\users\shannoncode\documents\visual studio 2012\Projects\ValidicCSharp\ValidicCSharp\bin\Debug\Newtonsoft.Json.xml
+\\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\obj\Debug\ValidicCSharp.csprojResolveAssemblyReference.cache
+\\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\obj\Debug\ValidicCSharp.dll
+\\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\bin\Debug\ValidicCSharp.dll
+\\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\bin\Debug\ValidicCSharp.pdb
+\\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\bin\Debug\Newtonsoft.Json.dll
+\\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\bin\Debug\nunit.framework.dll
+\\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\bin\Debug\Newtonsoft.Json.xml
+\\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\bin\Debug\nunit.framework.xml
+\\protonas\NAS_Public\Development\Validic\ValidicCSharp\ValidicCSharp\obj\Debug\ValidicCSharp.pdb
