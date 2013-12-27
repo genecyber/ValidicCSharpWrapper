@@ -29,10 +29,7 @@ namespace ValidicCSharp.Utility
             }
             catch (Exception)
             {
-                if (fromString != null)
-                    obj = JsonConvert.SerializeObject(JArray.FromObject(root[fromString]));
-                else
-                    obj = JsonConvert.SerializeObject(JArray.FromObject(root[fromString]));
+                obj = fromString != null ? JsonConvert.SerializeObject(JArray.FromObject(root[fromString])) : JsonConvert.SerializeObject(JArray.FromObject(root[fromString]));
             }
             var tConverted = JsonConvert.DeserializeObject<T>(obj);
             var rootObject = new ValidicResult<T>() { Object = tConverted };

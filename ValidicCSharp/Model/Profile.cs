@@ -33,10 +33,10 @@ namespace ValidicCSharp.Model
         public object BirthYear { get; set; }
 
         [JsonProperty("height")]
-        public double Height { get; set; }
+        public double? Height { get; set; }
 
         [JsonProperty("weight")]
-        public double Weight { get; set; }
+        public double? Weight { get; set; }
 
         [JsonProperty("applications")]
         public List<Application> Applications { get; set; }

@@ -13,10 +13,10 @@ namespace ValidicCSharp.Model
         public DateTime EndDate { get; set; }
 
         [DataMember(Name = "offset")]
-        public int Offset { get; set; }
+        public int? Offset { get; set; }
 
         [DataMember(Name = "limit")]
-        public int Limit { get; set; }
+        public int? Limit { get; set; }
         
         [DataMember(Name = "source")]
         public object Source { get; set; }

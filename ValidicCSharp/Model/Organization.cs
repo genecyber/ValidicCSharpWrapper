@@ -19,10 +19,10 @@ namespace ValidicCSharp.Model
         public int UsersProvisioned { get; set; }
 
         [DataMember(Name = "activities")]
-        public int Activities { get; set; }
+        public int? Activities { get; set; }
 
         [DataMember(Name = "connections")]
-        public int Connections { get; set; }
+        public int? Connections { get; set; }
 
         [DataMember(Name = "organizations")]
         public List<Organization> ChildOrganizations { get; set; }

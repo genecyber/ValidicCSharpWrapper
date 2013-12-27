@@ -9,3 +9,14 @@ C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\bin\De
 C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\obj\Debug\ValidicCSharpTests.csprojResolveAssemblyReference.cache
 C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\obj\Debug\ValidicCSharpTests.dll
 C:\Users\Shannon\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\obj\Debug\ValidicCSharpTests.pdb
+C:\Users\ShannonCode\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\bin\Debug\ValidicCSharpTests.dll
+C:\Users\ShannonCode\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\bin\Debug\ValidicCSharpTests.pdb
+C:\Users\ShannonCode\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\ShannonCode\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\bin\Debug\nunit.framework.dll
+C:\Users\ShannonCode\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\bin\Debug\ValidicCSharp.dll
+C:\Users\ShannonCode\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\bin\Debug\ValidicCSharp.pdb
+C:\Users\ShannonCode\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\ShannonCode\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\bin\Debug\nunit.framework.xml
+C:\Users\ShannonCode\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\obj\Debug\ValidicCSharpTests.csprojResolveAssemblyReference.cache
+C:\Users\ShannonCode\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\obj\Debug\ValidicCSharpTests.dll
+C:\Users\ShannonCode\Documents\GitHub\ValidicCSharpWrapper\ValidicCSharpTests\obj\Debug\ValidicCSharpTests.pdb

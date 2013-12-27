@@ -16,7 +16,7 @@ namespace ValidicCSharp.Model
         public string intensity { get; set; }
         public string start_time { get; set; }
         public double? distance { get; set; }
-        public double duration { get; set; }
+        public double? duration { get; set; }
         public double? calories { get; set; }
         public string source { get; set; }
         public string source_name { get; set; }
