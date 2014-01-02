@@ -91,7 +91,7 @@ namespace ValidicCSharpTests
             var command = new Command()
                 .GetInformationType(CommandType.Me);
 
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/me.json");
+            Assert.IsTrue(command.GetStringAndStripRandom() == "/UserObject.json");
         }
 
         [Test]

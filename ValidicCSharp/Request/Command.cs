@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using ValidicCSharp.Interfaces;
+using ValidicCSharp.Model;
 using ValidicCSharp.Utility;
 
 namespace ValidicCSharp.Request
@@ -33,7 +34,7 @@ namespace ValidicCSharp.Request
 
             if (Type != CommandType.None)
                 target += "/" + Type.ToString().ToLower() + ".json";
-            else if (Type == CommandType.None && UserId != null) target += ".json";
+            else if (Type == CommandType.None && (UserId != null || Payload != null)) target += ".json";
             else target += "/";
 
             target += "?nocache=" + NoCache;
@@ -48,6 +49,8 @@ namespace ValidicCSharp.Request
         public bool Organization { get; set; }
         public bool User { get; set; }
         public string UserId { get; set; }
+        public HttpMethod Method { get; set; }
+        public object Payload { get; set; }
     }
 
     public enum CommandType
@@ -84,13 +87,22 @@ namespace ValidicCSharp.Request
             return command;
         }
 
+        public static Command ToOrganization(this Command command, string organizationId)
+        {
+            return FromOrganization(command, organizationId);
+        }
+
         public static Command GetOrganization(this Command command, string organizationId)
         {
+
+            command.Method = HttpMethod.GET;
             return command.FromOrganization(organizationId);
         }
 
         public static Command GetOrganizations(this Command command)
         {
+
+            command.Method = HttpMethod.GET;
             command.Organization = true;
             return command;
         }
@@ -109,18 +121,36 @@ namespace ValidicCSharp.Request
 
         public static Command GetUser(this Command command, string userId)
         {
+
+            command.Method = HttpMethod.GET;
             return command.FromUser(userId);
         }
 
         public static Command GetUsers(this Command command)
         {
             command.User = true;
+            command.Method = HttpMethod.GET;
             return command;
         }
 
-        public static string GetStringAndStripRandom(this Command command)
+        public static Command AddUser(this Command command, AddUserRequest userRequest)
+        {
+            command.User = true;
+            command.Method = HttpMethod.POST;
+            command.Payload = userRequest;
+            return command;
+        }
+
+       public static string GetStringAndStripRandom(this Command command)
         {
             return command.ToString().Split('?')[0];
         }
+    }
+    public enum HttpMethod
+    {
+        GET = 0,
+        POST,
+        DELETE,
+        PUT
     }
 }

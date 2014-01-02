@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 using ValidicCSharp.Interfaces;
 
@@ -10,6 +11,7 @@ namespace ValidicCSharp.Model
         public DateTime StartDate { get; set; }
 
         [DataMember(Name = "end_date")]
+        [DefaultValue("")]
         public DateTime EndDate { get; set; }
 
         [DataMember(Name = "offset")]

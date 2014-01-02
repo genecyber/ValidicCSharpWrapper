@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using ValidicCSharp;
@@ -17,7 +18,7 @@ namespace ValidicCSharpTests
         public void InitialDeserializationWorks()
         {
             var client = new Client { AccessToken = "ENTERPRISE_KEY" };
-            var json = client.ExecuteWebCommand("organizations/51aca5a06dedda916400002b.json?start_date=09-01-01");
+            var json = client.ExecuteWebCommand("organizations/51aca5a06dedda916400002b.json?start_date=09-01-01", HttpMethod.GET);
             var org = json.ToResult<Organization>();
             
             Assert.IsTrue(org.Summary.Limit == 100);
@@ -40,7 +41,7 @@ namespace ValidicCSharpTests
         [Test]
         public void ActivitiesModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client() { AccessToken = "DEMO_KEY" };
             var command = new Command()
                 .GetUser(UserUnderTest);
 
@@ -53,20 +54,57 @@ namespace ValidicCSharpTests
         [Test]
         public void MyModelPopultesCorrectly()
         {
-            var client = new Client();
+            var client = new Client{ AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5" };
             var command = new Command()
                 .GetInformationType(CommandType.Me);
 
             var json = client.PerformCommand(command);
             var me = json.Objectify<Credentials>().me;
 
-            Assert.IsTrue(me.Id == UserUnderTest);
+            Assert.IsTrue(me.Id == "5238a4c26deddafb51000001");
+        }
+
+        [Test]
+        public void CanAddUser()
+        {
+            var client = new Client { AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5" };
+            var command = new Command()
+                .AddUser(new AddUserRequest { access_token = client.AccessToken, user = new UserRequest { uid = MakeRandom().ToString() } })
+                .ToOrganization("5238a4616deddaaefc000001");
+
+            var json = client.PerformCommand(command);
+            var response = json.Objectify<AddUserResponse>();
+
+            Assert.IsTrue(response.user._id != null);
+            Assert.IsTrue(response.code.Equals(201));
+        }
+
+        [Test]
+        public void CanAddUserWithProfile()
+        {
+            var client = new Client { AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5" };
+            //make a user request object
+            var newUserWithProfile = new UserRequest {uid = MakeRandom().ToString()};
+            //add a profile opbject to the newly created request object
+            newUserWithProfile.profile = new Profile { Country = "United States", Gender = GenderType.M, Weight = 125 };
+            //create a new command to "add user" and "to organization"
+            var command = new Command()
+                .AddUser(new AddUserRequest { access_token = client.AccessToken, user = newUserWithProfile })
+                .ToOrganization("5238a4616deddaaefc000001");
+            //execute the command
+            var json = client.PerformCommand(command);
+            //deserialize the json into a userresponse object
+            var response = json.Objectify<AddUserResponse>();
+
+            Assert.IsTrue(response.user._id != null);
+            Assert.IsTrue(response.code.Equals(201));
+            Assert.IsTrue(response.user.profile.Gender == GenderType.M);
         }
 
         [Test]
         public void ProfileModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client{ AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5" };
             var command = new Command()
                 .GetInformationType(CommandType.Profile);
 
@@ -74,7 +112,6 @@ namespace ValidicCSharpTests
             var profile = json.ToResult<Profile>();
 
             Assert.IsTrue(profile.Object.As<Profile>().Gender == GenderType.F);
-            Assert.IsTrue(profile.Object.As<Profile>().Applications.Last().name == "managebgl");
 
         }
 
@@ -144,7 +181,7 @@ namespace ValidicCSharpTests
             var json = client.PerformCommand(command);
 
             var nutrition = json.ToResult<List<Nutrition>>();
-            Assert.True(nutrition.Object.First()._id != null);
+            Assert.True(nutrition.Summary.Message.Equals("Ok"));
         }
 
         [Test]
@@ -217,7 +254,11 @@ namespace ValidicCSharpTests
             Assert.True(tobacco.Object.First()._id != null);
         }
 
-
+        private int MakeRandom(int to = 10000)
+        {
+            Random random = new Random();
+            return random.Next(0, to);
+        }
 
     }
 }

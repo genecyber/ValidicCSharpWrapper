@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using Newtonsoft.Json;
 using ValidicCSharp.Interfaces;
 using ValidicCSharp.Model;
 using ValidicCSharp.Request;
@@ -12,14 +13,28 @@ namespace ValidicCSharp
     {
         private readonly Uri _baseUrl = new Uri("https://api.validic.com/v1/");
         public String AccessToken = "DEMO_KEY";
-        public static String ApplicationID;
+        public static String ApplicationId;
 
-        public string ExecuteWebCommand(String command)
+        public string ExecuteWebCommand(string command, HttpMethod method, object payload = null)
         {
-            String json;
+            String json = null;
             using (var client = new WebClient())
             {
-                json = client.DownloadString(_baseUrl + command + AppendAuth());
+                string address = _baseUrl + command + AppendAuth();
+                if (method == HttpMethod.GET)
+                    json = client.DownloadString(address);
+                if (method == HttpMethod.POST && payload != null)
+                {
+                    client.Headers.Add("Content-Type", "application/json");
+                    try
+                    {
+                        json = client.UploadString(address, JsonConvert.SerializeObject(payload));
+                    }
+                    catch (WebException ex)
+                    {
+                        return JsonConvert.SerializeObject(new AddUserResponse());
+                    }
+                }
             }
             return json;
         }
@@ -32,9 +47,9 @@ namespace ValidicCSharp
             }
             return json;
         }
-        public string PerformCommand(Request.Command command)
+        public string PerformCommand(Command command)
         {
-            return ExecuteWebCommand(command.ToString());
+            return ExecuteWebCommand(command.ToString(), command.Method, command.Payload);
         }
         private string AppendAuth()
         {

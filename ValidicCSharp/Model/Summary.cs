@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 using ValidicCSharp.Interfaces;
 
@@ -28,9 +29,11 @@ namespace ValidicCSharp.Model
         public int? Limit { get; set; }
 
         [DataMember(Name = "previous")]
+        [DefaultValue("")]
         public string Previous { get; set; }
 
         [DataMember(Name = "next")]
+        [DefaultValue("")]
         public string Next { get; set; }
 
         [DataMember(Name = "@params")]
