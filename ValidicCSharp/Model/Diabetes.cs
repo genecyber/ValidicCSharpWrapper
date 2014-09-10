@@ -17,6 +17,7 @@ namespace ValidicCSharp.Model
         public object oral_glucose_tolerance_test { get; set; }
         public object random_plasma_glucose_test { get; set; }
         public object triglyceride { get; set; }
+        public object blood_glucose { get; set; }
         public string source { get; set; }
         public string source_name { get; set; }
         public string last_updated { get; set; }
