@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ValidicCSharp.Interfaces;
+﻿using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
 {

@@ -19,9 +19,17 @@ namespace ValidicCSharp.Request
         public List<ICommandFilter> Filters { get; set; }
         public int NoCache { get; set; }
 
+        //Pieces of the request
+        public string OrganizationId { get; set; }
+        public bool Organization { get; set; }
+        public bool User { get; set; }
+        public string UserId { get; set; }
+        public HttpMethod Method { get; set; }
+        public object Payload { get; set; }
+
         public override string ToString()
         {
-            var target = "";
+            string target = "";
 
             if (UserId != null)
                 target = "/" + UserId + target;
@@ -43,14 +51,6 @@ namespace ValidicCSharp.Request
 
             return target;
         }
-
-        //Pieces of the request
-        public string OrganizationId { get; set; }
-        public bool Organization { get; set; }
-        public bool User { get; set; }
-        public string UserId { get; set; }
-        public HttpMethod Method { get; set; }
-        public object Payload { get; set; }
     }
 
     public enum CommandType
@@ -67,8 +67,7 @@ namespace ValidicCSharp.Request
         Weight,
         Diabetes,
         Biometrics,
-        [DataMember(Name = "tobacco_cessation")]
-        Tobacco_Cessation,
+        [DataMember(Name = "tobacco_cessation")] Tobacco_Cessation,
         Custom
     }
 
@@ -94,14 +93,12 @@ namespace ValidicCSharp.Request
 
         public static Command GetOrganization(this Command command, string organizationId)
         {
-
             command.Method = HttpMethod.GET;
             return command.FromOrganization(organizationId);
         }
 
         public static Command GetOrganizations(this Command command)
         {
-
             command.Method = HttpMethod.GET;
             command.Organization = true;
             return command;
@@ -121,7 +118,6 @@ namespace ValidicCSharp.Request
 
         public static Command GetUser(this Command command, string userId)
         {
-
             command.Method = HttpMethod.GET;
             return command.FromUser(userId);
         }
@@ -141,11 +137,12 @@ namespace ValidicCSharp.Request
             return command;
         }
 
-       public static string GetStringAndStripRandom(this Command command)
+        public static string GetStringAndStripRandom(this Command command)
         {
             return command.ToString().Split('?')[0];
         }
     }
+
     public enum HttpMethod
     {
         GET = 0,

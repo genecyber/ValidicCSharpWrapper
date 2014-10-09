@@ -13,13 +13,18 @@ namespace ValidicCSharp.Model
         public double? cigarettes_smoked { get; set; }
         public double? cravings { get; set; }
         public string last_smoked { get; set; }
+
         [DefaultValue("")]
         public string source { get; set; }
+
         [DefaultValue("")]
         public string source_name { get; set; }
+
         public string last_updated { get; set; }
+
         [DefaultValue("")]
         public object extras { get; set; }
+
         public string user_id { get; set; }
     }
 }

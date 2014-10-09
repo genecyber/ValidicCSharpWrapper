@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ValidicCSharp.Interfaces;
@@ -15,13 +13,18 @@ namespace ValidicCSharp.Utility
     {
         public static ValidicResult<T> ToResult<T>(this String response, string fromString = null)
         {
-            
-            var parameter = typeof(T);
+            Type parameter = typeof (T);
             if (fromString == null && parameter.Name == "List`1")
                 fromString = parameter.GenericTypeArguments[0].Name.ToLower();
-            var root = JObject.Parse(response);
+            JObject root = JObject.Parse(response);
             JObject summary = null;
-            try { summary = JObject.FromObject(root["summary"]);} catch (Exception){}
+            try
+            {
+                summary = JObject.FromObject(root["summary"]);
+            }
+            catch (Exception)
+            {
+            }
             string obj;
             try
             {
@@ -29,45 +32,47 @@ namespace ValidicCSharp.Utility
             }
             catch (Exception)
             {
-                obj = fromString != null ? JsonConvert.SerializeObject(JArray.FromObject(root[fromString])) : JsonConvert.SerializeObject(JArray.FromObject(root[fromString]));
+                obj = fromString != null
+                    ? JsonConvert.SerializeObject(JArray.FromObject(root[fromString]))
+                    : JsonConvert.SerializeObject(JArray.FromObject(root[fromString]));
             }
             var tConverted = JsonConvert.DeserializeObject<T>(obj);
-            var rootObject = new ValidicResult<T>() { Object = tConverted };
+            var rootObject = new ValidicResult<T> {Object = tConverted};
             if (summary != null)
-                rootObject.Summary = JsonConvert.DeserializeObject<Summary>(summary.ToString());;
+                rootObject.Summary = JsonConvert.DeserializeObject<Summary>(summary.ToString());
+            ;
             return rootObject;
+        }
 
-        } 
-       
         public static T Objectify<T>(this String response)
         {
             return JsonConvert.DeserializeObject<T>(response);
         }
 
         public static T As<T>(this object o)
-        { 
-            return (T)o;
+        {
+            return (T) o;
         }
 
-        public static Request.Command GetInformationType(this Request.Command command, CommandType type)
+        public static Command GetInformationType(this Command command, CommandType type)
         {
             command.Type = type;
             return command;
         }
 
-        public static Request.Command AddSourceFilter(this Request.Command command, String sourceToAdd)
+        public static Command AddSourceFilter(this Command command, String sourceToAdd)
         {
             command.Filters.AddSourceFilter(sourceToAdd);
             return command;
         }
 
-        public static Request.Command FromDate(this Request.Command command, string date)
+        public static Command FromDate(this Command command, string date)
         {
             command.Filters.AddFromDateFilter(date);
             return command;
         }
 
-        public static Request.Command ToDate(this Request.Command command, string date)
+        public static Command ToDate(this Command command, string date)
         {
             command.Filters.AddToDateFilter(date);
             return command;
@@ -75,7 +80,7 @@ namespace ValidicCSharp.Utility
 
         public static List<ICommandFilter> AddSourceFilter(this List<ICommandFilter> filterList, String sourceToAdd)
         {
-            var source = (SourceFilter)filterList.FirstOrDefault(a => a.Type == FilterType.Source);
+            var source = (SourceFilter) filterList.FirstOrDefault(a => a.Type == FilterType.Source);
             if (source == null)
             {
                 source = new SourceFilter();
@@ -88,8 +93,8 @@ namespace ValidicCSharp.Utility
 
         public static List<ICommandFilter> AddFromDateFilter(this List<ICommandFilter> filterList, String date)
         {
-            var dateFilter = (FromDateFilter)filterList.FirstOrDefault(a => a.Type == FilterType.FromDate);
-            
+            var dateFilter = (FromDateFilter) filterList.FirstOrDefault(a => a.Type == FilterType.FromDate);
+
             if (dateFilter == null)
             {
                 dateFilter = new FromDateFilter();
@@ -101,7 +106,7 @@ namespace ValidicCSharp.Utility
 
         public static List<ICommandFilter> AddToDateFilter(this List<ICommandFilter> filterList, String date)
         {
-            var dateFilter = (ToDateFilter)filterList.FirstOrDefault(a => a.Type == FilterType.ToDate);
+            var dateFilter = (ToDateFilter) filterList.FirstOrDefault(a => a.Type == FilterType.ToDate);
 
             if (dateFilter == null)
             {

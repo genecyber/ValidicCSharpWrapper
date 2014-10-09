@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ValidicCSharp.Model
+﻿namespace ValidicCSharp.Model
 {
     public class AddUserResponse
     {
@@ -20,6 +14,4 @@ namespace ValidicCSharp.Model
         public string access_token { get; set; }
         public Profile profile { get; set; }
     }
-
-   
 }

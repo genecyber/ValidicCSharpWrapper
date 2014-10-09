@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace ValidicCSharp.Utility
 {
@@ -10,9 +7,9 @@ namespace ValidicCSharp.Utility
     {
         public static int GenerateRandom()
         {
-            Random rndNum =
+            var rndNum =
                 new Random(int.Parse(Guid.NewGuid().ToString().Substring(0, 8),
-                                     System.Globalization.NumberStyles.HexNumber));
+                    NumberStyles.HexNumber));
             int rnd = rndNum.Next(300, 3000);
             return rnd;
         }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ValidicCSharp.Interfaces;
+﻿using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
 {
@@ -11,7 +6,6 @@ namespace ValidicCSharp.Model
     {
         public UserRequest user { get; set; }
         public string access_token { get; set; }
-        
     }
 
     public class UserRequest

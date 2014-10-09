@@ -13,5 +13,4 @@ namespace ValidicCSharp.Model
     {
         public Me me { get; set; }
     }
-
 }

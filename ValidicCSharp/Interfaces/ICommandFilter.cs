@@ -4,8 +4,8 @@ namespace ValidicCSharp.Interfaces
 {
     public interface ICommandFilter
     {
-        String ToString();
         FilterType Type { get; set; }
+        String ToString();
     }
 
     public enum FilterType

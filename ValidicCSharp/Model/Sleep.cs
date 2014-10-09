@@ -17,5 +17,4 @@ namespace ValidicCSharp.Model
         public string source_name { get; set; }
         public string last_updated { get; set; }
     }
-
 }

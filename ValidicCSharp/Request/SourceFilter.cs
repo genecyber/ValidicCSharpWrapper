@@ -10,11 +10,11 @@ namespace ValidicCSharp.Request
         public SourceFilter()
         {
             Type = FilterType.Source;
-            Sources = new List<string>(); 
+            Sources = new List<string>();
         }
 
-        public FilterType Type { get; set; }
         public List<string> Sources { get; set; }
+        public FilterType Type { get; set; }
 
         string ICommandFilter.ToString()
         {

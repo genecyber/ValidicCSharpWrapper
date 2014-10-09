@@ -9,8 +9,9 @@ namespace ValidicCSharp.Request
         {
             Type = FilterType.FromDate;
         }
-        public FilterType Type { get; set; }
+
         public string Date { get; set; }
+        public FilterType Type { get; set; }
 
         string ICommandFilter.ToString()
         {
