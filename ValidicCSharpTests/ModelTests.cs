@@ -9,11 +9,11 @@ using ValidicCSharp.Utility;
 
 namespace ValidicCSharpTests
 {
-    public class ModelTests
+    public class ModelTests : BaseTests
     {
         private const string UserUnderTest = "51c7dc676dedda04f9000011";
         private const string OrganizationUnderTest = "51aca5a06dedda916400002b";
-
+        
         [Test]
         public void InitialDeserializationWorks()
         {

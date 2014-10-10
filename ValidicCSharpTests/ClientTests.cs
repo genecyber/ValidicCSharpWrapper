@@ -8,7 +8,7 @@ using ValidicCSharp.Request;
 
 namespace ValidicCSharpTests
 {
-    public class ClientTests
+    public class ClientTests : BaseTests
     {
         private const string UserUnderTest = "51c7dc676dedda04f9000011";
         private const string OrganizationUnderTest = "51aca5a06dedda916400002b";
@@ -36,21 +36,42 @@ namespace ValidicCSharpTests
         public void EnterpriseUserDiabetesDataPopulates()
         {
             var client = new Client {AccessToken = "ENTERPRISE_KEY"};
-            ValidicResult<List<Diabetes>> diabetesData = client.GetEnterpriseUserDiabetesData(UserUnderTest,
-                OrganizationUnderTest, GetFilters);
+            var diabetesData = client.GetEnterpriseUserDiabetesData(UserUnderTest, OrganizationUnderTest, GetFilters);
 
             Assert.IsTrue(diabetesData.Object.Count > 0);
             Assert.IsTrue(diabetesData.Object.First()._id != null);
         }
 
+        #region Activities
+
         [Test]
-        public void UserActivityDataPopulates()
+        public void GetUserActivities()
         {
             var client = new Client();
-            ValidicResult<List<Activity>> activityData = client.GetUserActivities(UserUnderTest, GetFilters);
+            var activityData = client.GetUserActivities(UserUnderTest, GetFilters);
 
             Assert.IsTrue(activityData.Object.Count > 0);
             Assert.IsTrue(activityData.Object.First()._id != null);
         }
+
+        [Test]
+        public void GetEnterpriseActivities()
+        {
+            var client = new Client { AccessToken = "ENTERPRISE_KEY" }; ;
+            var activityData = client.GetEnterpriseActivities(UserUnderTest, GetFilters);
+            Assert.IsTrue(activityData.Object.Count > 0);
+            Assert.IsTrue(activityData.Object.First()._id != null);
+        }
+
+        [Test]
+        public void GetEnterpriseUserActivities()
+        {
+            var client = new Client { AccessToken = "ENTERPRISE_KEY" }; ;
+            var activityData = client.GetEnterpriseUserActivities(UserUnderTest, OrganizationUnderTest, GetFilters);
+            Assert.IsTrue(activityData.Object.Count > 0);
+            Assert.IsTrue(activityData.Object.First()._id != null);
+        }
+
+        #endregion  
     }
 }

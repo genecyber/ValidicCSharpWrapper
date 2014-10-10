@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using ValidicCSharp.Interfaces;
 using ValidicCSharp.Model;
 using ValidicCSharp.Request;
+using SourceFilter = ValidicCSharp.Request.SourceFilter;
 
 namespace ValidicCSharp.Utility
 {
@@ -13,30 +16,51 @@ namespace ValidicCSharp.Utility
     {
         public static ValidicResult<T> ToResult<T>(this String response, string fromString = null)
         {
-            Type parameter = typeof (T);
+            var parameter = typeof (T);
+
             if (fromString == null && parameter.Name == "List`1")
                 fromString = parameter.GenericTypeArguments[0].Name.ToLower();
-            JObject root = JObject.Parse(response);
+
+            var root = JObject.Parse(response);
+
             JObject summary = null;
             try
             {
                 summary = JObject.FromObject(root["summary"]);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
             }
-            string obj;
+
+            string obj = null;
             try
             {
-                obj = JsonConvert.SerializeObject(JObject.FromObject(root[parameter.Name.ToLower()]));
+                var name = parameter.Name.ToLower();
+                obj = JsonConvert.SerializeObject(JObject.FromObject(root[name]));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                obj = fromString != null
-                    ? JsonConvert.SerializeObject(JArray.FromObject(root[fromString]))
-                    : JsonConvert.SerializeObject(JArray.FromObject(root[fromString]));
+                Debug.WriteLine(ex.Message);
             }
-            var tConverted = JsonConvert.DeserializeObject<T>(obj);
+
+            if (obj == null && fromString != null)
+            {
+                try
+                {
+                    obj = JsonConvert.SerializeObject(JArray.FromObject(root[fromString]));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                
+            }
+
+            T tConverted = default(T);
+            if(obj != null)
+                tConverted = JsonConvert.DeserializeObject<T>(obj);
+
             var rootObject = new ValidicResult<T> {Object = tConverted};
             if (summary != null)
                 rootObject.Summary = JsonConvert.DeserializeObject<Summary>(summary.ToString());

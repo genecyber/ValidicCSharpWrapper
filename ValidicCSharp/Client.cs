@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using Newtonsoft.Json;
 using ValidicCSharp.Interfaces;
@@ -14,28 +15,46 @@ namespace ValidicCSharp
         public static String ApplicationId;
         private readonly Uri _baseUrl = new Uri("https://api.validic.com/v1/");
         public String AccessToken = "DEMO_KEY";
+        public static Action<string> AddLine = null;
+
+        private static void OnAddLine(string line)
+        {
+            var tmp = AddLine;
+            if (tmp != null)
+                tmp(line);
+        }
+
+        private static string GetFunctionName(int skipFrames)
+        {
+            return new StackFrame(skipFrames, true).GetMethod().Name;
+        }
 
         public string ExecuteWebCommand(string command, HttpMethod method, object payload = null)
         {
             String json = null;
+            string address = _baseUrl + command + AppendAuth();
             using (var client = new WebClient())
             {
-                string address = _baseUrl + command + AppendAuth();
-                if (method == HttpMethod.GET)
-                    json = client.DownloadString(address);
-                if (method == HttpMethod.POST && payload != null)
+                try
                 {
-                    client.Headers.Add("Content-Type", "application/json");
-                    try
+                    if (method == HttpMethod.GET)
+                        json = client.DownloadString(address);
+                    if (method == HttpMethod.POST && payload != null)
                     {
+                        client.Headers.Add("Content-Type", "application/json");
                         json = client.UploadString(address, JsonConvert.SerializeObject(payload));
                     }
-                    catch (WebException ex)
-                    {
-                        return JsonConvert.SerializeObject(new AddUserResponse());
-                    }
+                }
+                catch (WebException ex)
+                {
+                    json = JsonConvert.SerializeObject(new AddUserResponse());
                 }
             }
+
+            OnAddLine(GetFunctionName(3));
+            OnAddLine(address);
+            OnAddLine(json);
+
             return json;
         }
 
@@ -59,7 +78,8 @@ namespace ValidicCSharp
             return "&access_token=" + AccessToken;
         }
 
-        //Standard User Data
+        // Standard User Data
+
         public ValidicResult<List<Activity>> GetUserActivities(string userId, List<ICommandFilter> filters = null)
         {
             Command command = new Command()

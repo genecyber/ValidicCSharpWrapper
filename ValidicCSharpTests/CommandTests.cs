@@ -4,7 +4,7 @@ using ValidicCSharp.Utility;
 
 namespace ValidicCSharpTests
 {
-    public class CommandTests
+    public class CommandTests : BaseTests
     {
         [Test]
         public void GetDataWithSingleSourceFilter()
