@@ -12,25 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ValidicCSharpApp.ViewModels;
 
-namespace ValidicCSharpApp
+namespace ValidicCSharpApp.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for OrganizationAuthenticationCredentialsView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OrganizationAuthenticationCredentialsView : UserControl
     {
-        readonly MainViewModel _main = new MainViewModel(); 
-        public MainWindow()
+        public OrganizationAuthenticationCredentialsView()
         {
             InitializeComponent();
-            this.Loaded += OnLoaded;
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
-        {
-            this.DataContext = _main;
         }
     }
 }

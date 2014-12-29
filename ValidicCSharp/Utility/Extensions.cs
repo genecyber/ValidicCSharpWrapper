@@ -37,7 +37,8 @@ namespace ValidicCSharp.Utility
             try
             {
                 var name = parameter.Name.ToLower();
-                obj = JsonConvert.SerializeObject(JObject.FromObject(root[name]));
+                var aa = JObject.FromObject(root[name]);
+                obj = JsonConvert.SerializeObject(aa);
             }
             catch (Exception ex)
             {

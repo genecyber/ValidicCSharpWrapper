@@ -1,30 +1,31 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
 {
     public class Organization : IValidic
     {
-        [DataMember(Name = "_id")]
+        [JsonProperty("_id")]
         public string Id { get; set; }
 
-        [DataMember(Name = "name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [DataMember(Name = "users")]
+        [JsonProperty("users")]
         public int Users { get; set; }
 
-        [DataMember(Name = "users_provisioned")]
+        [JsonProperty("users_provisioned")]
         public int UsersProvisioned { get; set; }
 
-        [DataMember(Name = "activities")]
+        [JsonProperty("activities")]
         public int? Activities { get; set; }
 
-        [DataMember(Name = "connections")]
+        [JsonProperty("connections")]
         public int? Connections { get; set; }
 
-        [DataMember(Name = "organizations")]
+        [JsonProperty("organizations")]
         public List<Organization> ChildOrganizations { get; set; }
     }
 }
