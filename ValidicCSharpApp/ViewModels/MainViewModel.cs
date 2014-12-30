@@ -38,8 +38,7 @@ namespace ValidicCSharpApp.ViewModels
 
         public MainViewModel()
         {
-            Model = new MainModel();
-            Model = ReadFromFile<MainModel>("validic.json");
+            OpenOrCreateModel();
             Client.AddLine += s => Debug.WriteLine(s);
             CommandGetOrganization = new RelayCommand(GetOrganization, () => true);
             CommandClearOrganization = new RelayCommand(ClearOrganization, () => true);
@@ -47,6 +46,7 @@ namespace ValidicCSharpApp.ViewModels
             // SaveToFile("validic.json", Model);
 
         }
+
 
         private void GetOrganization()
         {
@@ -88,7 +88,6 @@ namespace ValidicCSharpApp.ViewModels
 
         public T ReadFromFile<T>(string path)
         {
-            // read JSON directly from a file
             using (var file = File.OpenText(path))
             using (JsonTextReader reader = new JsonTextReader(file))
             {
@@ -96,5 +95,20 @@ namespace ValidicCSharpApp.ViewModels
                 return o2.ToObject<T>();
             }
         }
+
+        private void OpenOrCreateModel()
+        {
+            var path = "validic.json";
+            Model = new MainModel();
+            // read JSON directly from a file
+            if (!File.Exists(path))
+            {
+                Model.Populate();
+                SaveToFile(path, Model);
+            }
+
+            Model = ReadFromFile<MainModel>("validic.json");
+        }
+
     }
 }
