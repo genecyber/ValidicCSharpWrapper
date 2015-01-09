@@ -20,6 +20,7 @@
             <ToolBar>
                 <Button Command="{Binding CommandGetOrganization}" >Get Organization</Button>
                 <Button Command="{Binding CommandClearOrganization}" >Clear Organization</Button>
+                <Button Command="{Binding CommandGetOrganizationWeight}" >Get Organization Weight</Button>
             </ToolBar>
         </Border>
         <Border Grid.Row="2" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >

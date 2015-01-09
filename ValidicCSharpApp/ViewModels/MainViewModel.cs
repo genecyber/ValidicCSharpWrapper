@@ -23,6 +23,9 @@ namespace ValidicCSharpApp.ViewModels
 
         public RelayCommand CommandGetOrganization { get; private set; }
         public RelayCommand CommandClearOrganization { get; private set; }
+        public RelayCommand CommandGetOrganizationWeight { get; private set; }
+
+        
         public Organization Organization { get; set; }
         public MainModel Model { get; set; }
 
@@ -42,9 +45,25 @@ namespace ValidicCSharpApp.ViewModels
             Client.AddLine += s => Debug.WriteLine(s);
             CommandGetOrganization = new RelayCommand(GetOrganization, () => true);
             CommandClearOrganization = new RelayCommand(ClearOrganization, () => true);
+            CommandGetOrganizationWeight = new RelayCommand(GetOrganizationWeight, () => true);
             SelectedOrganizationAuthenticationCredential = Model.OrganizationAuthenticationCredentials[0];
             // SaveToFile("validic.json", Model);
 
+        }
+
+        private void GetOrganizationWeight()
+        {
+            var oac = SelectedOrganizationAuthenticationCredential;
+            if (oac == null)
+                return;
+
+            var client = new Client { AccessToken = oac.AccessToken };
+            var command = new Command().FromOrganization(oac.OrganizationId)
+                .GetInformationType(CommandType.Weight)
+                .GetLatest();
+
+            string json = client.PerformCommand(command);
+            var weights = json.ToResult<List<Weight>>();
         }
 
 
@@ -55,7 +74,12 @@ namespace ValidicCSharpApp.ViewModels
                 return;
 
             var client = new Client {AccessToken = oac.AccessToken};
-            GetOrganizationData(client, oac.OrganizationId);
+            var command = new Command().FromOrganization(oac.OrganizationId);
+
+            var json = client.PerformCommand(command);
+            var result = json.ToResult<Organization>();
+            Organization = (Organization)result.Object;
+            RaisePropertyChanged("Organization");
         }
 
         private void ClearOrganization()
@@ -64,13 +88,17 @@ namespace ValidicCSharpApp.ViewModels
             RaisePropertyChanged("Organization");
         }
 
-        public void GetOrganizationData(Client client, string orgId)
+        public void GetOrganizationWeight(Client client, string orgId)
         {
-            var command = new Command().FromOrganization(orgId);
-            var json = client.PerformCommand(command);
-            var result = json.ToResult<Organization>();
-            Organization = (Organization) result.Object;
-            RaisePropertyChanged("Organization");
+            // Assert.True(weight.Object.First()._id != null);
+
+
+
+//            var command = new Command().GetInformationType(CommandType.Weight);
+//            var json = client.PerformCommand(command);
+//            var result = json.ToResult<Organization>();
+//            Organization = (Organization)result.Object;
+//            RaisePropertyChanged("Organization");
         }
 
         public static void SaveToFile(string path, object value)

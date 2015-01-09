@@ -7,7 +7,7 @@ namespace ValidicCSharp.Model
         public string _id { get; set; }
         public string timestamp { get; set; }
         public string utc_offset { get; set; }
-        public double weight { get; set; }
+        public double? weight { get; set; }
         public double? height { get; set; }
         public double? free_mass { get; set; }
         public double? fat_percent { get; set; }

@@ -26,6 +26,7 @@ namespace ValidicCSharp.Request
         public string UserId { get; set; }
         public HttpMethod Method { get; set; }
         public object Payload { get; set; }
+        public bool Latest { get; set; }
 
         public override string ToString()
         {
@@ -38,10 +39,10 @@ namespace ValidicCSharp.Request
             if (OrganizationId != null)
                 target = "/" + OrganizationId + target;
             if (Organization)
-                target = "/organizations" + target;
-
+                target = "organizations" + target;
             if (Type != CommandType.None)
-                target += "/" + Type.ToString().ToLower() + ".json";
+                target += "/" + Type.ToString().ToLower() + (Latest ? "/latest" : "") + ".json";
+
             else if (Type == CommandType.None && (UserId != null || Payload != null)) target += ".json";
             else target += "/";
 
@@ -134,6 +135,12 @@ namespace ValidicCSharp.Request
             command.User = true;
             command.Method = HttpMethod.POST;
             command.Payload = userRequest;
+            return command;
+        }
+
+        public static Command GetLatest(this Command command)
+        {
+            command.Latest = true;
             return command;
         }
 
