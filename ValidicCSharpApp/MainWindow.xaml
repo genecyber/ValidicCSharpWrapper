@@ -17,18 +17,10 @@
             <v:OrganizationAuthenticationCredentialsView/>
         </Border>
         <Border Grid.Row="1" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Command="{Binding CommandGetOrganization}" Grid.Column="1" >Get Organization</Button>
-                <Button Command="{Binding CommandClearOrganization}" Grid.Column="3" >Clear Organization</Button>
-            </Grid>
+            <ToolBar>
+                <Button Command="{Binding CommandGetOrganization}" >Get Organization</Button>
+                <Button Command="{Binding CommandClearOrganization}" >Clear Organization</Button>
+            </ToolBar>
         </Border>
         <Border Grid.Row="2" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
             <v:OrganizationView DataContext="{Binding Organization}"/>
