@@ -11,7 +11,7 @@ namespace ValidicCSharpTests
 {
     public class ModelTests : BaseTests
     {
-        private const string UserUnderTest = "51c7dc676dedda04f9000011";
+        private const string UserUnderTest = "52ffcb4bf1f70eefba000004";
         private const string OrganizationUnderTest = "51aca5a06dedda916400002b";
         
         [Test]
@@ -29,10 +29,11 @@ namespace ValidicCSharpTests
         [Test]
         public void AppModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
             Command command = new Command()
-                .GetInformationType(CommandType.Apps)
-                .FromUser(UserUnderTest);
+                .FromOrganization(OrganizationUnderTest)
+                .GetInformationType(CommandType.Apps);
+
             string json = client.PerformCommand(command);
             List<App> applications = json.Objectify<Apps>().AppCollection;
 
@@ -42,8 +43,9 @@ namespace ValidicCSharpTests
         [Test]
         public void ActivitiesModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = "DEMO_KEY"};
+            var client = new Client { AccessToken = "ENTERPRISE_KEY" }; ;
             Command command = new Command()
+                .FromOrganization(OrganizationUnderTest)
                 .GetUser(UserUnderTest);
 
             string json = client.PerformCommand(command);
@@ -122,8 +124,9 @@ namespace ValidicCSharpTests
         [Test]
         public void FitnessModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
             Command command = new Command()
+                .FromOrganization(OrganizationUnderTest)
                 .GetInformationType(CommandType.Fitness)
                 .FromUser(UserUnderTest);
 
@@ -152,8 +155,8 @@ namespace ValidicCSharpTests
         {
             var client = new Client {AccessToken = "ENTERPRISE_KEY"};
             Command command = new Command()
-                .GetUsers()
-                .FromOrganization(OrganizationUnderTest);
+                .FromOrganization(OrganizationUnderTest)
+                .GetUsers();
             string json = client.PerformCommand(command);
 
             ValidicResult<List<Me>> users = json.ToResult<List<Me>>("users");
@@ -163,8 +166,9 @@ namespace ValidicCSharpTests
         [Test]
         public void RoutineModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
             Command command = new Command()
+                .FromOrganization(OrganizationUnderTest)
                 .GetInformationType(CommandType.Routine)
                 .FromUser(UserUnderTest);
             string json = client.PerformCommand(command);
@@ -176,8 +180,9 @@ namespace ValidicCSharpTests
         [Test]
         public void NutritionModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
             Command command = new Command()
+                .FromOrganization(OrganizationUnderTest)
                 .GetInformationType(CommandType.Nutrition)
                 .FromUser(UserUnderTest);
             string json = client.PerformCommand(command);
@@ -189,10 +194,11 @@ namespace ValidicCSharpTests
         [Test]
         public void SleepModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = "ENTERPRISE_KEY"};
             Command command = new Command()
-                .GetInformationType(CommandType.Sleep)
+                .FromOrganization(OrganizationUnderTest)
                 .FromUser(UserUnderTest)
+                .GetInformationType(CommandType.Sleep)
                 .FromDate("09-01-01");
             string json = client.PerformCommand(command);
 
@@ -203,11 +209,12 @@ namespace ValidicCSharpTests
         [Test]
         public void WeightModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
             Command command = new Command()
-                .GetInformationType(CommandType.Weight)
+                .FromOrganization(OrganizationUnderTest)
                 .FromUser(UserUnderTest)
-                .FromDate("09-01-01");
+                .GetInformationType(CommandType.Weight)
+                .GetLatest();
             string json = client.PerformCommand(command);
 
             ValidicResult<List<Weight>> weight = json.ToResult<List<Weight>>();
@@ -217,7 +224,7 @@ namespace ValidicCSharpTests
         [Test]
         public void DiabetesModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
             Command command = new Command()
                 .GetInformationType(CommandType.Diabetes)
                 .FromUser(UserUnderTest)
@@ -231,7 +238,7 @@ namespace ValidicCSharpTests
         [Test]
         public void BiometricsModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
             Command command = new Command()
                 .GetInformationType(CommandType.Biometrics)
                 .FromUser(UserUnderTest)
