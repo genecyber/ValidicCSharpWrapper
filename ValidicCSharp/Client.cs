@@ -80,15 +80,6 @@ namespace ValidicCSharp
 
         // Standard User Data
 
-        public ValidicResult<List<Activity>> GetUserActivities(string userId, List<ICommandFilter> filters = null)
-        {
-            Command command = new Command()
-                .GetUser(userId);
-            if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
-            ValidicResult<List<Activity>> userActivities = json.ToResult<List<Activity>>("activities");
-            return userActivities;
-        }
 
         public List<App> GetUserApplications(string userId, List<ICommandFilter> filters = null)
         {
@@ -212,17 +203,6 @@ namespace ValidicCSharp
         }
 
         //Enterprise User Data
-        public ValidicResult<List<Activity>> GetEnterpriseUserActivities(string userId, string orgId,
-            List<ICommandFilter> filters = null)
-        {
-            Command command = new Command()
-                .FromOrganization(orgId)
-                .GetUser(userId);
-            if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
-            ValidicResult<List<Activity>> userActivities = json.ToResult<List<Activity>>("activities");
-            return userActivities;
-        }
 
         public List<App> GetEnterpriseUserApplications(string userId, string orgId, List<ICommandFilter> filters = null)
         {
@@ -347,17 +327,6 @@ namespace ValidicCSharp
 
             ValidicResult<List<Me>> users = json.ToResult<List<Me>>("users");
             return users;
-        }
-
-        //Enterprise Bulk Data
-        public ValidicResult<List<Activity>> GetEnterpriseActivities(string orgId, List<ICommandFilter> filters = null)
-        {
-            Command command = new Command()
-                .FromOrganization(orgId);
-            if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
-            ValidicResult<List<Activity>> userActivities = json.ToResult<List<Activity>>("activities");
-            return userActivities;
         }
 
         public List<App> GetEnterpriseApplications(string orgId, List<ICommandFilter> filters = null)

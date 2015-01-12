@@ -45,31 +45,31 @@ namespace ValidicCSharpTests
         #region Activities
 
         [Test]
-        public void GetUserActivities()
+        public void GetUserFitnessData()
         {
             var client = new Client();
-            var activityData = client.GetUserActivities(UserUnderTest, GetFilters);
+            var data = client.GetUserFitnessData(UserUnderTest, GetFilters);
 
-            Assert.IsTrue(activityData.Object.Count > 0);
-            Assert.IsTrue(activityData.Object.First().Id != null);
+            Assert.IsTrue(data.Object.Count > 0);
+            Assert.IsTrue(data.Object.First().Id != null);
         }
 
         [Test]
-        public void GetEnterpriseActivities()
+        public void GetEnterpriseFitnessData()
         {
             var client = new Client { AccessToken = "ENTERPRISE_KEY" }; ;
-            var activityData = client.GetEnterpriseActivities(UserUnderTest, GetFilters);
-            Assert.IsTrue(activityData.Object.Count > 0);
-            Assert.IsTrue(activityData.Object.First().Id != null);
+            var data = client.GetEnterpriseFitnessData(UserUnderTest, GetFilters);
+            Assert.IsTrue(data.Object.Count > 0);
+            Assert.IsTrue(data.Object.First().Id != null);
         }
 
         [Test]
-        public void GetEnterpriseUserActivities()
+        public void GetEnterpriseUserFitnessData()
         {
             var client = new Client { AccessToken = "ENTERPRISE_KEY" }; ;
-            var activityData = client.GetEnterpriseUserActivities(UserUnderTest, OrganizationUnderTest, GetFilters);
-            Assert.IsTrue(activityData.Object.Count > 0);
-            Assert.IsTrue(activityData.Object.First().Id != null);
+            var data = client.GetEnterpriseUserFitnessData(UserUnderTest, OrganizationUnderTest, GetFilters);
+            Assert.IsTrue(data.Object.Count > 0);
+            Assert.IsTrue(data.Object.First().Id != null);
         }
 
         #endregion  

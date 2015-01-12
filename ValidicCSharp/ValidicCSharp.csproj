@@ -73,7 +73,6 @@
     <Compile Include="Model\StatusCode.cs" />
     <Compile Include="Model\Summary.cs" />
     <Compile Include="Model\Tobacco_Cessation.cs" />
-    <Compile Include="Model\Activity.cs" />
     <Compile Include="Model\Weight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\Extensions.cs" />

@@ -40,19 +40,6 @@ namespace ValidicCSharpTests
             Assert.IsTrue(applications.Count > 0);
         }
 
-        [Test]
-        public void ActivitiesModelPopulatesCorrectly()
-        {
-            var client = new Client { AccessToken = "ENTERPRISE_KEY" }; ;
-            Command command = new Command()
-                .FromOrganization(OrganizationUnderTest)
-                .GetUser(UserUnderTest);
-
-            string json = client.PerformCommand(command);
-            ValidicResult<List<Activity>> user = json.ToResult<List<Activity>>("activities");
-
-            Assert.IsTrue(user.Object.As<List<Activity>>().Count == 100);
-        }
 
         [Test]
         public void MyModelPopultesCorrectly()
