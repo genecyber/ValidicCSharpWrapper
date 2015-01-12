@@ -51,6 +51,8 @@ namespace ValidicCSharpApp.ViewModels
 
         }
 
+        public List<Weight> Weights { get; set; }
+
         private void GetOrganizationWeight()
         {
             var oac = SelectedOrganizationAuthenticationCredential;
@@ -63,7 +65,10 @@ namespace ValidicCSharpApp.ViewModels
                 .GetLatest();
 
             string json = client.PerformCommand(command);
-            var weights = json.ToResult<List<Weight>>();
+            var validicResult = json.ToResult<List<Weight>>();
+            Weights = validicResult.Object;
+            RaisePropertyChanged("Weights");
+            var sum = validicResult.Summary;
         }
 
 

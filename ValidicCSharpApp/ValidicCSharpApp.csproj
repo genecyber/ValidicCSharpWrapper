@@ -83,6 +83,9 @@
     <Compile Include="Views\OrganizationView.xaml.cs">
       <DependentUpon>OrganizationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WeightView.xaml.cs">
+      <DependentUpon>WeightView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -100,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OrganizationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WeightView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
