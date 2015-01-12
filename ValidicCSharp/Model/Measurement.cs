@@ -11,19 +11,23 @@ namespace ValidicCSharp.Model
 {
     public class Measurement : IValidic
     {
-        public string _id { get; set; }
-        public string timestamp { get; set; }
-        public string utc_offset { get; set; }
-        public string last_updated { get; set; }
-        [DefaultValue("")]
-        public string source { get; set; }
+        [JsonProperty("_id")]
+        public string Id { get; set; }
+        [JsonProperty("timestamp")]
+        public string Timestamp { get; set; }
+        [JsonProperty("utc_offset")]
+        public string UtcOffset { get; set; }
+        [JsonProperty("last_updated")]
+        public string LastUpdated { get; set; }
+        [JsonProperty("source"), DefaultValue("")] 
+        public string Source { get; set; }
 
-        [DefaultValue("")]
-        public string source_name { get; set; }
+        [JsonProperty("source_name"), DefaultValue("")]
+        public string SourceName { get; set; }
 
-        [DefaultValue("")]
-        public object extras { get; set; }
-        public string user_id { get; set; }
-
+        [JsonProperty("extras"), DefaultValue("")]
+        public object Extras { get; set; }
+        [JsonProperty("user_id"), DefaultValue("")]
+        public string UserId { get; set; }
     }
 }

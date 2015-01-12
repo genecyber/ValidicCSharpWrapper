@@ -147,7 +147,7 @@ namespace ValidicCSharpTests
                 .GetUser(UserUnderTest);
             string json = client.PerformCommand(command);
             ValidicResult<List<Fitness>> fitness = json.ToResult<List<Fitness>>();
-            Assert.IsTrue(fitness.Object.First()._id != null);
+            Assert.IsTrue(fitness.Object.First().Id != null);
         }
 
         [Test]
@@ -174,7 +174,7 @@ namespace ValidicCSharpTests
             string json = client.PerformCommand(command);
 
             ValidicResult<List<Routine>> routine = json.ToResult<List<Routine>>();
-            Assert.True(routine.Object.First()._id != null);
+            Assert.True(routine.Object.First().Id != null);
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace ValidicCSharpTests
             string json = client.PerformCommand(command);
 
             ValidicResult<List<Sleep>> sleep = json.ToResult<List<Sleep>>();
-            Assert.True(sleep.Object.First()._id != null);
+            Assert.True(sleep.Object.First().Id != null);
         }
 
         [Test]
@@ -218,7 +218,7 @@ namespace ValidicCSharpTests
             string json = client.PerformCommand(command);
 
             ValidicResult<List<Weight>> weight = json.ToResult<List<Weight>>();
-            Assert.True(weight.Object.First()._id != null);
+            Assert.True(weight.Object.First().Id != null);
         }
 
         [Test]
@@ -232,7 +232,7 @@ namespace ValidicCSharpTests
             string json = client.PerformCommand(command);
 
             ValidicResult<List<Diabetes>> diabetes = json.ToResult<List<Diabetes>>();
-            Assert.True(diabetes.Object.First()._id != null);
+            Assert.True(diabetes.Object.First().Id != null);
         }
 
         [Test]
@@ -246,7 +246,7 @@ namespace ValidicCSharpTests
             string json = client.PerformCommand(command);
 
             ValidicResult<List<Biometrics>> biometrics = json.ToResult<List<Biometrics>>();
-            Assert.True(biometrics.Object.First()._id != null);
+            Assert.True(biometrics.Object.First().Id != null);
         }
 
         [Test]
@@ -260,7 +260,7 @@ namespace ValidicCSharpTests
             string json = client.PerformCommand(command);
 
             ValidicResult<List<Tobacco_Cessation>> tobacco = json.ToResult<List<Tobacco_Cessation>>();
-            Assert.True(tobacco.Object.First()._id != null);
+            Assert.True(tobacco.Object.First().Id != null);
         }
 
         private int MakeRandom(int to = 10000)

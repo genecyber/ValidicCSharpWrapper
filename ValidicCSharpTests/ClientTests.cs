@@ -29,7 +29,7 @@ namespace ValidicCSharpTests
             ValidicResult<List<Sleep>> sleepData = client.GetEnterpriseSleepData(OrganizationUnderTest, GetFilters);
 
             Assert.IsTrue(sleepData.Object.Count > 0);
-            Assert.IsTrue(sleepData.Object.First()._id != null);
+            Assert.IsTrue(sleepData.Object.First().Id != null);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace ValidicCSharpTests
             var diabetesData = client.GetEnterpriseUserDiabetesData(UserUnderTest, OrganizationUnderTest, GetFilters);
 
             Assert.IsTrue(diabetesData.Object.Count > 0);
-            Assert.IsTrue(diabetesData.Object.First()._id != null);
+            Assert.IsTrue(diabetesData.Object.First().Id != null);
         }
 
         #region Activities
@@ -51,7 +51,7 @@ namespace ValidicCSharpTests
             var activityData = client.GetUserActivities(UserUnderTest, GetFilters);
 
             Assert.IsTrue(activityData.Object.Count > 0);
-            Assert.IsTrue(activityData.Object.First()._id != null);
+            Assert.IsTrue(activityData.Object.First().Id != null);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace ValidicCSharpTests
             var client = new Client { AccessToken = "ENTERPRISE_KEY" }; ;
             var activityData = client.GetEnterpriseActivities(UserUnderTest, GetFilters);
             Assert.IsTrue(activityData.Object.Count > 0);
-            Assert.IsTrue(activityData.Object.First()._id != null);
+            Assert.IsTrue(activityData.Object.First().Id != null);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace ValidicCSharpTests
             var client = new Client { AccessToken = "ENTERPRISE_KEY" }; ;
             var activityData = client.GetEnterpriseUserActivities(UserUnderTest, OrganizationUnderTest, GetFilters);
             Assert.IsTrue(activityData.Object.Count > 0);
-            Assert.IsTrue(activityData.Object.First()._id != null);
+            Assert.IsTrue(activityData.Object.First().Id != null);
         }
 
         #endregion  
