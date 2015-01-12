@@ -120,7 +120,7 @@ namespace ValidicCSharpTests
             string json = client.PerformCommand(command);
             ValidicResult<List<Fitness>> fitness = json.ToResult<List<Fitness>>();
 
-            Assert.IsTrue(fitness.Object.As<List<Fitness>>().First().calories != null);
+            Assert.IsTrue(fitness.Object.As<List<Fitness>>().First().Calories != null);
             Assert.IsTrue(fitness.Summary.Status == StatusCode.Ok);
         }
 

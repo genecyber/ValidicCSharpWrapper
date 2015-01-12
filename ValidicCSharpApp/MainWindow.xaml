@@ -24,6 +24,7 @@
                 <Separator/>
                 <Button Command="{Binding CommandGetOrganizationWeight}" >Weights</Button>
                 <Button Command="{Binding CommandGetOrganizationBiometrics}" >Biometrics</Button>
+                <Button Command="{Binding CommandGetOrganizationFitnessData}" >Fitness</Button>
             </ToolBar>
         </Border>
         <Border Grid.Row="2" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
@@ -35,6 +36,9 @@
             </TabItem>
             <TabItem Header="Biometrics">
                 <v:BiometricsView/>
+            </TabItem>
+            <TabItem Header="Fitness">
+                <v:FitnessView/>
             </TabItem>
         </TabControl>
 

@@ -25,6 +25,7 @@ namespace ValidicCSharpApp.ViewModels
         public RelayCommand CommandClearOrganization { get; private set; }
         public RelayCommand CommandGetOrganizationWeight { get; private set; }
         public RelayCommand CommandGetOrganizationBiometrics { get; private set; }
+        public RelayCommand CommandGetOrganizationFitnessData { get; private set; }
 
         
         public Organization Organization { get; set; }
@@ -32,6 +33,7 @@ namespace ValidicCSharpApp.ViewModels
 
         public List<Weight> Weights { get; set; }
         public List<Biometrics> Biometrics { get; set; }
+        public List<Fitness> FitnessData { get; set; }
 
 
 
@@ -53,46 +55,49 @@ namespace ValidicCSharpApp.ViewModels
             CommandClearOrganization = new RelayCommand(ClearOrganization, () => true);
             CommandGetOrganizationWeight = new RelayCommand(GetOrganizationWeight, () => true);
             CommandGetOrganizationBiometrics = new RelayCommand(GetOrganizationBiometrics, () => true);
+            CommandGetOrganizationFitnessData = new RelayCommand(GetOrganizationGetOrganizationFitnessData, () => true);
             SelectedOrganizationAuthenticationCredential = Model.OrganizationAuthenticationCredentials[0];
             // SaveToFile("validic.json", Model);
 
         }
 
-        private void GetOrganizationBiometrics()
+        private ValidicResult<List<T>> GetOrganizationData<T>(CommandType commandType)
         {
             var oac = SelectedOrganizationAuthenticationCredential;
             if (oac == null)
-                return;
+                return null;
 
             var client = new Client { AccessToken = oac.AccessToken };
             var command = new Command().FromOrganization(oac.OrganizationId)
-                .GetInformationType(CommandType.Biometrics)
+                .GetInformationType(commandType)
                 .GetLatest();
 
             string json = client.PerformCommand(command);
-            var validicResult = json.ToResult<List<Biometrics>>();
-            Biometrics = validicResult.Object;
+            var validicResult = json.ToResult<List<T>>();
+            return validicResult;
+        }
+
+        private void GetOrganizationGetOrganizationFitnessData()
+        {
+            var result = GetOrganizationData<Fitness>(CommandType.Fitness);
+            FitnessData = result != null ? result.Object : null;
+            RaisePropertyChanged("FitnessData");
+        }
+
+        private void GetOrganizationBiometrics()
+        {
+            var result = GetOrganizationData<Biometrics>(CommandType.Biometrics);
+            Biometrics = result != null ? result.Object : null;
             RaisePropertyChanged("Biometrics");
-            var sum = validicResult.Summary;
         }
 
         private void GetOrganizationWeight()
         {
-            var oac = SelectedOrganizationAuthenticationCredential;
-            if (oac == null)
-                return;
-
-            var client = new Client { AccessToken = oac.AccessToken };
-            var command = new Command().FromOrganization(oac.OrganizationId)
-                .GetInformationType(CommandType.Weight)
-                .GetLatest();
-
-            string json = client.PerformCommand(command);
-            var validicResult = json.ToResult<List<Weight>>();
-            Weights = validicResult.Object;
+            var result = GetOrganizationData<Weight>(CommandType.Weight);
+            Weights = result != null ?result.Object : null;
             RaisePropertyChanged("Weights");
-            var sum = validicResult.Summary;
         }
+
 
 
         private void GetOrganization()
