@@ -24,10 +24,16 @@ namespace ValidicCSharpApp.ViewModels
         public RelayCommand CommandGetOrganization { get; private set; }
         public RelayCommand CommandClearOrganization { get; private set; }
         public RelayCommand CommandGetOrganizationWeight { get; private set; }
+        public RelayCommand CommandGetOrganizationBiometrics { get; private set; }
 
         
         public Organization Organization { get; set; }
         public MainModel Model { get; set; }
+
+        public List<Weight> Weights { get; set; }
+        public List<Biometrics> Biometrics { get; set; }
+
+
 
         public List<OrganizationAuthenticationCredentialModel> OrganizationAuthenticationCredentials
         {
@@ -46,12 +52,29 @@ namespace ValidicCSharpApp.ViewModels
             CommandGetOrganization = new RelayCommand(GetOrganization, () => true);
             CommandClearOrganization = new RelayCommand(ClearOrganization, () => true);
             CommandGetOrganizationWeight = new RelayCommand(GetOrganizationWeight, () => true);
+            CommandGetOrganizationBiometrics = new RelayCommand(GetOrganizationBiometrics, () => true);
             SelectedOrganizationAuthenticationCredential = Model.OrganizationAuthenticationCredentials[0];
             // SaveToFile("validic.json", Model);
 
         }
 
-        public List<Weight> Weights { get; set; }
+        private void GetOrganizationBiometrics()
+        {
+            var oac = SelectedOrganizationAuthenticationCredential;
+            if (oac == null)
+                return;
+
+            var client = new Client { AccessToken = oac.AccessToken };
+            var command = new Command().FromOrganization(oac.OrganizationId)
+                .GetInformationType(CommandType.Biometrics)
+                .GetLatest();
+
+            string json = client.PerformCommand(command);
+            var validicResult = json.ToResult<List<Biometrics>>();
+            Biometrics = validicResult.Object;
+            RaisePropertyChanged("Biometrics");
+            var sum = validicResult.Summary;
+        }
 
         private void GetOrganizationWeight()
         {

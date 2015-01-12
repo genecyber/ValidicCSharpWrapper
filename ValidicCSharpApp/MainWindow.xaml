@@ -21,15 +21,20 @@
             <ToolBar>
                 <Button Command="{Binding CommandGetOrganization}" >Get Organization</Button>
                 <Button Command="{Binding CommandClearOrganization}" >Clear Organization</Button>
-                <Button Command="{Binding CommandGetOrganizationWeight}" >Get Organization Weight</Button>
+                <Separator/>
+                <Button Command="{Binding CommandGetOrganizationWeight}" >Weights</Button>
+                <Button Command="{Binding CommandGetOrganizationBiometrics}" >Biometrics</Button>
             </ToolBar>
         </Border>
         <Border Grid.Row="2" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
             <v:OrganizationView DataContext="{Binding Organization}"/>
         </Border>
-        <TabControl Grid.Row="3">
+        <TabControl Grid.Row="3" SelectedIndex="2">
             <TabItem Header="Weights">
                 <v:WeightView/>
+            </TabItem>
+            <TabItem Header="Biometrics">
+                <v:BiometricsView/>
             </TabItem>
         </TabControl>
 
