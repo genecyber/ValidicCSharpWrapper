@@ -50,6 +50,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Model\AddUserResponse.cs" />
     <Compile Include="Model\AddUserRequest.cs" />
+    <Compile Include="Model\Measurement.cs" />
     <Compile Include="Request\Command.cs" />
     <Compile Include="Request\FromDateFilter.cs" />
     <Compile Include="Request\SourceFilter.cs" />

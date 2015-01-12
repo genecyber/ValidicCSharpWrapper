@@ -2,11 +2,8 @@
 
 namespace ValidicCSharp.Model
 {
-    public class Nutrition : IValidic
+    public class Nutrition : Measurement
     {
-        public string _id { get; set; }
-        public string timestamp { get; set; }
-        public string utc_offset { get; set; }
         public double calories { get; set; }
         public double? carbohydrates { get; set; }
         public double? fat { get; set; }
@@ -15,8 +12,5 @@ namespace ValidicCSharp.Model
         public double? sodium { get; set; }
         public object water { get; set; }
         public string meal { get; set; }
-        public string source { get; set; }
-        public string source_name { get; set; }
-        public string last_updated { get; set; }
     }
 }

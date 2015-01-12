@@ -2,11 +2,8 @@
 
 namespace ValidicCSharp.Model
 {
-    public class Biometrics : IValidic
+    public class Biometrics : Measurement
     {
-        public string _id { get; set; }
-        public string timestamp { get; set; }
-        public string utc_offset { get; set; }
         public object blood_calcium { get; set; }
         public object blood_chromium { get; set; }
         public object blood_folic_acid { get; set; }
@@ -31,8 +28,5 @@ namespace ValidicCSharp.Model
         public object uric_acid { get; set; }
         public object vitamin_d { get; set; }
         public object white_cell_count { get; set; }
-        public string source { get; set; }
-        public string source_name { get; set; }
-        public string last_updated { get; set; }
     }
 }
