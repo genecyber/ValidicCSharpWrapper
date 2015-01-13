@@ -28,7 +28,7 @@ namespace ValidicCSharpApp.ViewModels
         public RelayCommand CommandGetOrganizationFitnessData { get; private set; }
         public RelayCommand CommandGetOrganizationDiabetesData { get; private set; }
         public RelayCommand CommandGetOrganizationNutritionData { get; private set; }
-        
+        public RelayCommand CommandGetOrganizationRoutineData { get; private set; }
 
         
         public Organization Organization { get; set; }
@@ -39,6 +39,7 @@ namespace ValidicCSharpApp.ViewModels
         public List<Fitness> FitnessData { get; set; }
         public List<Diabetes> DiabetesData { get; set; }
         public List<Nutrition> NutritionData { get; set; }
+        public List<Routine> RoutineData { get; set; }
 
 
 
@@ -63,10 +64,19 @@ namespace ValidicCSharpApp.ViewModels
             CommandGetOrganizationFitnessData = new RelayCommand(GetOrganizationFitnessData, () => true);
             CommandGetOrganizationDiabetesData = new RelayCommand(GetOrganizationDiabetesData, () => true);
             CommandGetOrganizationNutritionData = new RelayCommand(GetOrganizationNutritionData, () => true);
+            CommandGetOrganizationRoutineData = new RelayCommand(GetOrganizationRoutineData, () => true);
             SelectedOrganizationAuthenticationCredential = Model.OrganizationAuthenticationCredentials[0];
             // SaveToFile("validic.json", Model);
 
         }
+
+        private void GetOrganizationRoutineData()
+        {
+            var result = GetOrganizationData<Routine>(CommandType.Routine);
+            RoutineData = result != null ? result.Object : null;
+            RaisePropertyChanged("RoutineData");
+        }
+
 
         private void GetOrganizationNutritionData()
         {

@@ -1,13 +1,23 @@
-﻿using ValidicCSharp.Interfaces;
+﻿using Newtonsoft.Json;
+using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
 {
     public class Routine : Measurement
     {
-        public double? steps { get; set; }
-        public double? calories_burned { get; set; }
-        public double? distance { get; set; }
-        public object floors { get; set; }
-        public object elevation { get; set; }
+        [JsonProperty("steps")]
+        public double? Steps { get; set; }
+
+        [JsonProperty("calories_burned")]
+        public double? CaloriesBurned { get; set; }
+
+        [JsonProperty("distance")]
+        public double? Distance { get; set; }
+
+        [JsonProperty("floors")]
+        public object Floors { get; set; }
+
+        [JsonProperty("elevation")]
+        public object Elevation { get; set; }
     }
 }

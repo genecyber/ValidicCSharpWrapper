@@ -95,6 +95,9 @@
     <Compile Include="Views\OrganizationView.xaml.cs">
       <DependentUpon>OrganizationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RoutineView.xaml.cs">
+      <DependentUpon>RoutineView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WeightView.xaml.cs">
       <DependentUpon>WeightView.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OrganizationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RoutineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
