@@ -86,6 +86,9 @@
     <Compile Include="Views\FitnessView.xaml.cs">
       <DependentUpon>FitnessView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NutritionView.xaml.cs">
+      <DependentUpon>NutritionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OrganizationAuthenticationCredentialsView.xaml.cs">
       <DependentUpon>OrganizationAuthenticationCredentialsView.xaml</DependentUpon>
     </Compile>
@@ -116,6 +119,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FitnessView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NutritionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

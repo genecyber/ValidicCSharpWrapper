@@ -27,6 +27,7 @@ namespace ValidicCSharpApp.ViewModels
         public RelayCommand CommandGetOrganizationBiometrics { get; private set; }
         public RelayCommand CommandGetOrganizationFitnessData { get; private set; }
         public RelayCommand CommandGetOrganizationDiabetesData { get; private set; }
+        public RelayCommand CommandGetOrganizationNutritionData { get; private set; }
         
 
         
@@ -37,6 +38,7 @@ namespace ValidicCSharpApp.ViewModels
         public List<Biometrics> Biometrics { get; set; }
         public List<Fitness> FitnessData { get; set; }
         public List<Diabetes> DiabetesData { get; set; }
+        public List<Nutrition> NutritionData { get; set; }
 
 
 
@@ -59,14 +61,22 @@ namespace ValidicCSharpApp.ViewModels
             CommandGetOrganizationWeight = new RelayCommand(GetOrganizationWeight, () => true);
             CommandGetOrganizationBiometrics = new RelayCommand(GetOrganizationBiometrics, () => true);
             CommandGetOrganizationFitnessData = new RelayCommand(GetOrganizationFitnessData, () => true);
-            CommandGetOrganizationDiabetesData = new RelayCommand(GetOrganizationGetDiabetesDataData, () => true);
-
+            CommandGetOrganizationDiabetesData = new RelayCommand(GetOrganizationDiabetesData, () => true);
+            CommandGetOrganizationNutritionData = new RelayCommand(GetOrganizationNutritionData, () => true);
             SelectedOrganizationAuthenticationCredential = Model.OrganizationAuthenticationCredentials[0];
             // SaveToFile("validic.json", Model);
 
         }
 
-        private void GetOrganizationGetDiabetesDataData()
+        private void GetOrganizationNutritionData()
+        {
+            var result = GetOrganizationData<Nutrition>(CommandType.Nutrition);
+            NutritionData = result != null ? result.Object : null;
+            RaisePropertyChanged("NutritionData");
+        }
+
+
+        private void GetOrganizationDiabetesData()
         {
             var result = GetOrganizationData<Diabetes>(CommandType.Diabetes);
             DiabetesData = result != null ? result.Object : null;
