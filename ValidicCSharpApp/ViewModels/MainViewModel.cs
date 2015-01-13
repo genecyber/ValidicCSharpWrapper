@@ -30,6 +30,7 @@ namespace ValidicCSharpApp.ViewModels
         public RelayCommand CommandGetOrganizationNutritionData { get; private set; }
         public RelayCommand CommandGetOrganizationRoutineData { get; private set; }
         public RelayCommand CommandGetOrganizationSleepData { get; private set; }
+        public RelayCommand CommandGetOrganizationTobaccoCessationData { get; private set; }
         
         
         public Organization Organization { get; set; }
@@ -42,6 +43,7 @@ namespace ValidicCSharpApp.ViewModels
         public List<Nutrition> NutritionData { get; set; }
         public List<Routine> RoutineData { get; set; }
         public List<Sleep> SleepData { get; set; }
+        public List<Tobacco_Cessation> TobaccoCessationData { get; set; }
 
 
 
@@ -68,11 +70,22 @@ namespace ValidicCSharpApp.ViewModels
             CommandGetOrganizationNutritionData = new RelayCommand(GetOrganizationNutritionData, () => true);
             CommandGetOrganizationRoutineData = new RelayCommand(GetOrganizationRoutineData, () => true);
             CommandGetOrganizationSleepData = new RelayCommand(GetOrganizationSleepData, () => true);
+            CommandGetOrganizationTobaccoCessationData = new RelayCommand(GetOrganizationTobaccoCessationData, () => true);
+
+            
             SelectedOrganizationAuthenticationCredential = Model.OrganizationAuthenticationCredentials[0];
             // SaveToFile("validic.json", Model);
 
         }
 
+        private void GetOrganizationTobaccoCessationData()
+        {
+            var result = GetOrganizationData<Tobacco_Cessation>(CommandType.Tobacco_Cessation);
+            TobaccoCessationData = result != null ? result.Object : null;
+            RaisePropertyChanged("TobaccoCessationData");
+        }
+
+        
         private void GetOrganizationSleepData()
         {
             var result = GetOrganizationData<Sleep>(CommandType.Sleep);

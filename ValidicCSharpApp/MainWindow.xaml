@@ -29,6 +29,7 @@
                 <Button Command="{Binding CommandGetOrganizationNutritionData}" >Nutrition</Button>
                 <Button Command="{Binding CommandGetOrganizationRoutineData}" >Routine</Button>
                 <Button Command="{Binding CommandGetOrganizationSleepData}" >Sleep</Button>
+                <Button Command="{Binding CommandGetOrganizationTobaccoCessationData}" >Tobacco Cessation</Button>
             </ToolBar>
         </Border>
         <Border Grid.Row="2" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
@@ -55,6 +56,9 @@
             </TabItem>
             <TabItem Header="Sleep">
                 <v:SleepView/>
+            </TabItem>
+            <TabItem Header="Tobacco Cessation">
+                <v:TobaccoCessationView/>
             </TabItem>
         </TabControl>
     </Grid>

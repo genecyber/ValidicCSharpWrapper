@@ -1,14 +1,22 @@
 ﻿using System;
 using System.ComponentModel;
+using Newtonsoft.Json;
 using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
 {
     public class Tobacco_Cessation : Measurement
     {
-        public double? cigarettes_allowed { get; set; }
-        public double? cigarettes_smoked { get; set; }
-        public double? cravings { get; set; }
-        public string last_smoked { get; set; }
+        [JsonProperty("cigarettes_allowed")]
+        public double? CigarettesAllowed { get; set; }
+
+        [JsonProperty("cigarettes_smoked")]
+        public double? CigarettesSmoked { get; set; }
+
+        [JsonProperty("cravings")]
+        public double? Cravings { get; set; }
+
+        [JsonProperty("last_smoked")]
+        public string LastSmoked { get; set; }
     }
 }

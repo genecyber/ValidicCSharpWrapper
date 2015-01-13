@@ -101,6 +101,9 @@
     <Compile Include="Views\SleepView.xaml.cs">
       <DependentUpon>SleepView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TobaccoCessationView.xaml.cs">
+      <DependentUpon>TobaccoCessationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WeightView.xaml.cs">
       <DependentUpon>WeightView.xaml</DependentUpon>
     </Compile>
@@ -145,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SleepView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TobaccoCessationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
