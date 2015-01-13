@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ValidicCSharpApp.Views.WeightView"
+﻿<UserControl x:Class="ValidicCSharpApp.Views.SleepView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ListView Margin="10" ItemsSource="{Binding Path=Weights}">
+        <ListView Margin="10" ItemsSource="{Binding Path=SleepData}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="170" DisplayMemberBinding="{Binding Id}" />
@@ -18,16 +18,14 @@
                     <GridViewColumn Header="Extras" Width="70" DisplayMemberBinding="{Binding Extras}" />
                     <GridViewColumn Header="UserId" Width="170" DisplayMemberBinding="{Binding UserId}" />
                     <!--Weight-->
-                    <GridViewColumn Header="Weight" Width="70" DisplayMemberBinding="{Binding Value}" />
-                    <GridViewColumn Header="Height" Width="70" DisplayMemberBinding="{Binding Height}" />
-                    <GridViewColumn Header="FreeMass" Width="70" DisplayMemberBinding="{Binding FreeMass}" />
-                    <GridViewColumn Header="FatPercent" Width="70" DisplayMemberBinding="{Binding FatPercent}" />
-                    <GridViewColumn Header="MassWeight" Width="70" DisplayMemberBinding="{Binding MassWeight}" />
-                    <GridViewColumn Header="Bmi" Width="70" DisplayMemberBinding="{Binding Bmi}" />
+                    <GridViewColumn Header="Awake" Width="70" DisplayMemberBinding="{Binding Awake}" />
+                    <GridViewColumn Header="Deep" Width="70" DisplayMemberBinding="{Binding Deep}" />
+                    <GridViewColumn Header="Light" Width="70" DisplayMemberBinding="{Binding Light}" />
+                    <GridViewColumn Header="Rem" Width="70" DisplayMemberBinding="{Binding Rem}" />
+                    <GridViewColumn Header="TimesWoken" Width="70" DisplayMemberBinding="{Binding TimesWoken}" />
+                    <GridViewColumn Header="TotalSleep" Width="70" DisplayMemberBinding="{Binding TotalSleep}" />
                 </GridView>
             </ListView.View>
         </ListView>
     </Grid>
 </UserControl>
-
-
