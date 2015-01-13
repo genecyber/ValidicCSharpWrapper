@@ -26,6 +26,8 @@ namespace ValidicCSharpApp.ViewModels
         public RelayCommand CommandGetOrganizationWeight { get; private set; }
         public RelayCommand CommandGetOrganizationBiometrics { get; private set; }
         public RelayCommand CommandGetOrganizationFitnessData { get; private set; }
+        public RelayCommand CommandGetOrganizationDiabetesData { get; private set; }
+        
 
         
         public Organization Organization { get; set; }
@@ -34,6 +36,7 @@ namespace ValidicCSharpApp.ViewModels
         public List<Weight> Weights { get; set; }
         public List<Biometrics> Biometrics { get; set; }
         public List<Fitness> FitnessData { get; set; }
+        public List<Diabetes> DiabetesData { get; set; }
 
 
 
@@ -55,11 +58,21 @@ namespace ValidicCSharpApp.ViewModels
             CommandClearOrganization = new RelayCommand(ClearOrganization, () => true);
             CommandGetOrganizationWeight = new RelayCommand(GetOrganizationWeight, () => true);
             CommandGetOrganizationBiometrics = new RelayCommand(GetOrganizationBiometrics, () => true);
-            CommandGetOrganizationFitnessData = new RelayCommand(GetOrganizationGetOrganizationFitnessData, () => true);
+            CommandGetOrganizationFitnessData = new RelayCommand(GetOrganizationFitnessData, () => true);
+            CommandGetOrganizationDiabetesData = new RelayCommand(GetOrganizationGetDiabetesDataData, () => true);
+
             SelectedOrganizationAuthenticationCredential = Model.OrganizationAuthenticationCredentials[0];
             // SaveToFile("validic.json", Model);
 
         }
+
+        private void GetOrganizationGetDiabetesDataData()
+        {
+            var result = GetOrganizationData<Diabetes>(CommandType.Diabetes);
+            DiabetesData = result != null ? result.Object : null;
+            RaisePropertyChanged("DiabetesData");
+        }
+
 
         private ValidicResult<List<T>> GetOrganizationData<T>(CommandType commandType)
         {
@@ -77,7 +90,7 @@ namespace ValidicCSharpApp.ViewModels
             return validicResult;
         }
 
-        private void GetOrganizationGetOrganizationFitnessData()
+        private void GetOrganizationFitnessData()
         {
             var result = GetOrganizationData<Fitness>(CommandType.Fitness);
             FitnessData = result != null ? result.Object : null;

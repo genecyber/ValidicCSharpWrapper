@@ -80,6 +80,9 @@
     <Compile Include="Views\BiometricsView.xaml.cs">
       <DependentUpon>BiometricsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DiabetesView.xaml.cs">
+      <DependentUpon>DiabetesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FitnessView.xaml.cs">
       <DependentUpon>FitnessView.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\BiometricsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DiabetesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,16 +1,32 @@
-﻿using ValidicCSharp.Interfaces;
+﻿using Newtonsoft.Json;
+using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
 {
     public class Diabetes : Measurement
     {
-        public object c_peptide { get; set; }
-        public object fasting_plasma_glucose_test { get; set; }
-        public double? hba1c { get; set; }
-        public double? insulin { get; set; }
-        public object oral_glucose_tolerance_test { get; set; }
-        public object random_plasma_glucose_test { get; set; }
-        public object triglyceride { get; set; }
-        public object blood_glucose { get; set; }
+        [JsonProperty("c_peptide")]
+        public object CPeptide { get; set; }
+
+        [JsonProperty("fasting_plasma_glucose_test")]
+        public object FastingPlasmaGlucoseTest { get; set; }
+
+        [JsonProperty("hba1c")]
+        public double? Hba1C { get; set; }
+
+        [JsonProperty("insulin")]
+        public double? Insulin { get; set; }
+
+        [JsonProperty("oral_glucose_tolerance_test")]
+        public object OralGlucoseToleranceTest { get; set; }
+
+        [JsonProperty("random_plasma_glucose_test")]
+        public object RandomPlasmaGlucoseTest { get; set; }
+
+        [JsonProperty("triglyceride")]
+        public object Triglyceride { get; set; }
+
+        [JsonProperty("blood_glucose")]
+        public object BloodGlucose { get; set; }
     }
 }
