@@ -72,6 +72,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\BaseConverter.cs" />
+    <Compile Include="Views\DateConverter.cs" />
+    <Compile Include="Helpers\IndexConverter.cs" />
     <Compile Include="Models\MainModel.cs" />
     <Compile Include="Models\OrganizationAuthenticationCredentialModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -86,6 +89,9 @@
     <Compile Include="Views\FitnessView.xaml.cs">
       <DependentUpon>FitnessView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MeView.xaml.cs">
+      <DependentUpon>MeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NutritionView.xaml.cs">
       <DependentUpon>NutritionView.xaml</DependentUpon>
     </Compile>
@@ -94,6 +100,9 @@
     </Compile>
     <Compile Include="Views\OrganizationView.xaml.cs">
       <DependentUpon>OrganizationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProfileView.xaml.cs">
+      <DependentUpon>ProfileView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RoutineView.xaml.cs">
       <DependentUpon>RoutineView.xaml</DependentUpon>
@@ -131,6 +140,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\NutritionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OrganizationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

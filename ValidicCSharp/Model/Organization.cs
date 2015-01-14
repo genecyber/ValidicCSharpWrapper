@@ -5,11 +5,8 @@ using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
 {
-    public class Organization : IValidic
+    public class Organization : Me
     {
-        [JsonProperty("_id")]
-        public string Id { get; set; }
-
         [JsonProperty("name")]
         public string Name { get; set; }
 

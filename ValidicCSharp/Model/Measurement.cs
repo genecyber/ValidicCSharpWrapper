@@ -9,10 +9,8 @@ using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
 {
-    public class Measurement : IValidic
+    public class Measurement : Me
     {
-        [JsonProperty("_id")]
-        public string Id { get; set; }
         [JsonProperty("timestamp")]
         public string Timestamp { get; set; }
         [JsonProperty("utc_offset")]

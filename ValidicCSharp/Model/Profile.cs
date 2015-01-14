@@ -8,13 +8,10 @@ namespace ValidicCSharp.Model
         public string name { get; set; }
     }
 
-    public class Profile
+    public class Profile : Me
     {
         [JsonProperty("uid")]
-        public string uid { get; set; }
-
-        [JsonProperty("_id")]
-        public string Id { get; set; }
+        public string Uid { get; set; }
 
         [JsonProperty("gender")]
         public GenderType Gender { get; set; }

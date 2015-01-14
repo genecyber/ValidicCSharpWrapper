@@ -31,10 +31,15 @@ namespace ValidicCSharpApp.ViewModels
         public RelayCommand CommandGetOrganizationRoutineData { get; private set; }
         public RelayCommand CommandGetOrganizationSleepData { get; private set; }
         public RelayCommand CommandGetOrganizationTobaccoCessationData { get; private set; }
+        public RelayCommand CommandGetOrganizationProfiles { get; private set; }
+        public RelayCommand CommandGetOrganizationMeData { get; private set; }
         
         
         public Organization Organization { get; set; }
         public MainModel Model { get; set; }
+
+        public List<Me> MeData { get; set; }
+        public List<Profile> Profiles { get; set; }
 
         public List<Weight> Weights { get; set; }
         public List<Biometrics> Biometrics { get; set; }
@@ -71,12 +76,38 @@ namespace ValidicCSharpApp.ViewModels
             CommandGetOrganizationRoutineData = new RelayCommand(GetOrganizationRoutineData, () => true);
             CommandGetOrganizationSleepData = new RelayCommand(GetOrganizationSleepData, () => true);
             CommandGetOrganizationTobaccoCessationData = new RelayCommand(GetOrganizationTobaccoCessationData, () => true);
-
+            CommandGetOrganizationProfiles = new RelayCommand(GetOrganizationProfiles, () => true);
+            CommandGetOrganizationMeData = new RelayCommand(GetOrganizationMeData, () => true);
             
             SelectedOrganizationAuthenticationCredential = Model.OrganizationAuthenticationCredentials[0];
             // SaveToFile("validic.json", Model);
 
         }
+
+        private void GetOrganizationMeData()
+        {
+            var oac = SelectedOrganizationAuthenticationCredential;
+            if (oac == null)
+                return;
+
+            var client = new Client { AccessToken = oac.AccessToken };
+            var command = new Command().FromOrganization(oac.OrganizationId)
+                .GetUsers();
+
+            var json = client.PerformCommand(command);
+            var result  = json.ToResult<List<Me>>("users");
+            MeData = result != null ? result.Object : null;
+            RaisePropertyChanged("MeData");
+        }
+
+
+        private void GetOrganizationProfiles()
+        {
+            var result = GetOrganizationData<Profile>(CommandType.Profile);
+            Profiles = result != null ? result.Object : null;
+            RaisePropertyChanged("Profiles");
+        }
+
 
         private void GetOrganizationTobaccoCessationData()
         {
@@ -129,7 +160,7 @@ namespace ValidicCSharpApp.ViewModels
                 .GetInformationType(commandType)
                 .GetLatest();
 
-            string json = client.PerformCommand(command);
+            var json = client.PerformCommand(command);
             var validicResult = json.ToResult<List<T>>();
             return validicResult;
         }

@@ -22,6 +22,9 @@
                 <Button Command="{Binding CommandGetOrganization}" >Get Organization</Button>
                 <Button Command="{Binding CommandClearOrganization}" >Clear Organization</Button>
                 <Separator/>
+                <Button Command="{Binding CommandGetOrganizationMeData}" >Me</Button>
+                <Button Command="{Binding CommandGetOrganizationProfiles}" >Profiles</Button>
+                <Separator/>
                 <Button Command="{Binding CommandGetOrganizationWeight}" >Weights</Button>
                 <Button Command="{Binding CommandGetOrganizationBiometrics}" >Biometrics</Button>
                 <Button Command="{Binding CommandGetOrganizationFitnessData}" >Fitness</Button>
@@ -36,6 +39,12 @@
             <v:OrganizationView DataContext="{Binding Organization}"/>
         </Border>
         <TabControl Grid.Row="3" SelectedIndex="2">
+            <TabItem Header="Me">
+                <v:MeView/>
+            </TabItem>
+            <TabItem Header="Profiles">
+                <v:ProfileView/>
+            </TabItem>
             <TabItem Header="Weights">
                 <v:WeightView/>
             </TabItem>
