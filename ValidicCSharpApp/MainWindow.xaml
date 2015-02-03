@@ -8,67 +8,6 @@
 <!--        </vm:ValidicViewModel>-->
 <!--    </Window.DataContext>-->
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Border Grid.Row="0" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
-            <v:OrganizationAuthenticationCredentialsView/>
-        </Border>
-        <Border Grid.Row="1" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
-            <ToolBar>
-                <Button Command="{Binding CommandGetOrganization}" >Get Organization</Button>
-                <Button Command="{Binding CommandClearOrganization}" >Clear Organization</Button>
-                <Separator/>
-                <Button Command="{Binding CommandGetOrganizationMeData}" >Me</Button>
-                <Button Command="{Binding CommandGetOrganizationProfiles}" >Profiles</Button>
-                <Separator/>
-                <Button Command="{Binding CommandGetOrganizationWeight}" >Weights</Button>
-                <Button Command="{Binding CommandGetOrganizationBiometrics}" >Biometrics</Button>
-                <Button Command="{Binding CommandGetOrganizationFitnessData}" >Fitness</Button>
-                <Button Command="{Binding CommandGetOrganizationDiabetesData}" >Diabetes</Button>
-                <Button Command="{Binding CommandGetOrganizationNutritionData}" >Nutrition</Button>
-                <Button Command="{Binding CommandGetOrganizationRoutineData}" >Routine</Button>
-                <Button Command="{Binding CommandGetOrganizationSleepData}" >Sleep</Button>
-                <Button Command="{Binding CommandGetOrganizationTobaccoCessationData}" >Tobacco Cessation</Button>
-            </ToolBar>
-        </Border>
-        <Border Grid.Row="2" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
-            <v:OrganizationView DataContext="{Binding Organization}"/>
-        </Border>
-        <TabControl Grid.Row="3" SelectedIndex="2">
-            <TabItem Header="Me">
-                <v:MeView/>
-            </TabItem>
-            <TabItem Header="Profiles">
-                <v:ProfileView/>
-            </TabItem>
-            <TabItem Header="Weights">
-                <v:WeightView/>
-            </TabItem>
-            <TabItem Header="Biometrics">
-                <v:BiometricsView/>
-            </TabItem>
-            <TabItem Header="Fitness">
-                <v:FitnessView/>
-            </TabItem>
-            <TabItem Header="Diabetes">
-                <v:DiabetesView/>
-            </TabItem>
-            <TabItem Header="Nutrition">
-                <v:NutritionView/>
-            </TabItem>
-            <TabItem Header="Routine">
-                <v:RoutineView/>
-            </TabItem>
-            <TabItem Header="Sleep">
-                <v:SleepView/>
-            </TabItem>
-            <TabItem Header="Tobacco Cessation">
-                <v:TobaccoCessationView/>
-            </TabItem>
-        </TabControl>
+        <v:MainView/>
     </Grid>
 </Window>

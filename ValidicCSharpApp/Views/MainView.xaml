@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="ValidicCSharpApp.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="clr-namespace:ValidicCSharpApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
+            <views:OrganizationAuthenticationCredentialsView/>
+        </Border>
+        <Border Grid.Row="1" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
+            <ToolBar>
+                <Button Command="{Binding CommandGetOrganization}" >Get Organization</Button>
+                <Button Command="{Binding CommandClearOrganization}" >Clear Organization</Button>
+                <Separator/>
+                <Button Command="{Binding CommandGetOrganizationMeData}" >Me</Button>
+                <Button Command="{Binding CommandGetOrganizationProfiles}" >Profiles</Button>
+                <Separator/>
+                <Button Command="{Binding CommandGetOrganizationWeight}" >Weights</Button>
+                <Button Command="{Binding CommandGetOrganizationBiometrics}" >Biometrics</Button>
+                <Button Command="{Binding CommandGetOrganizationFitnessData}" >Fitness</Button>
+                <Button Command="{Binding CommandGetOrganizationDiabetesData}" >Diabetes</Button>
+                <Button Command="{Binding CommandGetOrganizationNutritionData}" >Nutrition</Button>
+                <Button Command="{Binding CommandGetOrganizationRoutineData}" >Routine</Button>
+                <Button Command="{Binding CommandGetOrganizationSleepData}" >Sleep</Button>
+                <Button Command="{Binding CommandGetOrganizationTobaccoCessationData}" >Tobacco Cessation</Button>
+            </ToolBar>
+        </Border>
+        <Border Grid.Row="2" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
+            <views:OrganizationView DataContext="{Binding Organization}"/>
+        </Border>
+        <TabControl Grid.Row="3" SelectedIndex="2">
+            <TabItem Header="Me">
+                <views:MeView/>
+            </TabItem>
+            <TabItem Header="Profiles">
+                <views:ProfileView/>
+            </TabItem>
+            <TabItem Header="Weights">
+                <views:WeightView/>
+            </TabItem>
+            <TabItem Header="Biometrics">
+                <views:BiometricsView/>
+            </TabItem>
+            <TabItem Header="Fitness">
+                <views:FitnessView/>
+            </TabItem>
+            <TabItem Header="Diabetes">
+                <views:DiabetesView/>
+            </TabItem>
+            <TabItem Header="Nutrition">
+                <views:NutritionView/>
+            </TabItem>
+            <TabItem Header="Routine">
+                <views:RoutineView/>
+            </TabItem>
+            <TabItem Header="Sleep">
+                <views:SleepView/>
+            </TabItem>
+            <TabItem Header="Tobacco Cessation">
+                <views:TobaccoCessationView/>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</UserControl>
