@@ -18,7 +18,7 @@ using ValidicCSharpApp.Models;
 
 namespace ValidicCSharpApp.ViewModels
 {
-    internal class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
 
         public RelayCommand CommandGetOrganization { get; private set; }
