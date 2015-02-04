@@ -10,7 +10,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="list" ItemsSource="{Binding LogItems}" SelectedItem="{Binding SelectedLogITem}" SelectionChanged="List_OnSelectionChanged" >
+        <ListView x:Name="list" ItemsSource="{Binding LogItems}" SelectedIndex="{Binding SelectedLogItemIndex}" SelectionChanged="List_OnSelectionChanged" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}" />

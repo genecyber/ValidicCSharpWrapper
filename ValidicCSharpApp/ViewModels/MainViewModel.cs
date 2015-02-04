@@ -41,7 +41,7 @@ namespace ValidicCSharpApp.ViewModels
 
         private readonly ObservableCollection<LogItem> _logItems = new ObservableCollection<LogItem>();
 
-        public string _selectedLogItem;
+        public int _selectedLogItemIndex;
 
         #endregion
 
@@ -78,16 +78,16 @@ namespace ValidicCSharpApp.ViewModels
         public List<Routine> RoutineData { get; set; }
         public List<Sleep> SleepData { get; set; }
         public List<Tobacco_Cessation> TobaccoCessationData { get; set; }
-        public string SelectedLogItem
+        public int SelectedLogItemIndex
         {
-            get { return _selectedLogItem; }
+            get { return _selectedLogItemIndex; }
             set
             {
-                if(_selectedLogItem == value)
+                if(_selectedLogItemIndex == value)
                     return;
 
-                _selectedLogItem = value;
-                RaisePropertyChanged("SelectedLogItem");
+                _selectedLogItemIndex = value;
+                RaisePropertyChanged("SelectedLogItemIndex");
             }
         }
 
@@ -294,8 +294,7 @@ namespace ValidicCSharpApp.ViewModels
         private void AddLine(LogItem a)
         {
             _logItems.Add(a);
+            SelectedLogItemIndex = _logItems.Count;
         }
-
-
     }
 }
