@@ -1,5 +1,8 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using ValidicCSharp;
 
 namespace ValidicCSharpApp.Views
@@ -26,6 +29,12 @@ namespace ValidicCSharpApp.Views
 
             rtbMsgBox.Document.Blocks.Clear();
             rtbMsgBox.AppendText(logItem.Json);
+        }
+
+        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }

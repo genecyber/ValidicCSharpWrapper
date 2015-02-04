@@ -14,6 +14,15 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Start" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label>
+                                    <Hyperlink NavigateUri="{Binding Path=Address}" RequestNavigate="Hyperlink_OnRequestNavigate">click</Hyperlink>
+                                </Label>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Address" Width="Auto" DisplayMemberBinding="{Binding Address}" />
                 </GridView>
             </ListView.View>
