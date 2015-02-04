@@ -23,25 +23,9 @@ namespace ValidicCSharpApp.ViewModels
     {
         #region Members
 
-        public List<OrganizationAuthenticationCredentialModel> OrganizationAuthenticationCredentials
-        {
-            get { return _organizationAuthenticationCredentials; }
-        }
-
-        public OrganizationAuthenticationCredentialModel SelectedOrganizationAuthenticationCredential { get; set; }
-
-        public ObservableCollection<LogItem> LogItems
-        {
-            get { return _logItems; }
-        }
-
-        private readonly List<OrganizationAuthenticationCredentialModel> _organizationAuthenticationCredentials =
-            new List<OrganizationAuthenticationCredentialModel>();
-
-
+        private readonly List<OrganizationAuthenticationCredentialModel> _organizationAuthenticationCredentials = new List<OrganizationAuthenticationCredentialModel>();
         private readonly ObservableCollection<LogItem> _logItems = new ObservableCollection<LogItem>();
-
-        public int _selectedLogItemIndex;
+        private int _selectedLogItemIndex;
 
         #endregion
 
@@ -64,12 +48,11 @@ namespace ValidicCSharpApp.ViewModels
         #endregion
 
         #region Properties
+
         public Organization Organization { get; set; }
         public MainModel Model { get; set; }
-
         public List<Me> MeData { get; set; }
         public List<Profile> Profiles { get; set; }
-
         public List<Weight> Weights { get; set; }
         public List<Biometrics> Biometrics { get; set; }
         public List<Fitness> FitnessData { get; set; }
@@ -83,13 +66,26 @@ namespace ValidicCSharpApp.ViewModels
             get { return _selectedLogItemIndex; }
             set
             {
-                if(_selectedLogItemIndex == value)
+                if (_selectedLogItemIndex == value)
                     return;
 
                 _selectedLogItemIndex = value;
                 RaisePropertyChanged("SelectedLogItemIndex");
             }
         }
+
+        public List<OrganizationAuthenticationCredentialModel> OrganizationAuthenticationCredentials
+        {
+            get { return _organizationAuthenticationCredentials; }
+        }
+
+        public OrganizationAuthenticationCredentialModel SelectedOrganizationAuthenticationCredential { get; set; }
+
+        public ObservableCollection<LogItem> LogItems
+        {
+            get { return _logItems; }
+        }
+
 
         #endregion
 
@@ -110,7 +106,7 @@ namespace ValidicCSharpApp.ViewModels
             CommandGetOrganizationTobaccoCessationData = new RelayCommand(GetOrganizationTobaccoCessationData, () => true);
             CommandGetOrganizationProfiles = new RelayCommand(GetOrganizationProfiles, () => true);
             CommandGetOrganizationMeData = new RelayCommand(GetOrganizationMeData, () => true);
-            
+
             SelectedOrganizationAuthenticationCredential = Model.OrganizationAuthenticationCredentials[0];
             // SaveToFile("validic.json", Model);
 
@@ -130,7 +126,7 @@ namespace ValidicCSharpApp.ViewModels
                 .GetUsers();
 
             var json = client.PerformCommand(command);
-            var result  = json.ToResult<List<Me>>("users");
+            var result = json.ToResult<List<Me>>("users");
             MeData = result != null ? result.Object : null;
             RaisePropertyChanged("MeData");
         }
@@ -148,7 +144,7 @@ namespace ValidicCSharpApp.ViewModels
             TobaccoCessationData = result != null ? result.Object : null;
             RaisePropertyChanged("TobaccoCessationData");
         }
-        
+
         private void GetOrganizationSleepData()
         {
             var result = GetOrganizationData<Sleep>(CommandType.Sleep);
@@ -210,7 +206,7 @@ namespace ValidicCSharpApp.ViewModels
         private void GetOrganizationWeight()
         {
             var result = GetOrganizationData<Weight>(CommandType.Weight);
-            Weights = result != null ?result.Object : null;
+            Weights = result != null ? result.Object : null;
             RaisePropertyChanged("Weights");
         }
 
@@ -220,7 +216,7 @@ namespace ValidicCSharpApp.ViewModels
             if (oac == null)
                 return;
 
-            var client = new Client {AccessToken = oac.AccessToken};
+            var client = new Client { AccessToken = oac.AccessToken };
             var command = new Command().FromOrganization(oac.OrganizationId);
 
             var json = client.PerformCommand(command);
@@ -241,11 +237,11 @@ namespace ValidicCSharpApp.ViewModels
 
 
 
-//            var command = new Command().GetInformationType(CommandType.Weight);
-//            var json = client.PerformCommand(command);
-//            var result = json.ToResult<Organization>();
-//            Organization = (Organization)result.Object;
-//            RaisePropertyChanged("Organization");
+            //            var command = new Command().GetInformationType(CommandType.Weight);
+            //            var json = client.PerformCommand(command);
+            //            var result = json.ToResult<Organization>();
+            //            Organization = (Organization)result.Object;
+            //            RaisePropertyChanged("Organization");
         }
 
         #endregion
