@@ -88,12 +88,6 @@
     <Compile Include="Views\DataViews\NutritionView.xaml.cs">
       <DependentUpon>NutritionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DataViews\OrganizationAuthenticationCredentialsView.xaml.cs">
-      <DependentUpon>OrganizationAuthenticationCredentialsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DataViews\OrganizationView.xaml.cs">
-      <DependentUpon>OrganizationView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\DataViews\ProfileView.xaml.cs">
       <DependentUpon>ProfileView.xaml</DependentUpon>
     </Compile>
@@ -121,6 +115,12 @@
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrganizationAuthenticationCredentialsView.xaml.cs">
+      <DependentUpon>OrganizationAuthenticationCredentialsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrganizationView.xaml.cs">
+      <DependentUpon>OrganizationView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -154,14 +154,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DataViews\OrganizationAuthenticationCredentialsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DataViews\OrganizationView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\DataViews\ProfileView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -189,6 +181,14 @@
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OrganizationAuthenticationCredentialsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OrganizationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

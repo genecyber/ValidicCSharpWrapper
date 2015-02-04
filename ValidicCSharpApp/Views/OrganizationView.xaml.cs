@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace ValidicCSharpApp.Views.DataViews
+namespace ValidicCSharpApp.Views
 {
     /// <summary>
     /// Interaction logic for OrganizationView.xaml
