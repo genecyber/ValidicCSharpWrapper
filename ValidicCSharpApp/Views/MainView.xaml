@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:ValidicCSharpApp.Views"
+             xmlns:dataViews="clr-namespace:ValidicCSharpApp.Views.DataViews"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -14,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
-            <views:OrganizationAuthenticationCredentialsView/>
+            <dataViews:OrganizationAuthenticationCredentialsView/>
         </Border>
         <Border Grid.Row="1" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
             <ToolBar>
@@ -35,38 +36,38 @@
             </ToolBar>
         </Border>
         <Border Grid.Row="2" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
-            <views:OrganizationView DataContext="{Binding Organization}"/>
+            <dataViews:OrganizationView DataContext="{Binding Organization}"/>
         </Border>
         <TabControl Grid.Row="3" SelectedIndex="2">
             <TabItem Header="Me">
-                <views:MeView/>
+                <dataViews:MeView/>
             </TabItem>
             <TabItem Header="Profiles">
-                <views:ProfileView/>
+                <dataViews:ProfileView/>
             </TabItem>
             <TabItem Header="Weights">
-                <views:WeightView/>
+                <dataViews:WeightView/>
             </TabItem>
             <TabItem Header="Biometrics">
-                <views:BiometricsView/>
+                <dataViews:BiometricsView/>
             </TabItem>
             <TabItem Header="Fitness">
-                <views:FitnessView/>
+                <dataViews:FitnessView/>
             </TabItem>
             <TabItem Header="Diabetes">
-                <views:DiabetesView/>
+                <dataViews:DiabetesView/>
             </TabItem>
             <TabItem Header="Nutrition">
-                <views:NutritionView/>
+                <dataViews:NutritionView/>
             </TabItem>
             <TabItem Header="Routine">
-                <views:RoutineView/>
+                <dataViews:RoutineView/>
             </TabItem>
             <TabItem Header="Sleep">
-                <views:SleepView/>
+                <dataViews:SleepView/>
             </TabItem>
             <TabItem Header="Tobacco Cessation">
-                <views:TobaccoCessationView/>
+                <dataViews:TobaccoCessationView/>
             </TabItem>
         </TabControl>
 

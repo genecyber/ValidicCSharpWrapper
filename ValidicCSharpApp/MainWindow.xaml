@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:v="clr-namespace:ValidicCSharpApp.Views"
         xmlns:Properties="clr-namespace:ValidicCSharpApp.Properties"
+        xmlns:dataViews="clr-namespace:ValidicCSharpApp.Views.DataViews"
         Title="Validic CSharp App " Height="800" Width="1200">
     <!--    <Window.DataContext>-->
     <!--        <vm:ValidicViewModel OrganizationId="51aca5a06dedda916400002b" AccessToken="ENTERPRISE_KEY">-->
@@ -16,8 +17,6 @@
         </Grid.ColumnDefinitions>
         <v:MainView Grid.Column="0"/>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="5"/>
-        <Grid Grid.Column="2">
-            
-        </Grid>
+        <v:LogView Grid.Column="2"/>
     </Grid>
 </Window>

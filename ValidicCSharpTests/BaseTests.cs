@@ -17,7 +17,12 @@ namespace ValidicCSharpTests
         [TestFixtureSetUp]
         public void SetUp()
         {
-            Client.AddLine += s => _log.AppendLine(s);
+            Client.AddLine += a =>
+            {
+                _log.AppendLine(a.Name);
+                _log.AppendLine(a.Address);
+                _log.AppendLine(a.Json);
+            };
         }
         [TestFixtureTearDown]
         public void TearDown()

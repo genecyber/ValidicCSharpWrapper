@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ValidicCSharp;
 using ValidicCSharpApp.ViewModels;
 
 namespace ValidicCSharpApp
@@ -18,8 +19,10 @@ namespace ValidicCSharpApp
         private readonly MainWindow _mainWindow = new MainWindow();
         private readonly MainViewModel _viewModel = new MainViewModel();
 
+
         protected override void OnStartup(StartupEventArgs e)
         {
+            Client.EnableLogging = true;
             base.OnStartup(e);
             // Logger.Level = Level.Debug;
 

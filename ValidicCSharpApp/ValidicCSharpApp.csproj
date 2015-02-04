@@ -73,6 +73,42 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\BaseConverter.cs" />
+    <Compile Include="Views\DataViews\BiometricsView.xaml.cs">
+      <DependentUpon>BiometricsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataViews\DiabetesView.xaml.cs">
+      <DependentUpon>DiabetesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataViews\FitnessView.xaml.cs">
+      <DependentUpon>FitnessView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataViews\MeView.xaml.cs">
+      <DependentUpon>MeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataViews\NutritionView.xaml.cs">
+      <DependentUpon>NutritionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataViews\OrganizationAuthenticationCredentialsView.xaml.cs">
+      <DependentUpon>OrganizationAuthenticationCredentialsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataViews\OrganizationView.xaml.cs">
+      <DependentUpon>OrganizationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataViews\ProfileView.xaml.cs">
+      <DependentUpon>ProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataViews\RoutineView.xaml.cs">
+      <DependentUpon>RoutineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataViews\SleepView.xaml.cs">
+      <DependentUpon>SleepView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataViews\TobaccoCessationView.xaml.cs">
+      <DependentUpon>TobaccoCessationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataViews\WeightView.xaml.cs">
+      <DependentUpon>WeightView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DateConverter.cs" />
     <Compile Include="Helpers\IndexConverter.cs" />
     <Compile Include="Models\MainModel.cs" />
@@ -80,44 +116,11 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\OrganizationViewModel.cs" />
-    <Compile Include="Views\BiometricsView.xaml.cs">
-      <DependentUpon>BiometricsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DiabetesView.xaml.cs">
-      <DependentUpon>DiabetesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FitnessView.xaml.cs">
-      <DependentUpon>FitnessView.xaml</DependentUpon>
+    <Compile Include="Views\LogView.xaml.cs">
+      <DependentUpon>LogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MeView.xaml.cs">
-      <DependentUpon>MeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NutritionView.xaml.cs">
-      <DependentUpon>NutritionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OrganizationAuthenticationCredentialsView.xaml.cs">
-      <DependentUpon>OrganizationAuthenticationCredentialsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OrganizationView.xaml.cs">
-      <DependentUpon>OrganizationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProfileView.xaml.cs">
-      <DependentUpon>ProfileView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RoutineView.xaml.cs">
-      <DependentUpon>RoutineView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SleepView.xaml.cs">
-      <DependentUpon>SleepView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TobaccoCessationView.xaml.cs">
-      <DependentUpon>TobaccoCessationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WeightView.xaml.cs">
-      <DependentUpon>WeightView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -131,55 +134,59 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\BiometricsView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\DataViews\BiometricsView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DiabetesView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\DataViews\DiabetesView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FitnessView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\DataViews\FitnessView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataViews\MeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataViews\NutritionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataViews\OrganizationAuthenticationCredentialsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataViews\OrganizationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataViews\ProfileView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataViews\RoutineView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataViews\SleepView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataViews\TobaccoCessationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DataViews\WeightView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\NutritionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\OrganizationAuthenticationCredentialsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\OrganizationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ProfileView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\RoutineView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SleepView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TobaccoCessationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\WeightView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

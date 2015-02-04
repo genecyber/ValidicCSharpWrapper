@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ValidicCSharpApp.Views.DiabetesView"
+﻿<UserControl x:Class="ValidicCSharpApp.Views.DataViews.RoutineView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ListView Margin="10" ItemsSource="{Binding Path=DiabetesData}">
+        <ListView Margin="10" ItemsSource="{Binding Path=RoutineData}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="170" DisplayMemberBinding="{Binding Id}" />
@@ -17,18 +17,19 @@
                     <GridViewColumn Header="SourceName" Width="70" DisplayMemberBinding="{Binding SourceName}" />
                     <GridViewColumn Header="Extras" Width="70" DisplayMemberBinding="{Binding Extras}" />
                     <GridViewColumn Header="UserId" Width="170" DisplayMemberBinding="{Binding UserId}" />
-                    <!--Diabetes-->
-                    <GridViewColumn Header="CPeptide" Width="70" DisplayMemberBinding="{Binding CPeptide  }" />
-                    <GridViewColumn Header="FastingPlasmaGlucoseTest" Width="70" DisplayMemberBinding="{Binding FastingPlasmaGlucoseTest  }" />
-                    <GridViewColumn Header="Hba1C" Width="70" DisplayMemberBinding="{Binding Hba1C  }" />
-                    <GridViewColumn Header="Insulin" Width="70" DisplayMemberBinding="{Binding Insulin  }" />
-                    <GridViewColumn Header="OralGlucoseToleranceTest" Width="70" DisplayMemberBinding="{Binding OralGlucoseToleranceTest  }" />
-                    <GridViewColumn Header="RandomPlasmaGlucoseTest" Width="70" DisplayMemberBinding="{Binding RandomPlasmaGlucoseTest  }" />
-                    <GridViewColumn Header="Triglyceride" Width="70" DisplayMemberBinding="{Binding Triglyceride  }" />
-                    <GridViewColumn Header="BloodGlucose" Width="70" DisplayMemberBinding="{Binding BloodGlucose  }" />
+                    <!--Weight-->
+                    <GridViewColumn Header="Steps" Width="70" DisplayMemberBinding="{Binding Steps}" />
+                    <GridViewColumn Header="CaloriesBurned" Width="70" DisplayMemberBinding="{Binding CaloriesBurned}" />
+                    <GridViewColumn Header="Distance" Width="70" DisplayMemberBinding="{Binding Distance}" />
+                    <GridViewColumn Header="Floors" Width="70" DisplayMemberBinding="{Binding Floors}" />
+                    <GridViewColumn Header="Elevation" Width="70" DisplayMemberBinding="{Binding Elevation}" />
                 </GridView>
             </ListView.View>
         </ListView>
     </Grid>
 </UserControl>
-    
+        
+        
+        
+        
+        

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using ValidicCSharp.Interfaces;
 using ValidicCSharp.Model;
 using ValidicCSharp.Utility;
@@ -13,6 +14,7 @@ namespace ValidicCSharp.Request
         {
             NoCache = Utilities.GenerateRandom();
             Filters = new List<ICommandFilter>();
+            Payload = Formatting.Indented;
         }
 
         public CommandType Type { get; set; }

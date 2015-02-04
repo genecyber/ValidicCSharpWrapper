@@ -12,20 +12,28 @@ namespace ValidicCSharp
 {
     public class Client
     {
+        public static bool EnableLogging = false;
         public static String ApplicationId;
         private readonly Uri _baseUrl = new Uri("https://api.validic.com/v1/");
         public String AccessToken = "DEMO_KEY";
-        public static Action<string> AddLine = null;
+        public static Action<LogItem> AddLine = null;
 
-        private static void OnAddLine(string line)
+        private static void OnAddLine(LogItem l)
         {
             var tmp = AddLine;
             if (tmp != null)
-                tmp(line);
+                tmp(l);
         }
 
         private static string GetFunctionName(int skipFrames)
         {
+            var s1 = new StackFrame(1, true).GetMethod().Name;
+            var s2 = new StackFrame(2, true).GetMethod().Name;
+            var s3 = new StackFrame(3, true).GetMethod().Name;
+            var s4 = new StackFrame(4, true).GetMethod().Name;
+            var s5 = new StackFrame(5, true).GetMethod().Name;
+            var s6 = new StackFrame(6, true).GetMethod().Name;
+
             return new StackFrame(skipFrames, true).GetMethod().Name;
         }
 
@@ -51,10 +59,12 @@ namespace ValidicCSharp
                 }
             }
 
-            OnAddLine(GetFunctionName(3));
-            OnAddLine(address);
-            OnAddLine(json);
-
+            if (EnableLogging)
+            {
+                var logItem = new LogItem {Address = address, Json = json};
+                OnAddLine(logItem);
+            }
+            
             return json;
         }
 

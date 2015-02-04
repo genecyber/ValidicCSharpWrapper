@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,31 @@ namespace ValidicCSharpApp.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        #region Members
+
+        public List<OrganizationAuthenticationCredentialModel> OrganizationAuthenticationCredentials
+        {
+            get { return _organizationAuthenticationCredentials; }
+        }
+
+        public OrganizationAuthenticationCredentialModel SelectedOrganizationAuthenticationCredential { get; set; }
+
+        public ObservableCollection<LogItem> LogItems
+        {
+            get { return _logItems; }
+        }
+
+        private readonly List<OrganizationAuthenticationCredentialModel> _organizationAuthenticationCredentials =
+            new List<OrganizationAuthenticationCredentialModel>();
+
+
+        private readonly ObservableCollection<LogItem> _logItems = new ObservableCollection<LogItem>();
+
+        public string _selectedLogItem;
+
+        #endregion
+
+        #region Commands
 
         public RelayCommand CommandGetOrganization { get; private set; }
         public RelayCommand CommandClearOrganization { get; private set; }
@@ -33,8 +59,11 @@ namespace ValidicCSharpApp.ViewModels
         public RelayCommand CommandGetOrganizationTobaccoCessationData { get; private set; }
         public RelayCommand CommandGetOrganizationProfiles { get; private set; }
         public RelayCommand CommandGetOrganizationMeData { get; private set; }
-        
-        
+
+
+        #endregion
+
+        #region Properties
         public Organization Organization { get; set; }
         public MainModel Model { get; set; }
 
@@ -49,23 +78,26 @@ namespace ValidicCSharpApp.ViewModels
         public List<Routine> RoutineData { get; set; }
         public List<Sleep> SleepData { get; set; }
         public List<Tobacco_Cessation> TobaccoCessationData { get; set; }
-
-
-
-        public List<OrganizationAuthenticationCredentialModel> OrganizationAuthenticationCredentials
+        public string SelectedLogItem
         {
-            get { return _organizationAuthenticationCredentials; }
+            get { return _selectedLogItem; }
+            set
+            {
+                if(_selectedLogItem == value)
+                    return;
+
+                _selectedLogItem = value;
+                RaisePropertyChanged("SelectedLogItem");
+            }
         }
 
-        public OrganizationAuthenticationCredentialModel SelectedOrganizationAuthenticationCredential { get; set; }
+        #endregion
 
-        private readonly List<OrganizationAuthenticationCredentialModel> _organizationAuthenticationCredentials =
-            new List<OrganizationAuthenticationCredentialModel>();
-
+        #region Ccnstructor
         public MainViewModel()
         {
             OpenOrCreateModel();
-            Client.AddLine += s => Debug.WriteLine(s);
+            Client.AddLine += AddLine;
             CommandGetOrganization = new RelayCommand(GetOrganization, () => true);
             CommandClearOrganization = new RelayCommand(ClearOrganization, () => true);
             CommandGetOrganizationWeight = new RelayCommand(GetOrganizationWeight, () => true);
@@ -84,6 +116,9 @@ namespace ValidicCSharpApp.ViewModels
 
         }
 
+        #endregion
+
+        #region  Commands Implemenation
         private void GetOrganizationMeData()
         {
             var oac = SelectedOrganizationAuthenticationCredential;
@@ -100,7 +135,6 @@ namespace ValidicCSharpApp.ViewModels
             RaisePropertyChanged("MeData");
         }
 
-
         private void GetOrganizationProfiles()
         {
             var result = GetOrganizationData<Profile>(CommandType.Profile);
@@ -108,14 +142,12 @@ namespace ValidicCSharpApp.ViewModels
             RaisePropertyChanged("Profiles");
         }
 
-
         private void GetOrganizationTobaccoCessationData()
         {
             var result = GetOrganizationData<Tobacco_Cessation>(CommandType.Tobacco_Cessation);
             TobaccoCessationData = result != null ? result.Object : null;
             RaisePropertyChanged("TobaccoCessationData");
         }
-
         
         private void GetOrganizationSleepData()
         {
@@ -124,14 +156,12 @@ namespace ValidicCSharpApp.ViewModels
             RaisePropertyChanged("SleepData");
         }
 
-
         private void GetOrganizationRoutineData()
         {
             var result = GetOrganizationData<Routine>(CommandType.Routine);
             RoutineData = result != null ? result.Object : null;
             RaisePropertyChanged("RoutineData");
         }
-
 
         private void GetOrganizationNutritionData()
         {
@@ -140,14 +170,12 @@ namespace ValidicCSharpApp.ViewModels
             RaisePropertyChanged("NutritionData");
         }
 
-
         private void GetOrganizationDiabetesData()
         {
             var result = GetOrganizationData<Diabetes>(CommandType.Diabetes);
             DiabetesData = result != null ? result.Object : null;
             RaisePropertyChanged("DiabetesData");
         }
-
 
         private ValidicResult<List<T>> GetOrganizationData<T>(CommandType commandType)
         {
@@ -186,8 +214,6 @@ namespace ValidicCSharpApp.ViewModels
             RaisePropertyChanged("Weights");
         }
 
-
-
         private void GetOrganization()
         {
             var oac = SelectedOrganizationAuthenticationCredential;
@@ -222,6 +248,10 @@ namespace ValidicCSharpApp.ViewModels
 //            RaisePropertyChanged("Organization");
         }
 
+        #endregion
+
+        #region Support Functions
+
         public static void SaveToFile(string path, object value)
         {
             using (var fs = File.Open(path, FileMode.CreateNew))
@@ -235,7 +265,7 @@ namespace ValidicCSharpApp.ViewModels
             }
         }
 
-        public T ReadFromFile<T>(string path)
+        public static T ReadFromFile<T>(string path)
         {
             using (var file = File.OpenText(path))
             using (JsonTextReader reader = new JsonTextReader(file))
@@ -258,6 +288,14 @@ namespace ValidicCSharpApp.ViewModels
 
             Model = ReadFromFile<MainModel>("validic.json");
         }
+
+        #endregion
+
+        private void AddLine(LogItem a)
+        {
+            _logItems.Add(a);
+        }
+
 
     }
 }
