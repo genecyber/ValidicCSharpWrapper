@@ -10,9 +10,25 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
+        <Menu Grid.Row="0">
+            <MenuItem Header="Get Data">
+                <MenuItem Command="{Binding Path=SelectedMainRecord.CommandGetOrganizationMeData}" Header="Me"/>
+                <MenuItem Command="{Binding Path=SelectedMainRecord.CommandGetOrganizationProfiles}" Header="Profiles"/>
+                <Separator/>
+                <MenuItem Command="{Binding Path=SelectedMainRecord.CommandGetOrganizationWeight}" Header="Weights"/>
+                <MenuItem Command="{Binding Path=SelectedMainRecord.CommandGetOrganizationBiometrics}" Header="Biometrics"/>
+                <MenuItem Command="{Binding Path=SelectedMainRecord.CommandGetOrganizationFitnessData}" Header="Fitness"/>
+                <MenuItem Command="{Binding Path=SelectedMainRecord.CommandGetOrganizationDiabetesData}" Header="Diabetes"/>
+                <MenuItem Command="{Binding Path=SelectedMainRecord.CommandGetOrganizationNutritionData}" Header="Nutrition"/>
+                <MenuItem Command="{Binding Path=SelectedMainRecord.CommandGetOrganizationRoutineData}" Header="Routine"/>
+                <MenuItem Command="{Binding Path=SelectedMainRecord.CommandGetOrganizationSleepData}" Header="Sleep"/>
+                <MenuItem Command="{Binding Path=SelectedMainRecord.CommandGetOrganizationTobaccoCessationData}" Header="Tobacco Cessation"/>
+            </MenuItem>
+        </Menu>
+        <Border Grid.Row="1" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -40,7 +56,7 @@
 
             </Grid>
         </Border>
-        <Border Grid.Row="1" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" DataContext="{Binding SelectedMainRecord}" >
+        <Border Grid.Row="2" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" DataContext="{Binding SelectedMainRecord}" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
