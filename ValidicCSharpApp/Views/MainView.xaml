@@ -17,17 +17,33 @@
         <Border Grid.Row="0" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="129*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <views:OrganizationAuthenticationCredentialsView Grid.Column="0"/>
-                <views:OrganizationView DataContext="{Binding Path=SelectedMainRecord.Organization}" Grid.Column="1"/>
+                <Border CornerRadius="5" BorderThickness="2" BorderBrush="CadetBlue" Grid.Column="1" Margin="2">
+                    <views:OrganizationView DataContext="{Binding Path=SelectedMainRecord.Organization}"/>
+                </Border>
+                <Border CornerRadius="5" Width="100" BorderThickness="2" BorderBrush="CadetBlue" DataContext="{Binding Path=SelectedMainRecord}" Grid.Column="2" Margin="2">
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Button Command="{Binding CommandGetOrganization}" Grid.Row="1" >Update</Button>
+                        <Button Command="{Binding CommandClearOrganization}" Grid.Row="3" >Clear</Button>
+                    </Grid>
+                </Border>
+
             </Grid>
         </Border>
         <Border Grid.Row="1" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" DataContext="{Binding SelectedMainRecord}" >
             <ToolBar>
-                <Button Command="{Binding CommandGetOrganization}" >Get Organization</Button>
-                <Button Command="{Binding CommandClearOrganization}" >Clear Organization</Button>
                 <Separator/>
                 <Button Command="{Binding CommandGetOrganizationMeData}" >Me</Button>
                 <Button Command="{Binding CommandGetOrganizationProfiles}" >Profiles</Button>

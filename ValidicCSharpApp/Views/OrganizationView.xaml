@@ -5,57 +5,63 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
              d:DesignWidth="300">
-<!--    <UserControl.DataContext>-->
-<!--        <m:Organization>-->
-<!--            <m:Organization.Id>51aca5a06dedda916400002b</m:Organization.Id>-->
-<!--            <m:Organization.Name>ACME Corp</m:Organization.Name>-->
-<!--            <m:Organization.Users>210</m:Organization.Users>-->
-<!--            <m:Organization.UsersProvisioned>336</m:Organization.UsersProvisioned>-->
-<!--            <m:Organization.Activities>303909</m:Organization.Activities>-->
-<!--            <m:Organization.Connections>154117</m:Organization.Connections>-->
-<!--        </m:Organization>-->
-<!--    </UserControl.DataContext>-->
+    <!--    <UserControl.DataContext>-->
+    <!--        <m:Organization>-->
+    <!--            <m:Organization.Id>51aca5a06dedda916400002b</m:Organization.Id>-->
+    <!--            <m:Organization.Name>ACME Corp</m:Organization.Name>-->
+    <!--            <m:Organization.Users>210</m:Organization.Users>-->
+    <!--            <m:Organization.UsersProvisioned>336</m:Organization.UsersProvisioned>-->
+    <!--            <m:Organization.Activities>303909</m:Organization.Activities>-->
+    <!--            <m:Organization.Connections>154117</m:Organization.Connections>-->
+    <!--        </m:Organization>-->
+    <!--    </UserControl.DataContext>-->
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <!--ID-->
-        <Label Grid.Row="1" Grid.Column="1">Id</Label>
-        <TextBox IsReadOnly="True" Grid.Row="1" Grid.Column="3" Text="{Binding Path=Id}"/>
-        <!--ID-->
-        <Label Grid.Row="3" Grid.Column="1">Name</Label>
-        <TextBox IsReadOnly="True" Grid.Row="3" Grid.Column="3" Text="{Binding Path=Name}"/>
-        <!--ID-->
-        <Label Grid.Row="5" Grid.Column="1">Users</Label>
-        <TextBox IsReadOnly="True" Grid.Row="5" Grid.Column="3" Text="{Binding Path=Users}"/>
-        <!--ID-->
-        <Label Grid.Row="7" Grid.Column="1">UsersProvisioned</Label>
-        <TextBox IsReadOnly="True" Grid.Row="7" Grid.Column="3" Text="{Binding Path=UsersProvisioned}"/>
-        <!--ID-->
-        <Label Grid.Row="9" Grid.Column="1">Activities</Label>
-        <TextBox IsReadOnly="True" Grid.Row="9" Grid.Column="3" Text="{Binding Path=Activities}"/>
-        <!--ID-->
-        <Label Grid.Row="11" Grid.Column="1">Connections</Label>
-        <TextBox IsReadOnly="True" Grid.Row="11" Grid.Column="3" Text="{Binding Path=Connections}"/>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+            <!--ID-->
+            <Label Grid.Row="1" Grid.Column="1">Id</Label>
+            <TextBox IsReadOnly="True" Grid.Row="1" Grid.Column="3" Text="{Binding Path=Id}"/>
+            <!--ID-->
+            <Label Grid.Row="3" Grid.Column="1">Name</Label>
+            <TextBox IsReadOnly="True" Grid.Row="3" Grid.Column="3" Text="{Binding Path=Name}"/>
+            <!--ID-->
+            <Label Grid.Row="5" Grid.Column="1">Users</Label>
+            <TextBox IsReadOnly="True" Grid.Row="5" Grid.Column="3" Text="{Binding Path=Users}"/>
+            <!--ID-->
+            <Label Grid.Row="7" Grid.Column="1">UsersProvisioned</Label>
+            <TextBox IsReadOnly="True" Grid.Row="7" Grid.Column="3" Text="{Binding Path=UsersProvisioned}"/>
+            <!--ID-->
+            <Label Grid.Row="9" Grid.Column="1">Activities</Label>
+            <TextBox IsReadOnly="True" Grid.Row="9" Grid.Column="3" Text="{Binding Path=Activities}"/>
+            <!--ID-->
+            <Label Grid.Row="11" Grid.Column="1">Connections</Label>
+            <TextBox IsReadOnly="True" Grid.Row="11" Grid.Column="3" Text="{Binding Path=Connections}"/>
+        </Grid>
     </Grid>
 </UserControl>
