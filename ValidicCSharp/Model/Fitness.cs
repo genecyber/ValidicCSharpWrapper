@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
@@ -12,7 +13,7 @@ namespace ValidicCSharp.Model
         public string Intensity { get; set; }
 
         [JsonProperty("start_time")]
-        public string StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         [JsonProperty("distance")]
         public double? Distance { get; set; }

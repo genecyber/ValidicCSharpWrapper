@@ -10,22 +10,23 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="170" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Timestamp" Width="170" DisplayMemberBinding="{Binding Timestamp, StringFormat={}{0:MM/dd/yyy hh:mm tt}}" />
+                    <GridViewColumn Header="Time" Width="145" DisplayMemberBinding="{Binding Time, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
+                    <GridViewColumn Header="Timestamp" Width="145" DisplayMemberBinding="{Binding Timestamp, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
                     <GridViewColumn Header="UtcOffset" Width="70" DisplayMemberBinding="{Binding UtcOffset}" />
-                    <GridViewColumn Header="LastUpdated" Width="130" DisplayMemberBinding="{Binding LastUpdated, StringFormat={}{0:MM/dd/yyy hh:mm tt}}" />
+                    <GridViewColumn Header="LastUpdated" Width="145" DisplayMemberBinding="{Binding LastUpdated, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
                     <GridViewColumn Header="Source" Width="80" DisplayMemberBinding="{Binding Source}" />
                     <GridViewColumn Header="SourceName" Width="80" DisplayMemberBinding="{Binding SourceName}" />
                     <GridViewColumn Header="Extras" Width="70" DisplayMemberBinding="{Binding Extras}" />
                     <GridViewColumn Header="UserId" Width="170" DisplayMemberBinding="{Binding UserId}" />
                     <!--Nutrition-->
-                    <GridViewColumn Header="Calories" Width="70" DisplayMemberBinding="{Binding Calories  }" />
-                    <GridViewColumn Header="Carbohydrates" Width="70" DisplayMemberBinding="{Binding Carbohydrates  }" />
-                    <GridViewColumn Header="Fat" Width="70" DisplayMemberBinding="{Binding Fat  }" />
-                    <GridViewColumn Header="Fiber" Width="70" DisplayMemberBinding="{Binding Fiber  }" />
-                    <GridViewColumn Header="Protein" Width="70" DisplayMemberBinding="{Binding Protein  }" />
-                    <GridViewColumn Header="Sodium" Width="70" DisplayMemberBinding="{Binding Sodium  }" />
-                    <GridViewColumn Header="Water" Width="70" DisplayMemberBinding="{Binding Water  }" />
-                    <GridViewColumn Header="Meal" Width="70" DisplayMemberBinding="{Binding Meal  }" />
+                    <GridViewColumn Header="Calories" DisplayMemberBinding="{Binding Calories, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Carbohydrates" DisplayMemberBinding="{Binding Carbohydrates, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Fat" Width="50" DisplayMemberBinding="{Binding Fat, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Fiber" DisplayMemberBinding="{Binding Fiber, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Protein" DisplayMemberBinding="{Binding Protein, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Sodium" DisplayMemberBinding="{Binding Sodium, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Water" DisplayMemberBinding="{Binding Water}" />
+                    <GridViewColumn Header="Meal" Width="120" DisplayMemberBinding="{Binding Meal}" />
                 </GridView>
             </ListView.View>
         </ListView>

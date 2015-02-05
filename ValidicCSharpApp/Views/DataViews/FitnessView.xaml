@@ -4,26 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="348" d:DesignWidth="1127">
     <Grid>
         <ListView Margin="10" ItemsSource="{Binding Path=FitnessData}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="170" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Timestamp" Width="170" DisplayMemberBinding="{Binding Timestamp, StringFormat={}{0:MM/dd/yyy hh:mm tt}}" />
+                    <GridViewColumn Header="Time" Width="145" DisplayMemberBinding="{Binding Time, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
+                    <GridViewColumn Header="Timestamp" Width="145" DisplayMemberBinding="{Binding Timestamp, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
                     <GridViewColumn Header="UtcOffset" Width="70" DisplayMemberBinding="{Binding UtcOffset}" />
-                    <GridViewColumn Header="LastUpdated" Width="130" DisplayMemberBinding="{Binding LastUpdated, StringFormat={}{0:MM/dd/yyy hh:mm tt}}" />
+                    <GridViewColumn Header="LastUpdated" Width="145" DisplayMemberBinding="{Binding LastUpdated, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
                     <GridViewColumn Header="Source" Width="80" DisplayMemberBinding="{Binding Source}" />
                     <GridViewColumn Header="SourceName" Width="80" DisplayMemberBinding="{Binding SourceName}" />
                     <GridViewColumn Header="Extras" Width="70" DisplayMemberBinding="{Binding Extras}" />
                     <GridViewColumn Header="UserId" Width="170" DisplayMemberBinding="{Binding UserId}" />
                     <!--Biometrics-->
-                    <GridViewColumn Header="Type" Width="70" DisplayMemberBinding="{Binding Type     }" />
-                    <GridViewColumn Header="Intensity" Width="70" DisplayMemberBinding="{Binding Intensity}" />
-                    <GridViewColumn Header="StartTime" Width="70" DisplayMemberBinding="{Binding StartTime}" />
-                    <GridViewColumn Header="Distance" Width="70" DisplayMemberBinding="{Binding Distance }" />
+                    <GridViewColumn Header="Type" Width="100" DisplayMemberBinding="{Binding Type     }" />
+                    <GridViewColumn Header="Intensity" Width="170" DisplayMemberBinding="{Binding Intensity}" />
+                    <GridViewColumn Header="StartTime" Width="145" DisplayMemberBinding="{Binding StartTime, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
+                    <GridViewColumn Header="Distance" Width="70" DisplayMemberBinding="{Binding Distance, StringFormat={}{0:0.##} }" />
                     <GridViewColumn Header="Duration" Width="70" DisplayMemberBinding="{Binding Duration }" />
-                    <GridViewColumn Header="Calories" Width="70" DisplayMemberBinding="{Binding Calories }" />
+                    <GridViewColumn Header="Calories" Width="70" DisplayMemberBinding="{Binding Calories, StringFormat={}{0:0.##} }" />
                 </GridView>
             </ListView.View>
         </ListView>

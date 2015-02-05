@@ -10,20 +10,21 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="170" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Timestamp" Width="130" DisplayMemberBinding="{Binding Timestamp, StringFormat={}{0:MM/dd/yyy hh:mm tt}}" />
+                    <GridViewColumn Header="Time" Width="145" DisplayMemberBinding="{Binding Time, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
+                    <GridViewColumn Header="Timestamp" Width="145" DisplayMemberBinding="{Binding Timestamp, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
                     <GridViewColumn Header="UtcOffset" Width="70" DisplayMemberBinding="{Binding UtcOffset}" />
-                    <GridViewColumn Header="LastUpdated" Width="130" DisplayMemberBinding="{Binding LastUpdated, StringFormat={}{0:MM/dd/yyy hh:mm tt}}" />
+                    <GridViewColumn Header="LastUpdated" Width="145" DisplayMemberBinding="{Binding LastUpdated, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
                     <GridViewColumn Header="Source" Width="80" DisplayMemberBinding="{Binding Source}" />
                     <GridViewColumn Header="SourceName" Width="80" DisplayMemberBinding="{Binding SourceName}" />
                     <GridViewColumn Header="Extras" Width="70" DisplayMemberBinding="{Binding Extras}" />
                     <GridViewColumn Header="UserId" Width="170" DisplayMemberBinding="{Binding UserId}" />
                     <!--Weight-->
-                    <GridViewColumn Header="Weight" Width="70" DisplayMemberBinding="{Binding Value}" />
+                    <GridViewColumn Header="Weight" Width="50" DisplayMemberBinding="{Binding Value, StringFormat={}{0:0.##}}" />
                     <GridViewColumn Header="Height" Width="70" DisplayMemberBinding="{Binding Height}" />
                     <GridViewColumn Header="FreeMass" Width="70" DisplayMemberBinding="{Binding FreeMass}" />
                     <GridViewColumn Header="FatPercent" Width="70" DisplayMemberBinding="{Binding FatPercent}" />
                     <GridViewColumn Header="MassWeight" Width="70" DisplayMemberBinding="{Binding MassWeight}" />
-                    <GridViewColumn Header="Bmi" Width="70" DisplayMemberBinding="{Binding Bmi}" />
+                    <GridViewColumn Header="Bmi" Width="50" DisplayMemberBinding="{Binding Bmi, StringFormat={}{0:0.##}}" />
                 </GridView>
             </ListView.View>
         </ListView>

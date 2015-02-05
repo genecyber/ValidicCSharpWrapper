@@ -10,9 +10,10 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="170" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Timestamp" Width="170" DisplayMemberBinding="{Binding Timestamp, StringFormat={}{0:MM/dd/yyy hh:mm tt}}" />
+                    <GridViewColumn Header="Time" Width="145" DisplayMemberBinding="{Binding Time, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
+                    <GridViewColumn Header="Timestamp" Width="145" DisplayMemberBinding="{Binding Timestamp, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
                     <GridViewColumn Header="UtcOffset" Width="70" DisplayMemberBinding="{Binding UtcOffset}" />
-                    <GridViewColumn Header="LastUpdated" Width="130" DisplayMemberBinding="{Binding LastUpdated, StringFormat={}{0:MM/dd/yyy hh:mm tt}}" />
+                    <GridViewColumn Header="LastUpdated" Width="145" DisplayMemberBinding="{Binding LastUpdated, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
                     <GridViewColumn Header="Source" Width="80" DisplayMemberBinding="{Binding Source}" />
                     <GridViewColumn Header="SourceName" Width="80" DisplayMemberBinding="{Binding SourceName}" />
                     <GridViewColumn Header="Extras" Width="70" DisplayMemberBinding="{Binding Extras}" />
@@ -25,7 +26,7 @@
                     <GridViewColumn Header="OralGlucoseToleranceTest" Width="70" DisplayMemberBinding="{Binding OralGlucoseToleranceTest  }" />
                     <GridViewColumn Header="RandomPlasmaGlucoseTest" Width="70" DisplayMemberBinding="{Binding RandomPlasmaGlucoseTest  }" />
                     <GridViewColumn Header="Triglyceride" Width="70" DisplayMemberBinding="{Binding Triglyceride  }" />
-                    <GridViewColumn Header="BloodGlucose" Width="70" DisplayMemberBinding="{Binding BloodGlucose  }" />
+                    <GridViewColumn Header="BloodGlucose" Width="70" DisplayMemberBinding="{Binding BloodGlucose, StringFormat={}{0:0.##}  }" />
                 </GridView>
             </ListView.View>
         </ListView>
