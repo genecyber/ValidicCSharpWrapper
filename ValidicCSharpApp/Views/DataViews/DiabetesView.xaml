@@ -10,11 +10,11 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="170" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Timestamp" Width="170" DisplayMemberBinding="{Binding Timestamp}" />
+                    <GridViewColumn Header="Timestamp" Width="170" DisplayMemberBinding="{Binding Timestamp, StringFormat={}{0:MM/dd/yyy hh:mm tt}}" />
                     <GridViewColumn Header="UtcOffset" Width="70" DisplayMemberBinding="{Binding UtcOffset}" />
-                    <GridViewColumn Header="LastUpdated" Width="170" DisplayMemberBinding="{Binding LastUpdated}" />
-                    <GridViewColumn Header="Source" Width="70" DisplayMemberBinding="{Binding Source}" />
-                    <GridViewColumn Header="SourceName" Width="70" DisplayMemberBinding="{Binding SourceName}" />
+                    <GridViewColumn Header="LastUpdated" Width="130" DisplayMemberBinding="{Binding LastUpdated, StringFormat={}{0:MM/dd/yyy hh:mm tt}}" />
+                    <GridViewColumn Header="Source" Width="80" DisplayMemberBinding="{Binding Source}" />
+                    <GridViewColumn Header="SourceName" Width="80" DisplayMemberBinding="{Binding SourceName}" />
                     <GridViewColumn Header="Extras" Width="70" DisplayMemberBinding="{Binding Extras}" />
                     <GridViewColumn Header="UserId" Width="170" DisplayMemberBinding="{Binding UserId}" />
                     <!--Diabetes-->

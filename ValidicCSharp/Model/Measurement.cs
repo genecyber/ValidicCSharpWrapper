@@ -12,11 +12,11 @@ namespace ValidicCSharp.Model
     public class Measurement : Me
     {
         [JsonProperty("timestamp")]
-        public string Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
         [JsonProperty("utc_offset")]
         public string UtcOffset { get; set; }
         [JsonProperty("last_updated")]
-        public string LastUpdated { get; set; }
+        public DateTime LastUpdated { get; set; }
         [JsonProperty("source"), DefaultValue("")] 
         public string Source { get; set; }
 
