@@ -73,6 +73,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\BaseConverter.cs" />
+    <Compile Include="ViewModels\MainRecordModelView.cs" />
     <Compile Include="Views\DataViews\BiometricsView.xaml.cs">
       <DependentUpon>BiometricsView.xaml</DependentUpon>
     </Compile>

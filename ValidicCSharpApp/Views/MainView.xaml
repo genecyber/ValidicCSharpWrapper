@@ -21,10 +21,10 @@
                     <ColumnDefinition Width="300"/>
                 </Grid.ColumnDefinitions>
                 <views:OrganizationAuthenticationCredentialsView Grid.Column="0"/>
-                <views:OrganizationView DataContext="{Binding Organization}" Grid.Column="1"/>
+                <views:OrganizationView DataContext="{Binding Path=SelectedMainRecord.Organization}" Grid.Column="1"/>
             </Grid>
         </Border>
-        <Border Grid.Row="1" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
+        <Border Grid.Row="1" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" DataContext="{Binding SelectedMainRecord}" >
             <ToolBar>
                 <Button Command="{Binding CommandGetOrganization}" >Get Organization</Button>
                 <Button Command="{Binding CommandClearOrganization}" >Clear Organization</Button>
