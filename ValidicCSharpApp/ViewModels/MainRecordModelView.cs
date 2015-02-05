@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Windows.Annotations;
+using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ValidicCSharp;
@@ -6,11 +8,13 @@ using ValidicCSharp.Model;
 using ValidicCSharp.Request;
 using ValidicCSharp.Utility;
 using ValidicCSharpApp.Models;
+using ValidicCSharpApp.Views.DataViews;
 
 namespace ValidicCSharpApp.ViewModels
 {
     public class MainRecordModelView : ViewModelBase
     {
+        #region Members
         OrganizationAuthenticationCredentialModel _organizationAuthenticationCredential;
         Organization        _organization;
         List<Me>            _meData; 
@@ -24,6 +28,9 @@ namespace ValidicCSharpApp.ViewModels
         List<Sleep>         _sleepData ;
         List<Tobacco_Cessation> _tobaccoCessationData ;
 
+        private object _selectedData;
+
+        #endregion
 
         #region Commands
 
@@ -39,6 +46,9 @@ namespace ValidicCSharpApp.ViewModels
         public RelayCommand CommandGetOrganizationTobaccoCessationData { get; private set; }
         public RelayCommand CommandGetOrganizationProfiles { get; private set; }
         public RelayCommand CommandGetOrganizationMeData { get; private set; }
+
+
+        public RelayCommand CommandDataSelected { get; private set; }
 
         public OrganizationAuthenticationCredentialModel OrganizationAuthenticationCredential
         {
@@ -121,21 +131,58 @@ namespace ValidicCSharpApp.ViewModels
 
         #endregion
 
+
+        public object SelectedData
+        {
+            get { return _selectedData; }
+            set
+            {
+                if(_selectedData == value)
+                    return;
+                
+
+                _selectedData = value;
+                TestSelecteData();
+                RaisePropertyChanged();
+            }
+        }
+
+        private void TestSelecteData()
+        {
+            var tabItem = SelectedData as TabItem;
+            if (tabItem == null)
+                return;
+
+            if (tabItem.Content is WeightView && Weights == null) GetOrganizationWeight();
+            else if (tabItem.Content is BiometricsView && Biometrics == null) GetOrganizationBiometrics();
+            else if (tabItem.Content is FitnessView && FitnessData == null) GetOrganizationFitnessData();
+            else if (tabItem.Content is DiabetesView && DiabetesData == null) GetOrganizationDiabetesData();
+            else if (tabItem.Content is NutritionView && NutritionData == null) GetOrganizationNutritionData();
+            else if (tabItem.Content is RoutineView && RoutineData == null) GetOrganizationRoutineData();
+            else if (tabItem.Content is SleepView && SleepData == null) GetOrganizationSleepData();
+            else if (tabItem.Content is TobaccoCessationView && TobaccoCessationData == null) GetOrganizationTobaccoCessationData();
+            else if (tabItem.Content is ProfileView && Profiles == null) GetOrganizationProfiles();
+            else if (tabItem.Content is MeView && MeData == null) GetOrganizationMeData();
+        }
+
+
         public MainRecordModelView()
         {
-            CommandGetOrganization = new RelayCommand(GetOrganization, () => true);
-            CommandClearOrganization = new RelayCommand(ClearOrganization, () => true);
-            CommandGetOrganizationWeight = new RelayCommand(GetOrganizationWeight, () => true);
-            CommandGetOrganizationBiometrics = new RelayCommand(GetOrganizationBiometrics, () => true);
-            CommandGetOrganizationFitnessData = new RelayCommand(GetOrganizationFitnessData, () => true);
-            CommandGetOrganizationDiabetesData = new RelayCommand(GetOrganizationDiabetesData, () => true);
-            CommandGetOrganizationNutritionData = new RelayCommand(GetOrganizationNutritionData, () => true);
-            CommandGetOrganizationRoutineData = new RelayCommand(GetOrganizationRoutineData, () => true);
-            CommandGetOrganizationSleepData = new RelayCommand(GetOrganizationSleepData, () => true);
-            CommandGetOrganizationTobaccoCessationData = new RelayCommand(GetOrganizationTobaccoCessationData, () => true);
-            CommandGetOrganizationProfiles = new RelayCommand(GetOrganizationProfiles, () => true);
-            CommandGetOrganizationMeData = new RelayCommand(GetOrganizationMeData, () => true);
-            
+            CommandGetOrganization                      = new RelayCommand(GetOrganization, () => true);
+            CommandClearOrganization                    = new RelayCommand(ClearOrganization, () => true);
+
+            CommandGetOrganizationWeight                = new RelayCommand(GetOrganizationWeight, () => true);
+            CommandGetOrganizationBiometrics            = new RelayCommand(GetOrganizationBiometrics, () => true);
+            CommandGetOrganizationFitnessData           = new RelayCommand(GetOrganizationFitnessData, () => true);
+            CommandGetOrganizationDiabetesData          = new RelayCommand(GetOrganizationDiabetesData, () => true);
+            CommandGetOrganizationNutritionData         = new RelayCommand(GetOrganizationNutritionData, () => true);
+            CommandGetOrganizationRoutineData           = new RelayCommand(GetOrganizationRoutineData, () => true);
+            CommandGetOrganizationSleepData             = new RelayCommand(GetOrganizationSleepData, () => true);
+            CommandGetOrganizationTobaccoCessationData  = new RelayCommand(GetOrganizationTobaccoCessationData, () => true);
+            CommandGetOrganizationProfiles              = new RelayCommand(GetOrganizationProfiles, () => true);
+            CommandGetOrganizationMeData                = new RelayCommand(GetOrganizationMeData, () => true);
+            // 
+            CommandDataSelected = new RelayCommand(DataSelected, () => true);
         }
 
         #region  Commands Implemenation
@@ -269,5 +316,12 @@ namespace ValidicCSharpApp.ViewModels
         }
 
         #endregion
+
+        private void DataSelected()
+        {
+
+        }
+
+
     }
 }

@@ -10,8 +10,6 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
@@ -43,55 +41,58 @@
             </Grid>
         </Border>
         <Border Grid.Row="1" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" DataContext="{Binding SelectedMainRecord}" >
-            <ToolBar>
-                <Separator/>
-                <Button Command="{Binding CommandGetOrganizationMeData}" >Me</Button>
-                <Button Command="{Binding CommandGetOrganizationProfiles}" >Profiles</Button>
-                <Separator/>
-                <Button Command="{Binding CommandGetOrganizationWeight}" >Weights</Button>
-                <Button Command="{Binding CommandGetOrganizationBiometrics}" >Biometrics</Button>
-                <Button Command="{Binding CommandGetOrganizationFitnessData}" >Fitness</Button>
-                <Button Command="{Binding CommandGetOrganizationDiabetesData}" >Diabetes</Button>
-                <Button Command="{Binding CommandGetOrganizationNutritionData}" >Nutrition</Button>
-                <Button Command="{Binding CommandGetOrganizationRoutineData}" >Routine</Button>
-                <Button Command="{Binding CommandGetOrganizationSleepData}" >Sleep</Button>
-                <Button Command="{Binding CommandGetOrganizationTobaccoCessationData}" >Tobacco Cessation</Button>
-            </ToolBar>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ToolBar Grid.Row="0">
+                    <Separator/>
+                    <Button Command="{Binding CommandGetOrganizationMeData}" >Me</Button>
+                    <Button Command="{Binding CommandGetOrganizationProfiles}" >Profiles</Button>
+                    <Separator/>
+                    <Button Command="{Binding CommandGetOrganizationWeight}" >Weights</Button>
+                    <Button Command="{Binding CommandGetOrganizationBiometrics}" >Biometrics</Button>
+                    <Button Command="{Binding CommandGetOrganizationFitnessData}" >Fitness</Button>
+                    <Button Command="{Binding CommandGetOrganizationDiabetesData}" >Diabetes</Button>
+                    <Button Command="{Binding CommandGetOrganizationNutritionData}" >Nutrition</Button>
+                    <Button Command="{Binding CommandGetOrganizationRoutineData}" >Routine</Button>
+                    <Button Command="{Binding CommandGetOrganizationSleepData}" >Sleep</Button>
+                    <Button Command="{Binding CommandGetOrganizationTobaccoCessationData}" >Tobacco Cessation</Button>
+                </ToolBar>
+                <TabControl Grid.Row="1" SelectedItem="{Binding SelectedData}">
+                    <TabItem Header="Me">
+                        <dataViews:MeView/>
+                    </TabItem>
+                    <TabItem Header="Profiles">
+                        <dataViews:ProfileView/>
+                    </TabItem>
+                    <TabItem Header="Weights">
+                        <dataViews:WeightView/>
+                    </TabItem>
+                    <TabItem Header="Biometrics">
+                        <dataViews:BiometricsView/>
+                    </TabItem>
+                    <TabItem Header="Fitness">
+                        <dataViews:FitnessView/>
+                    </TabItem>
+                    <TabItem Header="Diabetes">
+                        <dataViews:DiabetesView/>
+                    </TabItem>
+                    <TabItem Header="Nutrition">
+                        <dataViews:NutritionView/>
+                    </TabItem>
+                    <TabItem Header="Routine">
+                        <dataViews:RoutineView/>
+                    </TabItem>
+                    <TabItem Header="Sleep">
+                        <dataViews:SleepView/>
+                    </TabItem>
+                    <TabItem Header="Tobacco Cessation">
+                        <dataViews:TobaccoCessationView/>
+                    </TabItem>
+                </TabControl>
+            </Grid>
         </Border>
-        <Border Grid.Row="2" BorderThickness="2" BorderBrush="DarkSeaGreen" CornerRadius="5" >
-        </Border>
-        <TabControl Grid.Row="3" SelectedIndex="2">
-            <TabItem Header="Me">
-                <dataViews:MeView/>
-            </TabItem>
-            <TabItem Header="Profiles">
-                <dataViews:ProfileView/>
-            </TabItem>
-            <TabItem Header="Weights">
-                <dataViews:WeightView/>
-            </TabItem>
-            <TabItem Header="Biometrics">
-                <dataViews:BiometricsView/>
-            </TabItem>
-            <TabItem Header="Fitness">
-                <dataViews:FitnessView/>
-            </TabItem>
-            <TabItem Header="Diabetes">
-                <dataViews:DiabetesView/>
-            </TabItem>
-            <TabItem Header="Nutrition">
-                <dataViews:NutritionView/>
-            </TabItem>
-            <TabItem Header="Routine">
-                <dataViews:RoutineView/>
-            </TabItem>
-            <TabItem Header="Sleep">
-                <dataViews:SleepView/>
-            </TabItem>
-            <TabItem Header="Tobacco Cessation">
-                <dataViews:TobaccoCessationView/>
-            </TabItem>
-        </TabControl>
-
     </Grid>
 </UserControl>
