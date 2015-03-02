@@ -30,12 +30,12 @@ namespace ValidicCSharpTests
         public void AppModelPopulatesCorrectly()
         {
             var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
-            Command command = new Command()
+            var command = new Command()
                 .FromOrganization(OrganizationUnderTest)
                 .GetInformationType(CommandType.Apps);
 
-            string json = client.PerformCommand(command);
-            List<App> applications = json.Objectify<Apps>().AppCollection;
+            var json = client.PerformCommand(command);
+            var applications = json.Objectify<Apps>().AppCollection;
 
             Assert.IsTrue(applications.Count > 0);
         }

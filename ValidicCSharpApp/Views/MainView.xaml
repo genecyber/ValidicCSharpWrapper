@@ -66,6 +66,9 @@
                     <TabItem Header="Me">
                         <dataViews:MeView/>
                     </TabItem>
+                    <TabItem Header="Apps">
+                        <dataViews:AppsView/>
+                    </TabItem>
                     <TabItem Header="Profiles">
                         <dataViews:ProfileView/>
                     </TabItem>

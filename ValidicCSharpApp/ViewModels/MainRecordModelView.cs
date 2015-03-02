@@ -17,8 +17,9 @@ namespace ValidicCSharpApp.ViewModels
         #region Members
         OrganizationAuthenticationCredentialModel _organizationAuthenticationCredential;
         Organization        _organization;
-        List<Me>            _meData; 
-        List<Profile>       _profiles ;
+        List<Me>            _meData;
+        List<ValidicCSharp.Model.App> _apps;
+        List<Profile>       _profiles;
         List<Weight>        _weights ;
         List<Biometrics>    _biometrics ;
         List<Fitness>       _fitnessData ;
@@ -46,7 +47,7 @@ namespace ValidicCSharpApp.ViewModels
         public RelayCommand CommandGetOrganizationTobaccoCessationData { get; private set; }
         public RelayCommand CommandGetOrganizationProfiles { get; private set; }
         public RelayCommand CommandGetOrganizationMeData { get; private set; }
-
+        public RelayCommand CommandGetOrganizationApps { get; private set; }
 
         public RelayCommand CommandDataSelected { get; private set; }
 
@@ -129,6 +130,13 @@ namespace ValidicCSharpApp.ViewModels
             set { _tobaccoCessationData = value; }
         }
 
+
+        public List<ValidicCSharp.Model.App> Apps
+        {
+            get { return _apps; }
+            set { _apps = value; }
+        }
+
         #endregion
 
 
@@ -147,6 +155,7 @@ namespace ValidicCSharpApp.ViewModels
             }
         }
 
+
         private void TestSelecteData()
         {
             var tabItem = SelectedData as TabItem;
@@ -154,6 +163,7 @@ namespace ValidicCSharpApp.ViewModels
                 return;
 
             if (tabItem.Content is WeightView && Weights == null) GetOrganizationWeight();
+            else if (tabItem.Content is AppsView && Apps == null) GetOrganizationApps();
             else if (tabItem.Content is BiometricsView && Biometrics == null) GetOrganizationBiometrics();
             else if (tabItem.Content is FitnessView && FitnessData == null) GetOrganizationFitnessData();
             else if (tabItem.Content is DiabetesView && DiabetesData == null) GetOrganizationDiabetesData();
@@ -164,6 +174,7 @@ namespace ValidicCSharpApp.ViewModels
             else if (tabItem.Content is ProfileView && Profiles == null) GetOrganizationProfiles();
             else if (tabItem.Content is MeView && MeData == null) GetOrganizationMeData();
         }
+
 
 
         public MainRecordModelView()
@@ -181,11 +192,13 @@ namespace ValidicCSharpApp.ViewModels
             CommandGetOrganizationTobaccoCessationData  = new RelayCommand(GetOrganizationTobaccoCessationData, () => true);
             CommandGetOrganizationProfiles              = new RelayCommand(GetOrganizationProfiles, () => true);
             CommandGetOrganizationMeData                = new RelayCommand(GetOrganizationMeData, () => true);
+            CommandGetOrganizationApps                  = new RelayCommand(GetOrganizationApps, () => true);
             // 
             CommandDataSelected = new RelayCommand(DataSelected, () => true);
         }
 
         #region  Commands Implemenation
+
         public void GetOrganizationMeData()
         {
             var oac = OrganizationAuthenticationCredential;
@@ -201,6 +214,17 @@ namespace ValidicCSharpApp.ViewModels
             MeData = result != null ? result.Object : null;
             RaisePropertyChanged("MeData");
         }
+
+        public void GetOrganizationApps()
+        {
+            var json = GetOrganizationJsonData(CommandType.Apps);
+            if(json == null)
+                return;
+
+            Apps = json.Objectify<Apps>().AppCollection;
+            RaisePropertyChanged("Apps");
+        }
+
 
         public void GetOrganizationProfiles()
         {
@@ -244,21 +268,8 @@ namespace ValidicCSharpApp.ViewModels
             RaisePropertyChanged("DiabetesData");
         }
 
-        public ValidicResult<List<T>> GetOrganizationData<T>(CommandType commandType)
-        {
-            var oac = OrganizationAuthenticationCredential;
-            if (oac == null)
-                return null;
 
-            var client = new Client { AccessToken = oac.AccessToken };
-            var command = new Command().FromOrganization(oac.OrganizationId)
-                .GetInformationType(commandType)
-                .GetLatest();
 
-            var json = client.PerformCommand(command);
-            var validicResult = json.ToResult<List<T>>();
-            return validicResult;
-        }
 
         public void GetOrganizationFitnessData()
         {
@@ -323,5 +334,29 @@ namespace ValidicCSharpApp.ViewModels
         }
 
 
+        public string GetOrganizationJsonData(CommandType commandType)
+        {
+            var oac = OrganizationAuthenticationCredential;
+            if (oac == null)
+                return null;
+
+            var client = new Client { AccessToken = oac.AccessToken };
+            var command = new Command().FromOrganization(oac.OrganizationId)
+                .GetInformationType(commandType);
+            // .GetLatest();
+
+            var json = client.PerformCommand(command);
+            return json;
+        }
+
+        public ValidicResult<List<T>> GetOrganizationData<T>(CommandType commandType)
+        {
+            var json = GetOrganizationJsonData(commandType);
+            if (json == null)
+                return null;
+
+            var result = json.ToResult<List<T>>();
+            return result;
+        }
     }
 }
