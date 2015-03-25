@@ -43,13 +43,13 @@ namespace ValidicCSharp
             string address = _baseUrl + command + AppendAuth();
             using (var client = new WebClient())
             {
+                client.Headers.Add("Content-Type", "application/json; charset=utf-8");
                 try
                 {
                     if (method == HttpMethod.GET)
                         json = client.DownloadString(address);
                     if (method == HttpMethod.POST && payload != null)
                     {
-                        client.Headers.Add("Content-Type", "application/json");
                         json = client.UploadString(address, JsonConvert.SerializeObject(payload));
                     }
                 }
