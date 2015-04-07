@@ -8,9 +8,4 @@ namespace ValidicCSharp.Model
         [JsonProperty("_id")]
         public string Id { get; set; }
     }
-
-    public class Credentials
-    {
-        public Me me { get; set; }
-    }
 }
