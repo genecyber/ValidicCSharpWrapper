@@ -22,7 +22,7 @@ namespace ValidicCSharpTests
             var client = new Client {AccessToken = "ENTERPRISE_KEY"};
             string json = client.ExecuteWebCommand("organizations/51aca5a06dedda916400002b.json?start_date=09-01-01",
                 HttpMethod.GET);
-            ValidicResult<Organization> org = json.ToResult<Organization>();
+            var org = json.ToResult<Organization>();
 
             Assert.IsTrue(org.Summary.Limit == 100);
             Assert.IsTrue(org.Object.As<Organization>().Name == "ACME Corp");
