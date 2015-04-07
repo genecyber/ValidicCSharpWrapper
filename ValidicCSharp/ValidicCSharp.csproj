@@ -51,7 +51,11 @@
     <Compile Include="LogItem.cs" />
     <Compile Include="Model\AddUserResponse.cs" />
     <Compile Include="Model\AddUserRequest.cs" />
+    <Compile Include="Model\Application.cs" />
+    <Compile Include="Model\Credentials.cs" />
     <Compile Include="Model\Measurement.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserRequest.cs" />
     <Compile Include="Request\Command.cs" />
     <Compile Include="Request\FromDateFilter.cs" />
     <Compile Include="Request\SourceFilter.cs" />
