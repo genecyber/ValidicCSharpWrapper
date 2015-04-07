@@ -13,6 +13,8 @@ namespace ValidicCSharpTests
     {
         private const string UserUnderTest = "52ffcb4bf1f70eefba000004";
         private const string OrganizationUnderTest = "51aca5a06dedda916400002b";
+        private const string AccessTokenOne = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5";
+        private const string OrganizationOne = "5238a4616deddaaefc000001";
         
         [Test]
         public void InitialDeserializationWorks()
@@ -44,7 +46,7 @@ namespace ValidicCSharpTests
         [Test]
         public void MyModelPopultesCorrectly()
         {
-            var client = new Client {AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5"};
+            var client = new Client {AccessToken = AccessTokenOne};
             Command command = new Command()
                 .GetInformationType(CommandType.Me);
 
@@ -57,14 +59,14 @@ namespace ValidicCSharpTests
         [Test]
         public void CanAddUser()
         {
-            var client = new Client {AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5"};
+            var client = new Client {AccessToken = AccessTokenOne};
             Command command = new Command()
                 .AddUser(new AddUserRequest
                 {
                     access_token = client.AccessToken,
                     user = new UserRequest {uid = MakeRandom().ToString()}
                 })
-                .ToOrganization("5238a4616deddaaefc000001");
+                .ToOrganization(OrganizationOne);
 
             string json = client.PerformCommand(command);
             var response = json.Objectify<AddUserResponse>();
@@ -76,7 +78,7 @@ namespace ValidicCSharpTests
         [Test]
         public void CanAddUserWithProfile()
         {
-            var client = new Client {AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5"};
+            var client = new Client {AccessToken = AccessTokenOne};
             //make a user request object
             var newUserWithProfile = new UserRequest {uid = MakeRandom().ToString()};
             //add a profile opbject to the newly created request object
@@ -84,7 +86,7 @@ namespace ValidicCSharpTests
             //create a new command to "add user" and "to organization"
             Command command = new Command()
                 .AddUser(new AddUserRequest {access_token = client.AccessToken, user = newUserWithProfile})
-                .ToOrganization("5238a4616deddaaefc000001");
+                .ToOrganization(OrganizationOne);
             //execute the command
             string json = client.PerformCommand(command);
             //deserialize the json into a userresponse object
@@ -98,7 +100,7 @@ namespace ValidicCSharpTests
         [Test]
         public void ProfileModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5"};
+            var client = new Client {AccessToken = AccessTokenOne};
             Command command = new Command()
                 .GetInformationType(CommandType.Profile);
 
