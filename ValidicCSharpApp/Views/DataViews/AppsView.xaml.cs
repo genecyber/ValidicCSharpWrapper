@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ValidicCSharp.Model;
+using ValidicCSharpApp.Helpers;
 
 namespace ValidicCSharpApp.Views.DataViews
 {
@@ -30,5 +32,16 @@ namespace ValidicCSharpApp.Views.DataViews
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
         }
+
+        private void CommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            ViewHelper.CopyCommandOnCanExecute(sender, e);
+        }
+
+        private void CommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            ViewHelper.CopyCommandOnExecuted<ValidicCSharp.Model.App>(sender, e);
+        }
+
     }
 }

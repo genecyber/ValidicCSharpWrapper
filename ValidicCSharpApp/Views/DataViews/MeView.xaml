@@ -11,6 +11,9 @@
     </UserControl.Resources>
     <Grid>
         <ListView Margin="10" ItemsSource="{Binding Path=MeData}">
+            <ListView.CommandBindings>
+                <CommandBinding Command="Copy" CanExecute="CommandBinding_OnCanExecute" Executed="CommandBinding_OnExecuted" />
+            </ListView.CommandBindings>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Number" DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}},Converter={StaticResource IndexConverter}}" />

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
+using ValidicCSharp.Utility;
 
 namespace ValidicCSharp.Model
 {
@@ -87,6 +89,11 @@ namespace ValidicCSharp.Model
         
         [JsonProperty("last_sync")]
         public string LastSync { get; set; }
+
+        public override string ToString()
+        {
+            return Utilities.ToString(this, Environment.NewLine);
+        }
     }
 
     public class Apps
@@ -94,4 +101,6 @@ namespace ValidicCSharp.Model
         [JsonProperty("apps")]
         public List<App> AppCollection { get; set; }
     }
+
+
 }

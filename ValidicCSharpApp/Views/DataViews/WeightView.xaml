@@ -7,6 +7,9 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <ListView Margin="10" ItemsSource="{Binding Path=Weights}">
+            <ListView.CommandBindings>
+                <CommandBinding Command="Copy" CanExecute="CommandBinding_OnCanExecute" Executed="CommandBinding_OnExecuted" />
+            </ListView.CommandBindings>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="170" DisplayMemberBinding="{Binding Id}" />

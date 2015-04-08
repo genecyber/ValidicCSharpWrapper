@@ -1,5 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using ValidicCSharp.Interfaces;
+using ValidicCSharp.Utility;
 
 namespace ValidicCSharp.Model
 {
@@ -78,3 +85,7 @@ namespace ValidicCSharp.Model
         public object WhiteCellCount { get; set; }
     }
 }
+
+
+
+

@@ -13,8 +13,7 @@ namespace ValidicCSharpTests
     {
         private const string UserUnderTest = "52ffcb4bf1f70eefba000004";
         private const string OrganizationUnderTest = "51aca5a06dedda916400002b";
-        private const string AccessTokenOne = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5";
-        private const string OrganizationOne = "5238a4616deddaaefc000001";
+        private const string AccessTokenOne = "ENTERPRISE_KEY";
         
         [Test]
         public void InitialDeserializationWorks()
@@ -66,7 +65,7 @@ namespace ValidicCSharpTests
                     access_token = client.AccessToken,
                     user = new UserRequest {uid = MakeRandom().ToString()}
                 })
-                .ToOrganization(OrganizationOne);
+                .ToOrganization(OrganizationUnderTest);
 
             var json = client.PerformCommand(command);
             var response = json.Objectify<AddUserResponse>();
@@ -86,7 +85,7 @@ namespace ValidicCSharpTests
             //create a new command to "add user" and "to organization"
             var command = new Command()
                 .AddUser(new AddUserRequest {access_token = client.AccessToken, user = newUserWithProfile})
-                .ToOrganization(OrganizationOne);
+                .ToOrganization(OrganizationUnderTest);
             //execute the command
             var json = client.PerformCommand(command);
             //deserialize the json into a userresponse object

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
+using System.Text;
 
 namespace ValidicCSharp.Utility
 {
@@ -13,6 +16,7 @@ namespace ValidicCSharp.Utility
             int rnd = rndNum.Next(300, 3000);
             return rnd;
         }
+
         public static bool TryToConvertToDataTimeOffset(string sTimeStamp, string utcOffset, out DateTimeOffset newTimeStamp)
         {
             newTimeStamp = DateTimeOffset.MinValue;
@@ -30,6 +34,7 @@ namespace ValidicCSharp.Utility
             newTimeStamp = t2;
             return true;
         }
+
         public static bool TryToConvertToDataTimeOffset(DateTimeOffset timeStamp, string utcOffset, out DateTimeOffset newTimeStamp)
         {
             newTimeStamp = DateTimeOffset.MinValue;
@@ -43,5 +48,26 @@ namespace ValidicCSharp.Utility
             newTimeStamp = t2;
             return true;
         }
+
+        public static string ToString(object o, String delimeter = ", ", bool ignoreNull = true)
+        {
+            var myType = o.GetType();
+            IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
+            var sb = new StringBuilder();
+            foreach (var prop in props)
+            {
+                var propValue = prop.GetValue(o, null);
+                if (ignoreNull && propValue == null)
+                    continue;
+
+
+                sb.Append(prop.Name);
+                sb.Append("=");
+                sb.Append(propValue);
+                sb.Append(delimeter);
+            }
+            return sb.ToString();
+        }
+
     }
 }

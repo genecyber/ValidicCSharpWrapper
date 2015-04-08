@@ -39,7 +39,5 @@ namespace ValidicCSharp.Model
                 return newTimeStamp.DateTime;
             }
         }
-
-
     }
 }
