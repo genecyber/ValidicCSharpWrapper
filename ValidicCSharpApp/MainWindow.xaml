@@ -4,7 +4,8 @@
         xmlns:v="clr-namespace:ValidicCSharpApp.Views"
         xmlns:Properties="clr-namespace:ValidicCSharpApp.Properties"
         xmlns:dataViews="clr-namespace:ValidicCSharpApp.Views.DataViews"
-        Title="Validic CSharp App " Height="800" Width="1200">
+        Title="Validic CSharp App " Height="800" Width="1200"
+        Icon="/Resources/Images/csharpwrapper.ico">
     <!--    <Window.DataContext>-->
     <!--        <vm:ValidicViewModel OrganizationId="51aca5a06dedda916400002b" AccessToken="ENTERPRISE_KEY">-->
     <!--        </vm:ValidicViewModel>-->
