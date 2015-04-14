@@ -9,30 +9,40 @@ using ValidicCSharp.Utility;
 
 namespace ValidicCSharpTests
 {
+    public class OrgInfo
+    {
+        public string Name { get; set; }
+        public string OrganizationId { get; set; }
+        public string AccessToken { get; set; }
+        public string User { get; set; }
+    }
+
     public class ModelTests : BaseTests
     {
-        private const string UserUnderTest = "52ffcb4bf1f70eefba000004";
-        private const string OrganizationUnderTest = "51aca5a06dedda916400002b";
-        private const string AccessTokenOne = "ENTERPRISE_KEY";
+        public static OrgInfo Acme = new OrgInfo { Name = "ACME Corp", OrganizationId = "51aca5a06dedda916400002b", AccessToken = "ENTERPRISE_KEY", User = "52ffcb4bf1f70eefba000004" };
+                                                                                                                                                            
+
+        public OrgInfo Organization = Acme;
         
         [Test]
         public void InitialDeserializationWorks()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};
-            string json = client.ExecuteWebCommand("organizations/51aca5a06dedda916400002b.json?start_date=09-01-01",
+            var client = new Client {AccessToken = Organization.AccessToken};
+            var command = string.Format("organizations/{0}.json?start_date=09-01-01",Organization.OrganizationId);
+            string json = client.ExecuteWebCommand(command,
                 HttpMethod.GET);
             var org = json.ToResult<Organization>();
 
             Assert.IsTrue(org.Summary.Limit == 100);
-            Assert.IsTrue(org.Object.As<Organization>().Name == "ACME Corp");
+            Assert.IsTrue(org.Object.As<Organization>().Name == Organization.Name);
         }
 
         [Test]
         public void AppModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
+            var client = new Client {AccessToken = Organization.AccessToken};;
             var command = new Command()
-                .FromOrganization(OrganizationUnderTest)
+                .FromOrganization(Organization.OrganizationId)
                 .GetInformationType(CommandType.Apps);
 
             var json = client.PerformCommand(command);
@@ -45,27 +55,27 @@ namespace ValidicCSharpTests
         [Test]
         public void MyModelPopultesCorrectly()
         {
-            var client = new Client {AccessToken = AccessTokenOne};
+            var client = new Client {AccessToken = Organization.AccessToken};
             var command = new Command()
                 .GetInformationType(CommandType.Me);
 
             var json = client.PerformCommand(command);
             var me = json.Objectify<Credentials>().me;
 
-            Assert.IsTrue(me.Id == "5238a4c26deddafb51000001");
+            Assert.IsTrue(me.Id == Organization.User);
         }
 
         [Test]
         public void CanAddUser()
         {
-            var client = new Client {AccessToken = AccessTokenOne};
+            var client = new Client {AccessToken = Organization.AccessToken};
             var command = new Command()
                 .AddUser(new AddUserRequest
                 {
                     access_token = client.AccessToken,
                     user = new UserRequest {uid = MakeRandom().ToString()}
                 })
-                .ToOrganization(OrganizationUnderTest);
+                .ToOrganization(Organization.OrganizationId);
 
             var json = client.PerformCommand(command);
             var response = json.Objectify<AddUserResponse>();
@@ -77,7 +87,7 @@ namespace ValidicCSharpTests
         [Test]
         public void CanAddUserWithProfile()
         {
-            var client = new Client {AccessToken = AccessTokenOne};
+            var client = new Client {AccessToken = Organization.AccessToken};
             //make a user request object
             var newUserWithProfile = new UserRequest {uid = MakeRandom().ToString()};
             //add a profile opbject to the newly created request object
@@ -85,7 +95,7 @@ namespace ValidicCSharpTests
             //create a new command to "add user" and "to organization"
             var command = new Command()
                 .AddUser(new AddUserRequest {access_token = client.AccessToken, user = newUserWithProfile})
-                .ToOrganization(OrganizationUnderTest);
+                .ToOrganization(Organization.OrganizationId);
             //execute the command
             var json = client.PerformCommand(command);
             //deserialize the json into a userresponse object
@@ -99,7 +109,7 @@ namespace ValidicCSharpTests
         [Test]
         public void ProfileModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = AccessTokenOne};
+            var client = new Client {AccessToken = Organization.AccessToken};
             var command = new Command()
                 .GetInformationType(CommandType.Profile);
 
@@ -112,11 +122,11 @@ namespace ValidicCSharpTests
         [Test]
         public void FitnessModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
+            var client = new Client {AccessToken = Organization.AccessToken};;
             Command command = new Command()
-                .FromOrganization(OrganizationUnderTest)
+                .FromOrganization(Organization.OrganizationId)
                 .GetInformationType(CommandType.Fitness)
-                .FromUser(UserUnderTest);
+                .FromUser(Organization.User);
 
             string json = client.PerformCommand(command);
             ValidicResult<List<Fitness>> fitness = json.ToResult<List<Fitness>>();
@@ -128,11 +138,11 @@ namespace ValidicCSharpTests
         [Test]
         public void FitnessModelPopulatesFromEnterpriseCall()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};
+            var client = new Client {AccessToken = Organization.AccessToken};
             var command = new Command()
-                .FromOrganization(OrganizationUnderTest)
+                .FromOrganization(Organization.OrganizationId)
                 .GetInformationType(CommandType.Fitness)
-                .GetUser(UserUnderTest);
+                .GetUser(Organization.User);
             var json = client.PerformCommand(command);
             var fitness = json.ToResult<List<Fitness>>();
             Assert.IsTrue(fitness.Object.First().Id != null);
@@ -141,9 +151,9 @@ namespace ValidicCSharpTests
         [Test]
         public void ListOfUsersFromOrganizationParsesCorrectly()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};
+            var client = new Client {AccessToken = Organization.AccessToken};
             var command = new Command()
-                .FromOrganization(OrganizationUnderTest)
+                .FromOrganization(Organization.OrganizationId)
                 .GetUsers();
             var json = client.PerformCommand(command);
 
@@ -154,11 +164,11 @@ namespace ValidicCSharpTests
         [Test]
         public void RoutineModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
+            var client = new Client {AccessToken = Organization.AccessToken};;
             var command = new Command()
-                .FromOrganization(OrganizationUnderTest)
+                .FromOrganization(Organization.OrganizationId)
                 .GetInformationType(CommandType.Routine)
-                .FromUser(UserUnderTest);
+                .FromUser(Organization.User);
             var json = client.PerformCommand(command);
 
             var routine = json.ToResult<List<Routine>>();
@@ -168,11 +178,11 @@ namespace ValidicCSharpTests
         [Test]
         public void NutritionModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
+            var client = new Client {AccessToken = Organization.AccessToken};;
             var command = new Command()
-                .FromOrganization(OrganizationUnderTest)
+                .FromOrganization(Organization.OrganizationId)
                 .GetInformationType(CommandType.Nutrition)
-                .FromUser(UserUnderTest);
+                .FromUser(Organization.User);
             var json = client.PerformCommand(command);
 
             var nutrition = json.ToResult<List<Nutrition>>();
@@ -182,10 +192,10 @@ namespace ValidicCSharpTests
         [Test]
         public void SleepModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};
+            var client = new Client {AccessToken = Organization.AccessToken};
             var command = new Command()
-                .FromOrganization(OrganizationUnderTest)
-                .FromUser(UserUnderTest)
+                .FromOrganization(Organization.OrganizationId)
+                .FromUser(Organization.User)
                 .GetInformationType(CommandType.Sleep)
                 .FromDate("09-01-01");
             var json = client.PerformCommand(command);
@@ -197,10 +207,10 @@ namespace ValidicCSharpTests
         [Test]
         public void WeightModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
+            var client = new Client {AccessToken = Organization.AccessToken};;
             var command = new Command()
-                .FromOrganization(OrganizationUnderTest)
-                .FromUser(UserUnderTest)
+                .FromOrganization(Organization.OrganizationId)
+                .FromUser(Organization.User)
                 .GetInformationType(CommandType.Weight)
                 .GetLatest();
             var json = client.PerformCommand(command);
@@ -212,10 +222,11 @@ namespace ValidicCSharpTests
         [Test]
         public void DiabetesModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
+            var client = new Client {AccessToken = Organization.AccessToken};;
             var command = new Command()
                 .GetInformationType(CommandType.Diabetes)
-                .FromUser(UserUnderTest)
+                .FromOrganization(Organization.OrganizationId)
+                .FromUser(Organization.User)
                 .FromDate("09-01-01");
             var json = client.PerformCommand(command);
 
@@ -226,10 +237,11 @@ namespace ValidicCSharpTests
         [Test]
         public void BiometricsModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};;
+            var client = new Client {AccessToken = Organization.AccessToken};;
             var command = new Command()
                 .GetInformationType(CommandType.Biometrics)
-                .FromUser(UserUnderTest)
+                .FromOrganization(Organization.OrganizationId)
+                .FromUser(Organization.User)
                 .FromDate("09-01-01");
             var json = client.PerformCommand(command);
 
@@ -240,10 +252,10 @@ namespace ValidicCSharpTests
         [Test]
         public void TobaccoOrgModelPopulatesCorrectly()
         {
-            var client = new Client {AccessToken = "ENTERPRISE_KEY"};
+            var client = new Client {AccessToken = Organization.AccessToken};
             var command = new Command()
                 .GetInformationType(CommandType.Tobacco_Cessation)
-                .FromOrganization(OrganizationUnderTest)
+                .FromOrganization(Organization.OrganizationId)
                 .FromDate("09-01-01");
             var json = client.PerformCommand(command);
 

@@ -228,7 +228,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\csharpwrapper.ico" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ValidicCSharp\ValidicCSharp.csproj">
       <Project>{086b5c77-ca76-4baa-88e6-83808b602b87}</Project>
