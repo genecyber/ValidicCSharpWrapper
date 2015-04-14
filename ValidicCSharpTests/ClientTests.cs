@@ -3,7 +3,6 @@ using System.Linq;
 using NUnit.Framework;
 using ValidicCSharp;
 using ValidicCSharp.Interfaces;
-using ValidicCSharp.Model;
 using ValidicCSharp.Request;
 
 namespace ValidicCSharpTests
@@ -26,7 +25,7 @@ namespace ValidicCSharpTests
         public void EnterpriseBulkSleepDataPopulates()
         {
             var client = new Client {AccessToken = "ENTERPRISE_KEY"};
-            ValidicResult<List<Sleep>> sleepData = client.GetEnterpriseSleepData(OrganizationUnderTest, GetFilters);
+            var sleepData = client.GetEnterpriseSleepData(OrganizationUnderTest, GetFilters);
 
             Assert.IsTrue(sleepData.Object.Count > 0);
             Assert.IsTrue(sleepData.Object.First().Id != null);
@@ -42,7 +41,25 @@ namespace ValidicCSharpTests
             Assert.IsTrue(diabetesData.Object.First().Id != null);
         }
 
-        #region Activities
+        [Test]
+        public void GetEnterpriseFitnessData()
+        {
+            var client = new Client {AccessToken = "ENTERPRISE_KEY"};
+            ;
+            var data = client.GetEnterpriseFitnessData(UserUnderTest, GetFilters);
+            Assert.IsTrue(data.Object.Count > 0);
+            Assert.IsTrue(data.Object.First().Id != null);
+        }
+
+        [Test]
+        public void GetEnterpriseUserFitnessData()
+        {
+            var client = new Client {AccessToken = "ENTERPRISE_KEY"};
+            ;
+            var data = client.GetEnterpriseUserFitnessData(UserUnderTest, OrganizationUnderTest, GetFilters);
+            Assert.IsTrue(data.Object.Count > 0);
+            Assert.IsTrue(data.Object.First().Id != null);
+        }
 
         [Test]
         public void GetUserFitnessData()
@@ -53,25 +70,5 @@ namespace ValidicCSharpTests
             Assert.IsTrue(data.Object.Count > 0);
             Assert.IsTrue(data.Object.First().Id != null);
         }
-
-        [Test]
-        public void GetEnterpriseFitnessData()
-        {
-            var client = new Client { AccessToken = "ENTERPRISE_KEY" }; ;
-            var data = client.GetEnterpriseFitnessData(UserUnderTest, GetFilters);
-            Assert.IsTrue(data.Object.Count > 0);
-            Assert.IsTrue(data.Object.First().Id != null);
-        }
-
-        [Test]
-        public void GetEnterpriseUserFitnessData()
-        {
-            var client = new Client { AccessToken = "ENTERPRISE_KEY" }; ;
-            var data = client.GetEnterpriseUserFitnessData(UserUnderTest, OrganizationUnderTest, GetFilters);
-            Assert.IsTrue(data.Object.Count > 0);
-            Assert.IsTrue(data.Object.First().Id != null);
-        }
-
-        #endregion  
     }
 }

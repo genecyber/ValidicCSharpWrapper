@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using ValidicCSharp.Model;
 using ValidicCSharpApp.Helpers;
@@ -9,7 +6,7 @@ using ValidicCSharpApp.Helpers;
 namespace ValidicCSharpApp.Views.DataViews
 {
     /// <summary>
-    /// Interaction logic for BiometricsView.xaml
+    ///     Interaction logic for BiometricsView.xaml
     /// </summary>
     public partial class BiometricsView : UserControl
     {

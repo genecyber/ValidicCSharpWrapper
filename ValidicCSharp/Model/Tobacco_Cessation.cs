@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using Newtonsoft.Json;
-using ValidicCSharp.Interfaces;
+﻿using Newtonsoft.Json;
 
 namespace ValidicCSharp.Model
 {

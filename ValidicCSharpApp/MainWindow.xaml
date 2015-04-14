@@ -12,12 +12,14 @@
     <!--    </Window.DataContext>-->
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="{Binding LogWindowColumnWidthSetting, Source={x:Static Properties:Settings.Default}, Mode=TwoWay}" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition
+                Width="{Binding LogWindowColumnWidthSetting, Source={x:Static Properties:Settings.Default}, Mode=TwoWay}" />
         </Grid.ColumnDefinitions>
-        <v:MainView Grid.Column="0"/>
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="5"/>
-        <v:LogView Grid.Column="2"/>
+        <v:MainView Grid.Column="0" />
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True"
+                      Width="5" />
+        <v:LogView Grid.Column="2" />
     </Grid>
 </Window>

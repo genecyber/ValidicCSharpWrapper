@@ -6,7 +6,7 @@ using ValidicCSharpApp.Helpers;
 namespace ValidicCSharpApp.Views.DataViews
 {
     /// <summary>
-    /// Interaction logic for FitnessView.xaml
+    ///     Interaction logic for FitnessView.xaml
     /// </summary>
     public partial class FitnessView : UserControl
     {

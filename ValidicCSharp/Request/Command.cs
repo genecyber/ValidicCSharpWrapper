@@ -20,7 +20,6 @@ namespace ValidicCSharp.Request
         public CommandType Type { get; set; }
         public List<ICommandFilter> Filters { get; set; }
         public int NoCache { get; set; }
-
         //Pieces of the request
         public string OrganizationId { get; set; }
         public bool Organization { get; set; }
@@ -32,7 +31,7 @@ namespace ValidicCSharp.Request
 
         public override string ToString()
         {
-            string target = "";
+            var target = "";
 
             if (UserId != null)
                 target = "/" + UserId + target;

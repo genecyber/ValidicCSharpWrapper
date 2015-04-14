@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 using ValidicCSharp.Interfaces;
 using ValidicCSharp.Model;
 using ValidicCSharp.Request;
@@ -14,7 +13,7 @@ namespace ValidicCSharp.Utility
 {
     public static class Extensions
     {
-        public static ValidicResult<T> ToResult<T>(this String response, string fromString = null)
+        public static ValidicResult<T> ToResult<T>(this string response, string fromString = null)
         {
             var parameter = typeof (T);
 
@@ -55,11 +54,10 @@ namespace ValidicCSharp.Utility
                 {
                     Debug.WriteLine(ex.Message);
                 }
-                
             }
 
-            T tConverted = default(T);
-            if(obj != null)
+            var tConverted = default(T);
+            if (obj != null)
                 tConverted = JsonConvert.DeserializeObject<T>(obj);
 
             var rootObject = new ValidicResult<T> {Object = tConverted};
@@ -69,7 +67,7 @@ namespace ValidicCSharp.Utility
             return rootObject;
         }
 
-        public static T Objectify<T>(this String response)
+        public static T Objectify<T>(this string response)
         {
             return JsonConvert.DeserializeObject<T>(response);
         }
@@ -85,7 +83,7 @@ namespace ValidicCSharp.Utility
             return command;
         }
 
-        public static Command AddSourceFilter(this Command command, String sourceToAdd)
+        public static Command AddSourceFilter(this Command command, string sourceToAdd)
         {
             command.Filters.AddSourceFilter(sourceToAdd);
             return command;
@@ -103,7 +101,7 @@ namespace ValidicCSharp.Utility
             return command;
         }
 
-        public static List<ICommandFilter> AddSourceFilter(this List<ICommandFilter> filterList, String sourceToAdd)
+        public static List<ICommandFilter> AddSourceFilter(this List<ICommandFilter> filterList, string sourceToAdd)
         {
             var source = (SourceFilter) filterList.FirstOrDefault(a => a.Type == FilterType.Source);
             if (source == null)
@@ -116,7 +114,7 @@ namespace ValidicCSharp.Utility
             return filterList;
         }
 
-        public static List<ICommandFilter> AddFromDateFilter(this List<ICommandFilter> filterList, String date)
+        public static List<ICommandFilter> AddFromDateFilter(this List<ICommandFilter> filterList, string date)
         {
             var dateFilter = (FromDateFilter) filterList.FirstOrDefault(a => a.Type == FilterType.FromDate);
 
@@ -129,7 +127,7 @@ namespace ValidicCSharp.Utility
             return filterList;
         }
 
-        public static List<ICommandFilter> AddToDateFilter(this List<ICommandFilter> filterList, String date)
+        public static List<ICommandFilter> AddToDateFilter(this List<ICommandFilter> filterList, string date)
         {
             var dateFilter = (ToDateFilter) filterList.FirstOrDefault(a => a.Type == FilterType.ToDate);
 

@@ -13,11 +13,12 @@ namespace ValidicCSharp.Utility
             var rndNum =
                 new Random(int.Parse(Guid.NewGuid().ToString().Substring(0, 8),
                     NumberStyles.HexNumber));
-            int rnd = rndNum.Next(300, 3000);
+            var rnd = rndNum.Next(300, 3000);
             return rnd;
         }
 
-        public static bool TryToConvertToDataTimeOffset(string sTimeStamp, string utcOffset, out DateTimeOffset newTimeStamp)
+        public static bool TryToConvertToDataTimeOffset(string sTimeStamp, string utcOffset,
+            out DateTimeOffset newTimeStamp)
         {
             newTimeStamp = DateTimeOffset.MinValue;
             DateTimeOffset timeStamp;
@@ -35,7 +36,8 @@ namespace ValidicCSharp.Utility
             return true;
         }
 
-        public static bool TryToConvertToDataTimeOffset(DateTimeOffset timeStamp, string utcOffset, out DateTimeOffset newTimeStamp)
+        public static bool TryToConvertToDataTimeOffset(DateTimeOffset timeStamp, string utcOffset,
+            out DateTimeOffset newTimeStamp)
         {
             newTimeStamp = DateTimeOffset.MinValue;
             var s = timeStamp.DateTime + utcOffset;
@@ -49,7 +51,7 @@ namespace ValidicCSharp.Utility
             return true;
         }
 
-        public static string ToString(object o, String delimeter = ", ", bool ignoreNull = true)
+        public static string ToString(object o, string delimeter = ", ", bool ignoreNull = true)
         {
             var myType = o.GetType();
             IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
@@ -68,6 +70,5 @@ namespace ValidicCSharp.Utility
             }
             return sb.ToString();
         }
-
     }
 }

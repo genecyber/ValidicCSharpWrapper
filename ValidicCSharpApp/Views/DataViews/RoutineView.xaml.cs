@@ -6,7 +6,7 @@ using ValidicCSharpApp.Helpers;
 namespace ValidicCSharpApp.Views.DataViews
 {
     /// <summary>
-    /// Interaction logic for RoutineView.xaml
+    ///     Interaction logic for RoutineView.xaml
     /// </summary>
     public partial class RoutineView : UserControl
     {
@@ -14,6 +14,7 @@ namespace ValidicCSharpApp.Views.DataViews
         {
             InitializeComponent();
         }
+
         private void CommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             ViewHelper.CopyCommandOnCanExecute(sender, e);
@@ -23,6 +24,5 @@ namespace ValidicCSharpApp.Views.DataViews
         {
             ViewHelper.CopyCommandOnExecuted<Routine>(sender, e);
         }
-
     }
 }

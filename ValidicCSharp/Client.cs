@@ -13,10 +13,10 @@ namespace ValidicCSharp
     public class Client
     {
         public static bool EnableLogging = false;
-        public static String ApplicationId;
-        private readonly Uri _baseUrl = new Uri("https://api.validic.com/v1/");
-        public String AccessToken = "DEMO_KEY";
+        public static string ApplicationId;
         public static Action<LogItem> AddLine = null;
+        private readonly Uri _baseUrl = new Uri("https://api.validic.com/v1/");
+        public string AccessToken = "DEMO_KEY";
 
         private static void OnAddLine(LogItem l)
         {
@@ -40,7 +40,7 @@ namespace ValidicCSharp
         public string ExecuteWebCommand(string command, HttpMethod method, object payload = null)
         {
             string json = null;
-            string address = _baseUrl + command + AppendAuth();
+            var address = _baseUrl + command + AppendAuth();
             if (EnableLogging)
             {
                 Debug.WriteLine(address);
@@ -68,13 +68,13 @@ namespace ValidicCSharp
                 var logItem = new LogItem {Address = address, Json = json};
                 OnAddLine(logItem);
             }
-            
+
             return json;
         }
 
-        public string PerformHttpRequest(String targetUrl)
+        public string PerformHttpRequest(string targetUrl)
         {
-            String json;
+            string json;
             using (var client = new WebClient())
             {
                 json = client.DownloadString(targetUrl);
@@ -98,122 +98,122 @@ namespace ValidicCSharp
 
         public List<App> GetUserApplications(string userId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Apps)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
-            List<App> applications = json.Objectify<Apps>().AppCollection;
+            var json = PerformCommand(command);
+            var applications = json.Objectify<Apps>().AppCollection;
 
             return applications;
         }
 
         public Me GetUserContextId()
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Me);
 
-            string json = PerformCommand(command);
-            Me me = json.Objectify<Credentials>().me;
+            var json = PerformCommand(command);
+            var me = json.Objectify<Credentials>().me;
 
             return me;
         }
 
         public ValidicResult<Profile> GetProfile()
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Profile);
 
-            string json = PerformCommand(command);
-            ValidicResult<Profile> profile = json.ToResult<Profile>();
+            var json = PerformCommand(command);
+            var profile = json.ToResult<Profile>();
 
             return profile;
         }
 
         public ValidicResult<List<Fitness>> GetUserFitnessData(string userId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Fitness)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
-            ValidicResult<List<Fitness>> fitness = json.ToResult<List<Fitness>>();
+            var json = PerformCommand(command);
+            var fitness = json.ToResult<List<Fitness>>();
 
             return fitness;
         }
 
         public ValidicResult<List<Routine>> GetUserRoutineData(string userId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Routine)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Routine>> routine = json.ToResult<List<Routine>>();
+            var routine = json.ToResult<List<Routine>>();
 
             return routine;
         }
 
         public ValidicResult<List<Nutrition>> GetUserNutritionData(string userId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Nutrition)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Nutrition>> nutrition = json.ToResult<List<Nutrition>>();
+            var nutrition = json.ToResult<List<Nutrition>>();
 
             return nutrition;
         }
 
         public ValidicResult<List<Sleep>> GetUserSleepData(string userId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Sleep)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Sleep>> sleep = json.ToResult<List<Sleep>>();
+            var sleep = json.ToResult<List<Sleep>>();
 
             return sleep;
         }
 
         public ValidicResult<List<Weight>> GetUserWeightData(string userId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Weight)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Weight>> weight = json.ToResult<List<Weight>>();
+            var weight = json.ToResult<List<Weight>>();
             return weight;
         }
 
         public ValidicResult<List<Diabetes>> GetUserDiabetesData(string userId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Diabetes)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Diabetes>> diabetes = json.ToResult<List<Diabetes>>();
+            var diabetes = json.ToResult<List<Diabetes>>();
             return diabetes;
         }
 
         public ValidicResult<List<Biometrics>> GetUserBiometricsData(string userId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Biometrics)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Biometrics>> biometrics = json.ToResult<List<Biometrics>>();
+            var biometrics = json.ToResult<List<Biometrics>>();
             return biometrics;
         }
 
@@ -221,13 +221,13 @@ namespace ValidicCSharp
 
         public List<App> GetEnterpriseUserApplications(string userId, string orgId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Apps)
                 .FromOrganization(orgId)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
-            List<App> applications = json.Objectify<Apps>().AppCollection;
+            var json = PerformCommand(command);
+            var applications = json.Objectify<Apps>().AppCollection;
 
             return applications;
         }
@@ -235,13 +235,13 @@ namespace ValidicCSharp
         public ValidicResult<List<Fitness>> GetEnterpriseUserFitnessData(string userId, string orgId,
             List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Fitness)
                 .FromOrganization(orgId)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
-            ValidicResult<List<Fitness>> fitness = json.ToResult<List<Fitness>>();
+            var json = PerformCommand(command);
+            var fitness = json.ToResult<List<Fitness>>();
 
             return fitness;
         }
@@ -249,14 +249,14 @@ namespace ValidicCSharp
         public ValidicResult<List<Routine>> GetEnterpriseUserRoutineData(string userId, string orgId,
             List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Routine)
                 .FromOrganization(orgId)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Routine>> routine = json.ToResult<List<Routine>>();
+            var routine = json.ToResult<List<Routine>>();
 
             return routine;
         }
@@ -264,14 +264,14 @@ namespace ValidicCSharp
         public ValidicResult<List<Nutrition>> GetEnterpriseUserNutritionData(string userId, string orgId,
             List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Nutrition)
                 .FromOrganization(orgId)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Nutrition>> nutrition = json.ToResult<List<Nutrition>>();
+            var nutrition = json.ToResult<List<Nutrition>>();
 
             return nutrition;
         }
@@ -279,14 +279,14 @@ namespace ValidicCSharp
         public ValidicResult<List<Sleep>> GetEnterpriseUserSleepData(string userId, string orgId,
             List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Sleep)
                 .FromOrganization(orgId)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Sleep>> sleep = json.ToResult<List<Sleep>>();
+            var sleep = json.ToResult<List<Sleep>>();
 
             return sleep;
         }
@@ -294,89 +294,89 @@ namespace ValidicCSharp
         public ValidicResult<List<Weight>> GetEnterpriseUserWeightData(string userId, string orgId,
             List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Weight)
                 .FromOrganization(orgId)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Weight>> weight = json.ToResult<List<Weight>>();
+            var weight = json.ToResult<List<Weight>>();
             return weight;
         }
 
         public ValidicResult<List<Diabetes>> GetEnterpriseUserDiabetesData(string userId, string orgId,
             List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Diabetes)
                 .FromOrganization(orgId)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Diabetes>> diabetes = json.ToResult<List<Diabetes>>();
+            var diabetes = json.ToResult<List<Diabetes>>();
             return diabetes;
         }
 
         public ValidicResult<List<Biometrics>> GetEnterpriseUserBiometricsData(string userId, string orgId,
             List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Biometrics)
                 .FromOrganization(orgId)
                 .FromUser(userId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Biometrics>> biometrics = json.ToResult<List<Biometrics>>();
+            var biometrics = json.ToResult<List<Biometrics>>();
             return biometrics;
         }
 
         public ValidicResult<List<Me>> GetEnterpriseUsers(string orgId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetUsers()
                 .FromOrganization(orgId);
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Me>> users = json.ToResult<List<Me>>("users");
+            var users = json.ToResult<List<Me>>("users");
             return users;
         }
 
         public List<App> GetEnterpriseApplications(string orgId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Apps)
                 .FromOrganization(orgId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
-            List<App> applications = json.Objectify<Apps>().AppCollection;
+            var json = PerformCommand(command);
+            var applications = json.Objectify<Apps>().AppCollection;
 
             return applications;
         }
 
         public ValidicResult<List<Fitness>> GetEnterpriseFitnessData(string orgId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Fitness)
                 .FromOrganization(orgId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
-            ValidicResult<List<Fitness>> fitness = json.ToResult<List<Fitness>>();
+            var json = PerformCommand(command);
+            var fitness = json.ToResult<List<Fitness>>();
 
             return fitness;
         }
 
         public ValidicResult<List<Routine>> GetEnterpriseRoutineData(string orgId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Routine)
                 .FromOrganization(orgId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Routine>> routine = json.ToResult<List<Routine>>();
+            var routine = json.ToResult<List<Routine>>();
 
             return routine;
         }
@@ -384,64 +384,64 @@ namespace ValidicCSharp
         public ValidicResult<List<Nutrition>> GetEnterpriseNutritionData(string orgId,
             List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Nutrition)
                 .FromOrganization(orgId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Nutrition>> nutrition = json.ToResult<List<Nutrition>>();
+            var nutrition = json.ToResult<List<Nutrition>>();
 
             return nutrition;
         }
 
         public ValidicResult<List<Sleep>> GetEnterpriseSleepData(string orgId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Sleep)
                 .FromOrganization(orgId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Sleep>> sleep = json.ToResult<List<Sleep>>();
+            var sleep = json.ToResult<List<Sleep>>();
 
             return sleep;
         }
 
         public ValidicResult<List<Weight>> GetEnterpriseWeightData(string orgId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Weight)
                 .FromOrganization(orgId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Weight>> weight = json.ToResult<List<Weight>>();
+            var weight = json.ToResult<List<Weight>>();
             return weight;
         }
 
         public ValidicResult<List<Diabetes>> GetEnterpriseDiabetesData(string orgId, List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Diabetes)
                 .FromOrganization(orgId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Diabetes>> diabetes = json.ToResult<List<Diabetes>>();
+            var diabetes = json.ToResult<List<Diabetes>>();
             return diabetes;
         }
 
         public ValidicResult<List<Biometrics>> GetEnterpriseBiometricsData(string orgId,
             List<ICommandFilter> filters = null)
         {
-            Command command = new Command()
+            var command = new Command()
                 .GetInformationType(CommandType.Biometrics)
                 .FromOrganization(orgId);
             if (filters != null) command.Filters = filters;
-            string json = PerformCommand(command);
+            var json = PerformCommand(command);
 
-            ValidicResult<List<Biometrics>> biometrics = json.ToResult<List<Biometrics>>();
+            var biometrics = json.ToResult<List<Biometrics>>();
             return biometrics;
         }
     }

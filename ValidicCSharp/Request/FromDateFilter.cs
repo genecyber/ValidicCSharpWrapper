@@ -1,4 +1,3 @@
-using System;
 using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Request
@@ -18,7 +17,7 @@ namespace ValidicCSharp.Request
             return "&start_date=" + Date;
         }
 
-        public FromDateFilter AddDate(String date)
+        public FromDateFilter AddDate(string date)
         {
             Date = date;
             return this;

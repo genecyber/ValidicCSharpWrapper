@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using ValidicCSharp.Interfaces;
@@ -21,7 +20,7 @@ namespace ValidicCSharp.Request
             return Sources.Aggregate("&source=", (current, source) => current + (source + " ")).Trim();
         }
 
-        public SourceFilter AddSource(String source)
+        public SourceFilter AddSource(string source)
         {
             Sources.Add(source);
             return this;

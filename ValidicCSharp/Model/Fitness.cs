@@ -1,6 +1,5 @@
 ﻿using System;
 using Newtonsoft.Json;
-using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
 {

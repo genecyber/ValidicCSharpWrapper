@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using ValidicCSharp;
 
@@ -12,7 +8,7 @@ namespace ValidicCSharpTests
     [TestFixture]
     public class BaseTests
     {
-        readonly StringBuilder _log = new StringBuilder();
+        private readonly StringBuilder _log = new StringBuilder();
 
         [TestFixtureSetUp]
         public void SetUp()
@@ -25,6 +21,7 @@ namespace ValidicCSharpTests
                 _log.AppendLine(a.Json);
             };
         }
+
         [TestFixtureTearDown]
         public void TearDown()
         {

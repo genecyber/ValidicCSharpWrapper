@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
 {
@@ -24,4 +23,3 @@ namespace ValidicCSharp.Model
         public double? TotalSleep { get; set; }
     }
 }
-

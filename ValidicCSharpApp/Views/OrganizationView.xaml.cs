@@ -3,7 +3,7 @@
 namespace ValidicCSharpApp.Views
 {
     /// <summary>
-    /// Interaction logic for OrganizationView.xaml
+    ///     Interaction logic for OrganizationView.xaml
     /// </summary>
     public partial class OrganizationView : UserControl
     {

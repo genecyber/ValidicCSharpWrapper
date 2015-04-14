@@ -1,14 +1,15 @@
 ﻿<UserControl x:Class="ValidicCSharpApp.Views.DataViews.AppsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <ListView Margin="10" ItemsSource="{Binding Path=Apps}">
             <ListView.CommandBindings>
-                <CommandBinding Command="Copy" CanExecute="CommandBinding_OnCanExecute" Executed="CommandBinding_OnExecuted" />
+                <CommandBinding Command="Copy" CanExecute="CommandBinding_OnCanExecute"
+                                Executed="CommandBinding_OnExecuted" />
             </ListView.CommandBindings>
             <ListView.View>
                 <GridView>
@@ -17,8 +18,9 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label>
-                                    <Hyperlink NavigateUri="{Binding Path=SyncUrl}" RequestNavigate="Hyperlink_OnRequestNavigate" >
-                                        <TextBlock Text="{Binding Path=SyncUrl}" TextWrapping="WrapWithOverflow"/>
+                                    <Hyperlink NavigateUri="{Binding Path=SyncUrl}"
+                                               RequestNavigate="Hyperlink_OnRequestNavigate">
+                                        <TextBlock Text="{Binding Path=SyncUrl}" TextWrapping="WrapWithOverflow" />
                                     </Hyperlink>
                                 </Label>
                             </DataTemplate>
@@ -30,8 +32,9 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label>
-                                    <Hyperlink NavigateUri="{Binding Path=DownloadLink}" RequestNavigate="Hyperlink_OnRequestNavigate" >
-                                        <TextBlock Text="{Binding Path=DownloadLink}" TextWrapping="WrapWithOverflow"/>
+                                    <Hyperlink NavigateUri="{Binding Path=DownloadLink}"
+                                               RequestNavigate="Hyperlink_OnRequestNavigate">
+                                        <TextBlock Text="{Binding Path=DownloadLink}" TextWrapping="WrapWithOverflow" />
                                     </Hyperlink>
                                 </Label>
                             </DataTemplate>
@@ -40,14 +43,14 @@
                     <GridViewColumn Header="Excerpt" Width="240">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=Excerpt}" TextWrapping="WrapWithOverflow"/>
+                                <TextBlock Text="{Binding Path=Excerpt}" TextWrapping="WrapWithOverflow" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="ExtraExcerpt" Width="350">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=ExtraExcerpt}" TextWrapping="WrapWithOverflow"/>
+                                <TextBlock Text="{Binding Path=ExtraExcerpt}" TextWrapping="WrapWithOverflow" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
 
@@ -65,7 +68,8 @@
                     <GridViewColumn Header="PlatformTypes" Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ListBox ItemsSource="{Binding Path=PlatformTypes}" Width="120" SelectedIndex="0" Height="100" />
+                                <ListBox ItemsSource="{Binding Path=PlatformTypes}" Width="120" SelectedIndex="0"
+                                         Height="100" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

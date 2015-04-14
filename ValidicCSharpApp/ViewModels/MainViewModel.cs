@@ -1,26 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ValidicCSharp;
-using ValidicCSharp.Model;
-using ValidicCSharp.Request;
-using ValidicCSharp.Utility;
 using ValidicCSharpApp.Models;
 
 namespace ValidicCSharpApp.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        #region Ccnstructor
+
+        public MainViewModel()
+        {
+            Client.AddLine += AddLine;
+            OpenOrCreateModel();
+            foreach (var organizationAuthenticationCredential in Model.OrganizationAuthenticationCredentials)
+            {
+                var record = new MainRecordModelView();
+                record.OrganizationAuthenticationCredential = organizationAuthenticationCredential;
+                MainRecords.Add(record);
+            }
+            SelectedMainRecord = MainRecords[0];
+
+            // SaveToFile("validic.json", Model);
+        }
+
+        #endregion
+
+        private void AddLine(LogItem a)
+        {
+            _logItems.Add(a);
+            SelectedLogItemIndex = _logItems.Count;
+        }
+
         #region Members
 
         private readonly List<MainRecordModelView> _mainRecords = new List<MainRecordModelView>();
@@ -29,11 +44,10 @@ namespace ValidicCSharpApp.ViewModels
 
         #endregion
 
-
         #region Properties
 
-
         public MainModel Model { get; set; }
+
         public int SelectedLogItemIndex
         {
             get { return _selectedLogItemIndex; }
@@ -65,11 +79,11 @@ namespace ValidicCSharpApp.ViewModels
             get { return _selectedMainRecord; }
             set
             {
-                if(_selectedMainRecord == value)
+                if (_selectedMainRecord == value)
                     return;
 
                 _selectedMainRecord = value;
-                if(_selectedMainRecord.Organization == null)
+                if (_selectedMainRecord.Organization == null)
                     _selectedMainRecord.GetOrganization();
 
                 RaisePropertyChanged();
@@ -77,28 +91,6 @@ namespace ValidicCSharpApp.ViewModels
         }
 
         #endregion
-
-        #region Ccnstructor
-        public MainViewModel()
-        {
-
-            Client.AddLine += AddLine;
-            OpenOrCreateModel();
-            foreach (var organizationAuthenticationCredential in Model.OrganizationAuthenticationCredentials)
-            {
-                MainRecordModelView record = new MainRecordModelView();
-                record.OrganizationAuthenticationCredential = organizationAuthenticationCredential;
-                MainRecords.Add(record);
-                
-            }
-            SelectedMainRecord = MainRecords[0];
-
-            // SaveToFile("validic.json", Model);
-
-        }
-
-        #endregion
-
 
         #region Support Functions
 
@@ -118,9 +110,9 @@ namespace ValidicCSharpApp.ViewModels
         public static T ReadFromFile<T>(string path)
         {
             using (var file = File.OpenText(path))
-            using (JsonTextReader reader = new JsonTextReader(file))
+            using (var reader = new JsonTextReader(file))
             {
-                var o2 = (JObject)JToken.ReadFrom(reader);
+                var o2 = (JObject) JToken.ReadFrom(reader);
                 return o2.ToObject<T>();
             }
         }
@@ -140,11 +132,5 @@ namespace ValidicCSharpApp.ViewModels
         }
 
         #endregion
-
-        private void AddLine(LogItem a)
-        {
-            _logItems.Add(a);
-            SelectedLogItemIndex = _logItems.Count;
-        }
     }
 }

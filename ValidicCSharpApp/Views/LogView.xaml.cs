@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Reflection;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using ValidicCSharp;
@@ -8,7 +6,7 @@ using ValidicCSharp;
 namespace ValidicCSharpApp.Views
 {
     /// <summary>
-    /// Interaction logic for LogView.xaml
+    ///     Interaction logic for LogView.xaml
     /// </summary>
     public partial class LogView : UserControl
     {

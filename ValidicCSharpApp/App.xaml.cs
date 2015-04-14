@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using ValidicCSharp;
 using ValidicCSharpApp.ViewModels;
 
 namespace ValidicCSharpApp
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    ///     Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
         // private static readonly ILog Log = LogManager.GetLogger(typeof(App));
         private readonly MainWindow _mainWindow = new MainWindow();
         private readonly MainViewModel _viewModel = new MainViewModel();
-
 
         protected override void OnStartup(StartupEventArgs e)
         {

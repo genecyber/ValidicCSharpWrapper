@@ -6,7 +6,7 @@ using ValidicCSharpApp.Helpers;
 namespace ValidicCSharpApp.Views.DataViews
 {
     /// <summary>
-    /// Interaction logic for TobaccoCessationView.xaml
+    ///     Interaction logic for TobaccoCessationView.xaml
     /// </summary>
     public partial class TobaccoCessationView : UserControl
     {
@@ -14,6 +14,7 @@ namespace ValidicCSharpApp.Views.DataViews
         {
             InitializeComponent();
         }
+
         private void CommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             ViewHelper.CopyCommandOnCanExecute(sender, e);

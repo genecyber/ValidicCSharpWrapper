@@ -6,7 +6,7 @@ using ValidicCSharpApp.Helpers;
 namespace ValidicCSharpApp.Views.DataViews
 {
     /// <summary>
-    /// Interaction logic for DiabetesView.xaml
+    ///     Interaction logic for DiabetesView.xaml
     /// </summary>
     public partial class DiabetesView : UserControl
     {
