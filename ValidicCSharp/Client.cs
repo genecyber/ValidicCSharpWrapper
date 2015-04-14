@@ -39,7 +39,7 @@ namespace ValidicCSharp
 
         public string ExecuteWebCommand(string command, HttpMethod method, object payload = null)
         {
-            String json = null;
+            string json = null;
             string address = _baseUrl + command + AppendAuth();
             using (var client = new WebClient())
             {
@@ -61,6 +61,8 @@ namespace ValidicCSharp
 
             if (EnableLogging)
             {
+                if(json != null)
+                    Debug.WriteLine(json);
                 var logItem = new LogItem {Address = address, Json = json};
                 OnAddLine(logItem);
             }

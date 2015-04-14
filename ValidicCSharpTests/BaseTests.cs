@@ -17,6 +17,7 @@ namespace ValidicCSharpTests
         [TestFixtureSetUp]
         public void SetUp()
         {
+            Client.EnableLogging = true;
             Client.AddLine += a =>
             {
                 _log.AppendLine(a.Name);

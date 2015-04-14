@@ -15,7 +15,7 @@ namespace ValidicCSharp.Request
 
         string ICommandFilter.ToString()
         {
-            return Date = "&end_date=" + Date;
+            return "&end_date=" + Date;
         }
 
         public ToDateFilter AddDate(String date)
