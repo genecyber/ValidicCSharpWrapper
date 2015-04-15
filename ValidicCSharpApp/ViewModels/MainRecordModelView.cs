@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
@@ -14,7 +16,7 @@ using ValidicCSharpApp.Views.DataViews;
 
 namespace ValidicCSharpApp.ViewModels
 {
-    public class MainRecordModelView : ViewModelBase
+    public class MainRecordModelView : BaseViewModel
     {
         #region Members
 
@@ -139,8 +141,8 @@ namespace ValidicCSharpApp.ViewModels
             CommandGetOrganizationApps = new RelayCommand(GetOrganizationApps, () => true);
             // 
             CommandDataSelected = new RelayCommand(DataSelected, () => true);
-            CommandMeUpdate = new RelayCommand(MeUpdate, () => true);
-            CommandMeUpdateAll = new RelayCommand(MeUpdateAll, () => true);
+            CommandMeUpdate = new RelayCommand(async () =>  await MeUpdateAsync(), () => true);
+            CommandMeUpdateAll = new RelayCommand(async ()=> await MeUpdateAllAsync(), () => true);
         }
 
         #endregion
@@ -279,7 +281,7 @@ namespace ValidicCSharpApp.ViewModels
         }
 
 
-        private void Update(MeViewModel record)
+        private async Task UpdateAsync(MeViewModel record)
         {
             var oac = OrganizationAuthenticationCredential;
             if (oac == null)
@@ -291,22 +293,22 @@ namespace ValidicCSharpApp.ViewModels
                 .GetInformationType(CommandType.refresh_token)
                 .FromUser(record.Me.Id);
 
-            var json = client.PerformCommand(command);
+            var json = await client.PerformCommandAsync(command);
             var result = json.ToResult<RefreshToken>("user");
             record.RefreshToken = result.Object;
         }
 
-        private void MeUpdate()
+        private async Task MeUpdateAsync()
         {
-            Update(SelectedMeRecord);
+            await UpdateAsync(SelectedMeRecord);
         }
 
-        private void MeUpdateAll()
+        private async Task MeUpdateAllAsync()
         {
             foreach (var record in MeData)
             {
                 Debug.WriteLine(record);
-                Update(record);
+                Dispatcher(async () => await UpdateAsync(record));
             }
         }
 

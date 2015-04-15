@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ValidicCSharp.Interfaces;
 using ValidicCSharp.Model;
@@ -72,6 +73,41 @@ namespace ValidicCSharp
             return json;
         }
 
+        public async Task<string> ExecuteWebCommandAsync(string command, HttpMethod method, object payload = null)
+        {
+            string json = null;
+            var address = _baseUrl + command + AppendAuth();
+            if (EnableLogging)
+            {
+                Debug.WriteLine(address);
+            }
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                try
+                {
+                    if (method == HttpMethod.GET)
+                        json = client.DownloadString(address);
+                    if (method == HttpMethod.POST && payload != null)
+                    {
+                        json = await client.UploadStringTaskAsync(new Uri(address), JsonConvert.SerializeObject(payload));
+                    }
+                }
+                catch (WebException ex)
+                {
+                    json = JsonConvert.SerializeObject(new AddUserResponse());
+                }
+            }
+
+            if (EnableLogging)
+            {
+                var logItem = new LogItem { Address = address, Json = json };
+                OnAddLine(logItem);
+            }
+
+            return json;
+        }
+
         public string PerformHttpRequest(string targetUrl)
         {
             string json;
@@ -86,6 +122,11 @@ namespace ValidicCSharp
         {
             var commandText = command.ToString();
             return ExecuteWebCommand(commandText, command.Method, command.Payload);
+        }
+        public async Task<string> PerformCommandAsync(Command command)
+        {
+            var commandText = command.ToString();
+            return await ExecuteWebCommandAsync(commandText, command.Method, command.Payload);
         }
 
         private string AppendAuth()

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using GalaSoft.MvvmLight;
@@ -9,7 +10,7 @@ using ValidicCSharpApp.Models;
 
 namespace ValidicCSharpApp.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : BaseViewModel
     {
         #region Ccnstructor
 
@@ -24,9 +25,9 @@ namespace ValidicCSharpApp.ViewModels
                 MainRecords.Add(record);
             }
             SelectedMainRecord = MainRecords[0];
-
             // SaveToFile("validic.json", Model);
         }
+
 
         #endregion
 
@@ -47,6 +48,19 @@ namespace ValidicCSharpApp.ViewModels
         #region Properties
 
         public MainModel Model { get; set; }
+
+        public override Action<Action> Dispatcher
+        {
+            get { return base.Dispatcher; }
+            set
+            {
+                base.Dispatcher = value;
+                foreach (var record in MainRecords)
+                {
+                    record.Dispatcher = value;
+                }
+            }
+        }
 
         public int SelectedLogItemIndex
         {

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using ValidicCSharp;
+using ValidicCSharpApp.Helpers;
 using ValidicCSharpApp.ViewModels;
 
 namespace ValidicCSharpApp
@@ -21,7 +22,7 @@ namespace ValidicCSharpApp
 
             // _viewModel.Dispatcher = ViewHelper.GetAddDelegate(_mainWindow);
 
-//            _viewModel.Output.OutputDispatcher = ViewHelper.GetAddDelegate(_mainWindow);
+            _viewModel.Dispatcher = ViewHelper.GetAddDelegate(_mainWindow);
 //            _viewModel.Output.LogMessage = m => _viewModel.Output.Messages.Add(m);
 //            _viewModel.SerialPortManager.StartScanningPorts();
             _mainWindow.DataContext = _viewModel;

@@ -74,6 +74,7 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\BaseConverter.cs" />
     <Compile Include="Helpers\ViewHelper.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainRecordModelView.cs" />
     <Compile Include="ViewModels\MeViewModel.cs" />
     <Compile Include="Views\DataViews\AppsView.xaml.cs">
