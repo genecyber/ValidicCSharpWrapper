@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -69,9 +70,11 @@ namespace ValidicCSharp.Request
         Weight,
         Diabetes,
         Biometrics,
-        [DataMember(Name = "tobacco_cessation")] Tobacco_Cessation,
+        refresh_token,
+        [DataMember(Name = "tobacco_cessation")] 
+        Tobacco_Cessation,
         Custom
-    }
+         }
 
     public enum ClassType
     {

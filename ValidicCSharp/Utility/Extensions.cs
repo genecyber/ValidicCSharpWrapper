@@ -36,7 +36,11 @@ namespace ValidicCSharp.Utility
             try
             {
                 var name = parameter.Name.ToLower();
-                var aa = JObject.FromObject(root[name]);
+                var element = root[name];
+                if (element == null && fromString != null)
+                    element = root[fromString];
+
+                var aa = JObject.FromObject(element);
                 obj = JsonConvert.SerializeObject(aa);
             }
             catch (Exception ex)
@@ -48,7 +52,9 @@ namespace ValidicCSharp.Utility
             {
                 try
                 {
-                    obj = JsonConvert.SerializeObject(JArray.FromObject(root[fromString]));
+                    var element = root[fromString];
+                    var array = JArray.FromObject(element);
+                    obj = JsonConvert.SerializeObject(array);
                 }
                 catch (Exception ex)
                 {

@@ -55,6 +55,7 @@
     <Compile Include="Model\Credentials.cs" />
     <Compile Include="Model\Measurement.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\RefreshToken.cs" />
     <Compile Include="Model\UserRequest.cs" />
     <Compile Include="Request\Command.cs" />
     <Compile Include="Request\FromDateFilter.cs" />

@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ValidicCSharp;
@@ -13,96 +16,12 @@ namespace ValidicCSharpApp.ViewModels
 {
     public class MainRecordModelView : ViewModelBase
     {
-        public MainRecordModelView()
-        {
-            CommandGetOrganization = new RelayCommand(GetOrganization, () => true);
-            CommandClearOrganization = new RelayCommand(ClearOrganization, () => true);
-
-            CommandGetOrganizationWeight = new RelayCommand(GetOrganizationWeight, () => true);
-            CommandGetOrganizationBiometrics = new RelayCommand(GetOrganizationBiometrics, () => true);
-            CommandGetOrganizationFitnessData = new RelayCommand(GetOrganizationFitnessData, () => true);
-            CommandGetOrganizationDiabetesData = new RelayCommand(GetOrganizationDiabetesData, () => true);
-            CommandGetOrganizationNutritionData = new RelayCommand(GetOrganizationNutritionData, () => true);
-            CommandGetOrganizationRoutineData = new RelayCommand(GetOrganizationRoutineData, () => true);
-            CommandGetOrganizationSleepData = new RelayCommand(GetOrganizationSleepData, () => true);
-            CommandGetOrganizationTobaccoCessationData = new RelayCommand(GetOrganizationTobaccoCessationData,
-                () => true);
-            CommandGetOrganizationProfiles = new RelayCommand(GetOrganizationProfiles, () => true);
-            CommandGetOrganizationMeData = new RelayCommand(GetOrganizationMeData, () => true);
-            CommandGetOrganizationApps = new RelayCommand(GetOrganizationApps, () => true);
-            // 
-            CommandDataSelected = new RelayCommand(DataSelected, () => true);
-        }
-
-        public object SelectedData
-        {
-            get { return _selectedData; }
-            set
-            {
-                if (_selectedData == value)
-                    return;
-
-
-                _selectedData = value;
-                TestSelecteData();
-                RaisePropertyChanged();
-            }
-        }
-
-        private void TestSelecteData()
-        {
-            var tabItem = SelectedData as TabItem;
-            if (tabItem == null)
-                return;
-
-            if (tabItem.Content is WeightView && Weights == null) GetOrganizationWeight();
-            else if (tabItem.Content is AppsView && Apps == null) GetOrganizationApps();
-            else if (tabItem.Content is BiometricsView && Biometrics == null) GetOrganizationBiometrics();
-            else if (tabItem.Content is FitnessView && FitnessData == null) GetOrganizationFitnessData();
-            else if (tabItem.Content is DiabetesView && DiabetesData == null) GetOrganizationDiabetesData();
-            else if (tabItem.Content is NutritionView && NutritionData == null) GetOrganizationNutritionData();
-            else if (tabItem.Content is RoutineView && RoutineData == null) GetOrganizationRoutineData();
-            else if (tabItem.Content is SleepView && SleepData == null) GetOrganizationSleepData();
-            else if (tabItem.Content is TobaccoCessationView && TobaccoCessationData == null)
-                GetOrganizationTobaccoCessationData();
-            else if (tabItem.Content is ProfileView && Profiles == null) GetOrganizationProfiles();
-            else if (tabItem.Content is MeView && MeData == null) GetOrganizationMeData();
-        }
-
-        private void DataSelected()
-        {
-        }
-
-        public string GetOrganizationJsonData(CommandType commandType)
-        {
-            var oac = OrganizationAuthenticationCredential;
-            if (oac == null)
-                return null;
-
-            var client = new Client {AccessToken = oac.AccessToken};
-            var command = new Command().FromOrganization(oac.OrganizationId)
-                .GetInformationType(commandType);
-            // .GetLatest();
-
-            var json = client.PerformCommand(command);
-            return json;
-        }
-
-        public ValidicResult<List<T>> GetOrganizationData<T>(CommandType commandType)
-        {
-            var json = GetOrganizationJsonData(commandType);
-            if (json == null)
-                return null;
-
-            var result = json.ToResult<List<T>>();
-            return result;
-        }
-
         #region Members
 
         private Organization _organization;
 
         private object _selectedData;
+        private MeViewModel _selectedMeRecord;
 
         #endregion
 
@@ -121,8 +40,13 @@ namespace ValidicCSharpApp.ViewModels
         public RelayCommand CommandGetOrganizationProfiles { get; private set; }
         public RelayCommand CommandGetOrganizationMeData { get; private set; }
         public RelayCommand CommandGetOrganizationApps { get; private set; }
-
         public RelayCommand CommandDataSelected { get; private set; }
+        public RelayCommand CommandMeUpdate { get; private set; }
+        public RelayCommand CommandMeUpdateAll { get; private set; }
+
+        #endregion
+
+        #region Properties
 
         public OrganizationAuthenticationCredentialModel OrganizationAuthenticationCredential { get; set; }
 
@@ -139,7 +63,7 @@ namespace ValidicCSharpApp.ViewModels
             }
         }
 
-        public List<Me> MeData { get; set; }
+        public ObservableCollection<MeViewModel> MeData { get; set; }
 
         public List<Profile> Profiles { get; set; }
 
@@ -159,10 +83,68 @@ namespace ValidicCSharpApp.ViewModels
 
         public List<Tobacco_Cessation> TobaccoCessationData { get; set; }
 
-
         public List<ValidicCSharp.Model.App> Apps { get; set; }
 
+        public object SelectedData
+        {
+            get { return _selectedData; }
+            set
+            {
+                if (_selectedData == value)
+                    return;
+
+
+                _selectedData = value;
+                TestSelecteData();
+                RaisePropertyChanged();
+            }
+        }
+
+        public MeViewModel SelectedMeRecord
+        {
+            get { return _selectedMeRecord; }
+            set
+            {
+                if (_selectedMeRecord == value)
+                    return;
+
+
+                _selectedMeRecord = value;
+                RaisePropertyChanged();
+            }
+        }
+
         #endregion
+
+        #region Constructor
+
+        public MainRecordModelView()
+        {
+            MeData = new ObservableCollection<MeViewModel>();
+
+            CommandGetOrganization = new RelayCommand(GetOrganization, () => true);
+            CommandClearOrganization = new RelayCommand(ClearOrganization, () => true);
+
+            CommandGetOrganizationWeight = new RelayCommand(GetOrganizationWeight, () => true);
+            CommandGetOrganizationBiometrics = new RelayCommand(GetOrganizationBiometrics, () => true);
+            CommandGetOrganizationFitnessData = new RelayCommand(GetOrganizationFitnessData, () => true);
+            CommandGetOrganizationDiabetesData = new RelayCommand(GetOrganizationDiabetesData, () => true);
+            CommandGetOrganizationNutritionData = new RelayCommand(GetOrganizationNutritionData, () => true);
+            CommandGetOrganizationRoutineData = new RelayCommand(GetOrganizationRoutineData, () => true);
+            CommandGetOrganizationSleepData = new RelayCommand(GetOrganizationSleepData, () => true);
+            CommandGetOrganizationTobaccoCessationData = new RelayCommand(GetOrganizationTobaccoCessationData,
+                () => true);
+            CommandGetOrganizationProfiles = new RelayCommand(GetOrganizationProfiles, () => true);
+            CommandGetOrganizationMeData = new RelayCommand(GetOrganizationMeData, () => true);
+            CommandGetOrganizationApps = new RelayCommand(GetOrganizationApps, () => true);
+            // 
+            CommandDataSelected = new RelayCommand(DataSelected, () => true);
+            CommandMeUpdate = new RelayCommand(MeUpdate, () => true);
+            CommandMeUpdateAll = new RelayCommand(MeUpdateAll, () => true);
+        }
+
+        #endregion
+
 
         #region  Commands Implemenation
 
@@ -172,13 +154,19 @@ namespace ValidicCSharpApp.ViewModels
             if (oac == null)
                 return;
 
-            var client = new Client {AccessToken = oac.AccessToken};
+            var client = new Client { AccessToken = oac.AccessToken };
             var command = new Command().FromOrganization(oac.OrganizationId)
                 .GetUsers();
 
             var json = client.PerformCommand(command);
             var result = json.ToResult<List<Me>>("users");
-            MeData = result != null ? result.Object : null;
+            if (result != null)
+            {
+                foreach (var me in result.Object)
+                {
+                    MeData.Add(new MeViewModel { Me = me, RefreshToken = new RefreshToken() });
+                }
+            }
             RaisePropertyChanged("MeData");
         }
 
@@ -263,7 +251,7 @@ namespace ValidicCSharpApp.ViewModels
             if (oac == null)
                 return;
 
-            var client = new Client {AccessToken = oac.AccessToken};
+            var client = new Client { AccessToken = oac.AccessToken };
             var command = new Command().FromOrganization(oac.OrganizationId);
 
             var json = client.PerformCommand(command);
@@ -290,6 +278,89 @@ namespace ValidicCSharpApp.ViewModels
             //            RaisePropertyChanged("Organization");
         }
 
+
+        private void Update(MeViewModel record)
+        {
+            var oac = OrganizationAuthenticationCredential;
+            if (oac == null)
+                return;
+
+            var client = new Client { AccessToken = oac.AccessToken };
+            var command = new Command()
+                .FromOrganization(oac.OrganizationId)
+                .GetInformationType(CommandType.refresh_token)
+                .FromUser(record.Me.Id);
+
+            var json = client.PerformCommand(command);
+            var result = json.ToResult<RefreshToken>("user");
+            record.RefreshToken = result.Object;
+        }
+
+        private void MeUpdate()
+        {
+            Update(SelectedMeRecord);
+        }
+
+        private void MeUpdateAll()
+        {
+            foreach (var record in MeData)
+            {
+                Debug.WriteLine(record);
+                Update(record);
+            }
+        }
+
+
         #endregion
+
+
+        private void TestSelecteData()
+        {
+            var tabItem = SelectedData as TabItem;
+            if (tabItem == null)
+                return;
+
+            if (tabItem.Content is WeightView && Weights == null) GetOrganizationWeight();
+            else if (tabItem.Content is AppsView && Apps == null) GetOrganizationApps();
+            else if (tabItem.Content is BiometricsView && Biometrics == null) GetOrganizationBiometrics();
+            else if (tabItem.Content is FitnessView && FitnessData == null) GetOrganizationFitnessData();
+            else if (tabItem.Content is DiabetesView && DiabetesData == null) GetOrganizationDiabetesData();
+            else if (tabItem.Content is NutritionView && NutritionData == null) GetOrganizationNutritionData();
+            else if (tabItem.Content is RoutineView && RoutineData == null) GetOrganizationRoutineData();
+            else if (tabItem.Content is SleepView && SleepData == null) GetOrganizationSleepData();
+            else if (tabItem.Content is TobaccoCessationView && TobaccoCessationData == null)
+                GetOrganizationTobaccoCessationData();
+            else if (tabItem.Content is ProfileView && Profiles == null) GetOrganizationProfiles();
+            else if (tabItem.Content is MeView && MeData.Count == 0) GetOrganizationMeData();
+        }
+
+        private void DataSelected()
+        {
+        }
+
+        public string GetOrganizationJsonData(CommandType commandType)
+        {
+            var oac = OrganizationAuthenticationCredential;
+            if (oac == null)
+                return null;
+
+            var client = new Client {AccessToken = oac.AccessToken};
+            var command = new Command().FromOrganization(oac.OrganizationId)
+                .GetInformationType(commandType);
+            // .GetLatest();
+
+            var json = client.PerformCommand(command);
+            return json;
+        }
+
+        public ValidicResult<List<T>> GetOrganizationData<T>(CommandType commandType)
+        {
+            var json = GetOrganizationJsonData(commandType);
+            if (json == null)
+                return null;
+
+            var result = json.ToResult<List<T>>();
+            return result;
+        }
     }
 }
