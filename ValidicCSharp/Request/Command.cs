@@ -21,11 +21,13 @@ namespace ValidicCSharp.Request
         public CommandType Type { get; set; }
         public List<ICommandFilter> Filters { get; set; }
         public int NoCache { get; set; }
+
         //Pieces of the request
         public string OrganizationId { get; set; }
         public bool Organization { get; set; }
         public bool User { get; set; }
         public string UserId { get; set; }
+
         public HttpMethod Method { get; set; }
         public object Payload { get; set; }
         public bool Latest { get; set; }
@@ -34,14 +36,18 @@ namespace ValidicCSharp.Request
         {
             var target = "";
 
+            // User
             if (UserId != null)
                 target = "/" + UserId + target;
             if (User)
                 target = "/users" + target;
+
+            // Organization
             if (OrganizationId != null)
                 target = "/" + OrganizationId + target;
             if (Organization)
                 target = "organizations" + target;
+
             if (Type != CommandType.None)
                 target += "/" + Type.ToString().ToLower() + (Latest ? "/latest" : "") + ".json";
 
@@ -150,7 +156,9 @@ namespace ValidicCSharp.Request
 
         public static string GetStringAndStripRandom(this Command command)
         {
-            return command.ToString().Split('?')[0];
+            var text = command.ToString();
+            var split = text.Split('?');
+            return split[0];
         }
     }
 

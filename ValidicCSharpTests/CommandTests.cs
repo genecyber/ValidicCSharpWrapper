@@ -12,7 +12,8 @@ namespace ValidicCSharpTests
             var command = new Command()
                 .GetOrganizations();
 
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/organizations/");
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "organizations.json");
         }
 
         [Test]
@@ -21,7 +22,8 @@ namespace ValidicCSharpTests
             var command = new Command()
                 .GetUsers();
 
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/users/");
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "/users.json");
         }
 
         [Test]
@@ -32,8 +34,8 @@ namespace ValidicCSharpTests
                 .FromUser("bar")
                 .FromOrganization("foo");
 
-
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/organizations/foo/users/bar/tobacco_cessation.json");
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "organizations/foo/users/bar/tobacco_cessation.json");
         }
 
         [Test]
@@ -43,7 +45,8 @@ namespace ValidicCSharpTests
                 .FromOrganization("foo")
                 .GetInformationType(CommandType.Fitness);
 
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/organizations/foo/fitness.json");
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "organizations/foo/fitness.json");
         }
 
         [Test]
@@ -77,7 +80,8 @@ namespace ValidicCSharpTests
             var command = new Command()
                 .GetInformationType(CommandType.Me);
 
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/UserObject.json");
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "/me.json");
         }
 
         [Test]
@@ -87,8 +91,8 @@ namespace ValidicCSharpTests
                 .GetUsers()
                 .FromOrganization("foo");
 
-
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/organizations/foo/users/");
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "organizations/foo/users.json");
         }
 
         [Test]
@@ -98,7 +102,8 @@ namespace ValidicCSharpTests
                 .GetUser("User1")
                 .FromOrganization("foo");
 
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/organizations/foo/users/User1.json");
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "organizations/foo/users/User1.json");
         }
     }
 }

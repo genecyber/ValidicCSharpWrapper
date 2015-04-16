@@ -25,7 +25,6 @@ namespace ValidicCSharp
             if (tmp != null)
                 tmp(l);
         }
-
         private static string GetFunctionName(int skipFrames)
         {
             var s1 = new StackFrame(1, true).GetMethod().Name;
@@ -41,7 +40,7 @@ namespace ValidicCSharp
         public string ExecuteWebCommand(string command, HttpMethod method, object payload = null)
         {
             string json = null;
-            var address = _baseUrl + command + AppendAuth();
+            var address = _baseUrl + command;
             if (EnableLogging)
             {
                 Debug.WriteLine(address);
@@ -76,7 +75,7 @@ namespace ValidicCSharp
         public async Task<string> ExecuteWebCommandAsync(string command, HttpMethod method, object payload = null)
         {
             string json = null;
-            var address = _baseUrl + command + AppendAuth();
+            var address = _baseUrl + command;
             if (EnableLogging)
             {
                 Debug.WriteLine(address);
@@ -108,7 +107,7 @@ namespace ValidicCSharp
             return json;
         }
 
-        public string PerformHttpRequest(string targetUrl)
+        public static string PerformHttpRequest(string targetUrl)
         {
             string json;
             using (var client = new WebClient())
@@ -120,34 +119,26 @@ namespace ValidicCSharp
 
         public string PerformCommand(Command command)
         {
+            AppendAuth(command);
             var commandText = command.ToString();
             return ExecuteWebCommand(commandText, command.Method, command.Payload);
         }
         public async Task<string> PerformCommandAsync(Command command)
         {
+            AppendAuth(command);
             var commandText = command.ToString();
             return await ExecuteWebCommandAsync(commandText, command.Method, command.Payload);
         }
 
-        private string AppendAuth()
+        public void AppendAuth(Command command)
         {
-            return "&access_token=" + AccessToken;
+            if (string.IsNullOrEmpty(AccessToken))
+                return;
+
+            command.AccessToken(AccessToken);
         }
 
-        // Standard User Data
-
-
-        public List<App> GetUserApplications(string userId, List<ICommandFilter> filters = null)
-        {
-            var command = new Command()
-                .GetInformationType(CommandType.Apps)
-                .FromUser(userId);
-            if (filters != null) command.Filters = filters;
-            var json = PerformCommand(command);
-            var applications = json.Objectify<Apps>().AppCollection;
-
-            return applications;
-        }
+        #region Standard User Data
 
         public Me GetUserContextId()
         {
@@ -169,6 +160,22 @@ namespace ValidicCSharp
             var profile = json.ToResult<Profile>();
 
             return profile;
+        }
+
+        #endregion
+
+        #region Enterprise User Data
+
+        public List<App> GetUserApplications(string userId, List<ICommandFilter> filters = null)
+        {
+            var command = new Command()
+                .GetInformationType(CommandType.Apps)
+                .FromUser(userId);
+            if (filters != null) command.Filters = filters;
+            var json = PerformCommand(command);
+            var applications = json.Objectify<Apps>().AppCollection;
+
+            return applications;
         }
 
         public ValidicResult<List<Fitness>> GetUserFitnessData(string userId, List<ICommandFilter> filters = null)
@@ -258,7 +265,23 @@ namespace ValidicCSharp
             return biometrics;
         }
 
-        //Enterprise User Data
+        public async Task<ValidicResult<RefreshToken>> GetUserRefreshTokenAsync(string userId, string orgId, List<ICommandFilter> filters = null)
+        {
+            var command = new Command()
+               .FromOrganization(orgId)
+               .GetInformationType(CommandType.refresh_token)
+               .FromUser(userId);
+
+            if (filters != null) command.Filters = filters;
+
+            var json = await PerformCommandAsync(command);
+            var result = json.ToResult<RefreshToken>("user");
+            return result;
+        }
+
+        #endregion
+
+        #region Enterprise User Data
 
         public List<App> GetEnterpriseUserApplications(string userId, string orgId, List<ICommandFilter> filters = null)
         {
@@ -287,8 +310,7 @@ namespace ValidicCSharp
             return fitness;
         }
 
-        public ValidicResult<List<Routine>> GetEnterpriseUserRoutineData(string userId, string orgId,
-            List<ICommandFilter> filters = null)
+        public ValidicResult<List<Routine>> GetEnterpriseUserRoutineData(string userId, string orgId, List<ICommandFilter> filters = null)
         {
             var command = new Command()
                 .GetInformationType(CommandType.Routine)
@@ -302,8 +324,7 @@ namespace ValidicCSharp
             return routine;
         }
 
-        public ValidicResult<List<Nutrition>> GetEnterpriseUserNutritionData(string userId, string orgId,
-            List<ICommandFilter> filters = null)
+        public ValidicResult<List<Nutrition>> GetEnterpriseUserNutritionData(string userId, string orgId, List<ICommandFilter> filters = null)
         {
             var command = new Command()
                 .GetInformationType(CommandType.Nutrition)
@@ -317,8 +338,7 @@ namespace ValidicCSharp
             return nutrition;
         }
 
-        public ValidicResult<List<Sleep>> GetEnterpriseUserSleepData(string userId, string orgId,
-            List<ICommandFilter> filters = null)
+        public ValidicResult<List<Sleep>> GetEnterpriseUserSleepData(string userId, string orgId, List<ICommandFilter> filters = null)
         {
             var command = new Command()
                 .GetInformationType(CommandType.Sleep)
@@ -374,6 +394,10 @@ namespace ValidicCSharp
             return biometrics;
         }
 
+        #endregion
+
+        #region Enterprise Data
+
         public ValidicResult<List<Me>> GetEnterpriseUsers(string orgId, List<ICommandFilter> filters = null)
         {
             var command = new Command()
@@ -422,8 +446,7 @@ namespace ValidicCSharp
             return routine;
         }
 
-        public ValidicResult<List<Nutrition>> GetEnterpriseNutritionData(string orgId,
-            List<ICommandFilter> filters = null)
+        public ValidicResult<List<Nutrition>> GetEnterpriseNutritionData(string orgId, List<ICommandFilter> filters = null)
         {
             var command = new Command()
                 .GetInformationType(CommandType.Nutrition)
@@ -473,17 +496,19 @@ namespace ValidicCSharp
             return diabetes;
         }
 
-        public ValidicResult<List<Biometrics>> GetEnterpriseBiometricsData(string orgId,
-            List<ICommandFilter> filters = null)
+        public ValidicResult<List<Biometrics>> GetEnterpriseBiometricsData(string orgId, List<ICommandFilter> filters = null)
         {
             var command = new Command()
                 .GetInformationType(CommandType.Biometrics)
                 .FromOrganization(orgId);
+
             if (filters != null) command.Filters = filters;
             var json = PerformCommand(command);
 
             var biometrics = json.ToResult<List<Biometrics>>();
             return biometrics;
         }
+
+        #endregion
     }
 }

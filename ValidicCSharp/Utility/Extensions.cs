@@ -89,61 +89,76 @@ namespace ValidicCSharp.Utility
             return command;
         }
 
-        public static Command AddSourceFilter(this Command command, string sourceToAdd)
+        public static Command AddSourceFilter(this Command command, string value)
         {
-            command.Filters.AddSourceFilter(sourceToAdd);
+            command.Filters.AddSourceFilter(value);
             return command;
         }
 
-        public static Command FromDate(this Command command, string date)
+        public static Command FromDate(this Command command, string value)
         {
-            command.Filters.AddFromDateFilter(date);
+            command.Filters.AddFromDateFilter(value);
             return command;
         }
 
-        public static Command ToDate(this Command command, string date)
+        public static Command ToDate(this Command command, string value)
         {
-            command.Filters.AddToDateFilter(date);
+            command.Filters.AddToDateFilter(value);
             return command;
         }
 
-        public static List<ICommandFilter> AddSourceFilter(this List<ICommandFilter> filterList, string sourceToAdd)
+        public static Command AuthenticationToken(this Command command, string value)
         {
-            var source = (SourceFilter) filterList.FirstOrDefault(a => a.Type == FilterType.Source);
-            if (source == null)
-            {
-                source = new SourceFilter();
-                filterList.Add(source);
-            }
-            source.AddSource(sourceToAdd);
+            command.Filters.AddAuthenticationTokenFilter(value);
+            return command;
+        }
 
+        public static Command AccessToken(this Command command, string value)
+        {
+            command.Filters.AddAccessTokenFilter(value);
+            return command;
+        }
+        #region Add Filter
+
+        public static List<ICommandFilter> AddFilter<T>(this List<ICommandFilter> filterList, FilterType filterType, string value) where T : ICommandFilter, new()
+        {
+            var filter = (T)filterList.FirstOrDefault(a => a.Type == filterType);
+            if (filter == null)
+            {
+                filter = new T();
+                filterList.Add(filter);
+            }
+            filter.Add(value);
             return filterList;
         }
 
-        public static List<ICommandFilter> AddFromDateFilter(this List<ICommandFilter> filterList, string date)
-        {
-            var dateFilter = (FromDateFilter) filterList.FirstOrDefault(a => a.Type == FilterType.FromDate);
 
-            if (dateFilter == null)
-            {
-                dateFilter = new FromDateFilter();
-                filterList.Add(dateFilter);
-            }
-            dateFilter.AddDate(date);
-            return filterList;
+        public static List<ICommandFilter> AddSourceFilter(this List<ICommandFilter> filterList, string value)
+        {
+            return AddFilter<SourceFilter>(filterList, FilterType.Source, value);
         }
 
-        public static List<ICommandFilter> AddToDateFilter(this List<ICommandFilter> filterList, string date)
+        public static List<ICommandFilter> AddFromDateFilter(this List<ICommandFilter> filterList, string value)
         {
-            var dateFilter = (ToDateFilter) filterList.FirstOrDefault(a => a.Type == FilterType.ToDate);
-
-            if (dateFilter == null)
-            {
-                dateFilter = new ToDateFilter();
-                filterList.Add(dateFilter);
-            }
-            dateFilter.AddDate(date);
-            return filterList;
+            return AddFilter<FromDateFilter>(filterList, FilterType.FromDate, value);
         }
+
+        public static List<ICommandFilter> AddToDateFilter(this List<ICommandFilter> filterList, string value)
+        {
+            return AddFilter<ToDateFilter>(filterList, FilterType.ToDate, value);
+        }
+
+        public static List<ICommandFilter> AddAuthenticationTokenFilter(this List<ICommandFilter> filterList, string value)
+        {
+            return AddFilter<AuthenticationTokenFilter>(filterList, FilterType.AuthenticationToken, value);
+        }
+
+        public static List<ICommandFilter> AddAccessTokenFilter(this List<ICommandFilter> filterList, string value)
+        {
+            return AddFilter<AccessTokenFilter>(filterList, FilterType.AccessToken, value);
+        }
+
+
+        #endregion
     }
 }

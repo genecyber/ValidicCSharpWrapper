@@ -16,7 +16,7 @@ namespace ValidicCSharpTests
         {
             get
             {
-                var filters = new List<ICommandFilter> {new FromDateFilter {Date = "09-01-01"}};
+                var filters = new List<ICommandFilter> {new FromDateFilter {Value = "09-01-01"}};
                 return filters;
             }
         }
@@ -45,8 +45,7 @@ namespace ValidicCSharpTests
         public void GetEnterpriseFitnessData()
         {
             var client = new Client {AccessToken = "ENTERPRISE_KEY"};
-            ;
-            var data = client.GetEnterpriseFitnessData(UserUnderTest, GetFilters);
+            var data = client.GetEnterpriseFitnessData(OrganizationUnderTest, GetFilters);
             Assert.IsTrue(data.Object.Count > 0);
             Assert.IsTrue(data.Object.First().Id != null);
         }
@@ -61,6 +60,7 @@ namespace ValidicCSharpTests
             Assert.IsTrue(data.Object.First().Id != null);
         }
 
+#if TEMP
         [Test]
         public void GetUserFitnessData()
         {
@@ -70,5 +70,6 @@ namespace ValidicCSharpTests
             Assert.IsTrue(data.Object.Count > 0);
             Assert.IsTrue(data.Object.First().Id != null);
         }
+#endif
     }
 }

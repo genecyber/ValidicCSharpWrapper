@@ -4,7 +4,7 @@ using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Request
 {
-    public class SourceFilter : ICommandFilter
+    public class SourceFilter : BaseFilter, ICommandFilter
     {
         public SourceFilter()
         {
@@ -13,17 +13,15 @@ namespace ValidicCSharp.Request
         }
 
         public List<string> Sources { get; set; }
-        public FilterType Type { get; set; }
 
         string ICommandFilter.ToString()
         {
             return Sources.Aggregate("&source=", (current, source) => current + (source + " ")).Trim();
         }
 
-        public SourceFilter AddSource(string source)
+        public void Add(string source)
         {
             Sources.Add(source);
-            return this;
         }
     }
 }

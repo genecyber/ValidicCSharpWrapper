@@ -58,6 +58,7 @@
     <Compile Include="CommandTests.cs" />
     <Compile Include="Mocks\JsonMocks.cs" />
     <Compile Include="ModelTests.cs" />
+    <Compile Include="CustomerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

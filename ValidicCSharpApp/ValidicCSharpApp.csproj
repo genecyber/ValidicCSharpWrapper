@@ -113,7 +113,6 @@
     <Compile Include="Views\DateConverter.cs" />
     <Compile Include="Helpers\IndexConverter.cs" />
     <Compile Include="Models\MainModel.cs" />
-    <Compile Include="Models\OrganizationAuthenticationCredentialModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\OrganizationViewModel.cs" />

@@ -3,6 +3,7 @@ namespace ValidicCSharp.Interfaces
     public interface ICommandFilter
     {
         FilterType Type { get; set; }
+        void Add(string value);
         string ToString();
     }
 
@@ -10,6 +11,8 @@ namespace ValidicCSharp.Interfaces
     {
         Source = 0,
         FromDate,
-        ToDate
+        ToDate,
+        AuthenticationToken,
+        AccessToken
     }
 }

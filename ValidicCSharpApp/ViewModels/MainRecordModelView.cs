@@ -50,7 +50,7 @@ namespace ValidicCSharpApp.ViewModels
 
         #region Properties
 
-        public OrganizationAuthenticationCredentialModel OrganizationAuthenticationCredential { get; set; }
+        public OrganizationAuthenticationCredentials OrganizationAuthenticationCredential { get; set; }
 
         public Organization Organization
         {
@@ -156,19 +156,14 @@ namespace ValidicCSharpApp.ViewModels
             if (oac == null)
                 return;
 
-            var client = new Client { AccessToken = oac.AccessToken };
-            var command = new Command().FromOrganization(oac.OrganizationId)
-                .GetUsers();
+            var client = new Client {AccessToken = oac.AccessToken};
+            var result = client.GetEnterpriseUsers(oac.OrganizationId);
+            if (result == null)
+                return;
 
-            var json = client.PerformCommand(command);
-            var result = json.ToResult<List<Me>>("users");
-            if (result != null)
-            {
-                foreach (var me in result.Object)
-                {
-                    MeData.Add(new MeViewModel { Me = me, RefreshToken = new RefreshToken() });
-                }
-            }
+            foreach (var me in result.Object)
+                MeData.Add(new MeViewModel {Me = me, RefreshToken = new RefreshToken()});
+
             RaisePropertyChanged("MeData");
         }
 
@@ -288,13 +283,7 @@ namespace ValidicCSharpApp.ViewModels
                 return;
 
             var client = new Client { AccessToken = oac.AccessToken };
-            var command = new Command()
-                .FromOrganization(oac.OrganizationId)
-                .GetInformationType(CommandType.refresh_token)
-                .FromUser(record.Me.Id);
-
-            var json = await client.PerformCommandAsync(command);
-            var result = json.ToResult<RefreshToken>("user");
+            var result = await client.GetUserRefreshTokenAsync(record.Me.Id, oac.OrganizationId);
             record.RefreshToken = result.Object;
         }
 
