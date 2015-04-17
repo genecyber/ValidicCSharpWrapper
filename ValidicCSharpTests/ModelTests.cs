@@ -23,7 +23,8 @@ namespace ValidicCSharpTests
         public CustomerModel Customer = Acme;
 
         #region Support Functions
-        private int MakeRandom(int to = 10000)
+
+        private static int MakeRandom(int to = 10000)
         {
             var random = new Random();
             return random.Next(0, to);
@@ -67,18 +68,7 @@ namespace ValidicCSharpTests
         [Test]
         public void CanAddUser()
         {
-            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
-            var command = new Command()
-                .AddUser(new AddUserRequest
-                {
-                    access_token = client.AccessToken,
-                    user = new UserRequest {uid = MakeRandom().ToString()}
-                })
-                .ToOrganization(Customer.Credentials.OrganizationId);
-
-            var json = client.PerformCommand(command);
-            var response = json.Objectify<AddUserResponse>();
-
+            var response = Customer.AddUser(MakeRandom().ToString());
             Assert.IsTrue(response.user._id != null);
             Assert.IsTrue(response.code.Equals(201));
         }
@@ -86,20 +76,8 @@ namespace ValidicCSharpTests
         [Test]
         public void CanAddUserWithProfile()
         {
-            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
-            //make a user request object
-            var newUserWithProfile = new UserRequest {uid = MakeRandom().ToString()};
-            //add a profile opbject to the newly created request object
-            newUserWithProfile.profile = new Profile {Country = "United States", Gender = GenderType.M, Weight = 125};
-            //create a new command to "add user" and "to organization"
-            var command = new Command()
-                .AddUser(new AddUserRequest {access_token = client.AccessToken, user = newUserWithProfile})
-                .ToOrganization(Customer.Credentials.OrganizationId);
-            //execute the command
-            var json = client.PerformCommand(command);
-            //deserialize the json into a userresponse object
-            var response = json.Objectify<AddUserResponse>();
-
+            var profile = new Profile { Country = "United States", Gender = GenderType.M, Weight = 125 };
+            var response = Customer.AddUser(MakeRandom().ToString(), profile);
             Assert.IsTrue(response.user._id != null);
             Assert.IsTrue(response.code.Equals(201));
             Assert.IsTrue(response.user.profile.Gender == GenderType.M);
