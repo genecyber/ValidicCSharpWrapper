@@ -70,7 +70,18 @@ namespace ValidicCSharpTests
         {
             var response = Customer.AddUser(MakeRandom().ToString());
             Assert.IsTrue(response.user._id != null);
-            Assert.IsTrue(response.code.Equals(201));
+            Assert.IsTrue(response.code == (int)StatusCode.Created);
+        }
+        [Test]
+        public void AddUserWithSameId()
+        {
+            var uid = MakeRandom().ToString();
+            var response1 = Customer.AddUser(uid);
+            Assert.IsTrue(response1.user._id != null);
+            Assert.IsTrue(response1.code == (int)StatusCode.Created);
+            var response2 = Customer.AddUser(uid);
+            Assert.IsTrue(response2.user == null);
+            Assert.IsTrue(response2.code == (int)StatusCode.Conflict);
         }
 
         [Test]
@@ -79,9 +90,10 @@ namespace ValidicCSharpTests
             var profile = new Profile { Country = "United States", Gender = GenderType.M, Weight = 125 };
             var response = Customer.AddUser(MakeRandom().ToString(), profile);
             Assert.IsTrue(response.user._id != null);
-            Assert.IsTrue(response.code.Equals(201));
+            Assert.IsTrue(response.code == (int)StatusCode.Created);
             Assert.IsTrue(response.user.profile.Gender == GenderType.M);
         }
+
 
         [Test]
         public void DiabetesModelPopulatesCorrectly()

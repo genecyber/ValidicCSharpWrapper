@@ -37,6 +37,36 @@ namespace ValidicCSharp
             return new StackFrame(skipFrames, true).GetMethod().Name;
         }
 
+        private static string GetAddUserResponseFromExeption(WebException ex)
+        {
+            var addUserResponse = new AddUserResponse();
+            if (ex.Status == WebExceptionStatus.ProtocolError)
+            {
+                var response = ex.Response as HttpWebResponse;
+                if (response != null)
+                {
+                    addUserResponse.code = (int)response.StatusCode;
+                    addUserResponse.message = response.StatusDescription;
+                }
+                else
+                {
+                    // no http status code available
+                }
+            }
+            else
+            {
+                // no http status code available
+            }
+            var json = JsonConvert.SerializeObject(addUserResponse);
+            return json;
+        }
+
+        private static void AddHeader(WebClient client)
+        {
+            client.Headers.Add("Content-Type", "application/json; charset=utf-8");
+        }
+
+
         public string ExecuteWebCommand(string command, HttpMethod method, object payload = null)
         {
             string json = null;
@@ -47,7 +77,7 @@ namespace ValidicCSharp
             }
             using (var client = new WebClient())
             {
-                client.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                AddHeader(client);
                 try
                 {
                     if (method == HttpMethod.GET)
@@ -59,7 +89,7 @@ namespace ValidicCSharp
                 }
                 catch (WebException ex)
                 {
-                    json = JsonConvert.SerializeObject(new AddUserResponse());
+                    json = GetAddUserResponseFromExeption(ex);
                 }
             }
 
@@ -82,11 +112,11 @@ namespace ValidicCSharp
             }
             using (var client = new WebClient())
             {
-                client.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                AddHeader(client);
                 try
                 {
                     if (method == HttpMethod.GET)
-                        json = client.DownloadString(address);
+                        json = await client.DownloadStringTaskAsync(address);
                     if (method == HttpMethod.POST && payload != null)
                     {
                         json = await client.UploadStringTaskAsync(new Uri(address), JsonConvert.SerializeObject(payload));
@@ -94,7 +124,7 @@ namespace ValidicCSharp
                 }
                 catch (WebException ex)
                 {
-                    json = JsonConvert.SerializeObject(new AddUserResponse());
+                    json = GetAddUserResponseFromExeption(ex);
                 }
             }
 
