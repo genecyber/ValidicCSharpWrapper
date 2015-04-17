@@ -142,7 +142,7 @@ namespace ValidicCSharpApp.ViewModels
             // 
             CommandDataSelected = new RelayCommand(DataSelected, () => true);
             CommandMeUpdate = new RelayCommand(async () =>  await MeUpdateAsync(), () => true);
-            CommandMeUpdateAll = new RelayCommand(async ()=> await MeUpdateAllAsync(), () => true);
+            CommandMeUpdateAll = new RelayCommand(MeUpdateAll, () => true);
         }
 
         #endregion
@@ -292,7 +292,7 @@ namespace ValidicCSharpApp.ViewModels
             await UpdateAsync(SelectedMeRecord);
         }
 
-        private async Task MeUpdateAllAsync()
+        private void MeUpdateAll()
         {
             foreach (var record in MeData)
             {
