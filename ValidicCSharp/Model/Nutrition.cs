@@ -5,7 +5,7 @@ namespace ValidicCSharp.Model
     public class Nutrition : Measurement
     {
         [JsonProperty("calories")]
-        public double Calories { get; set; }
+        public double? Calories { get; set; }
 
         [JsonProperty("carbohydrates")]
         public double? Carbohydrates { get; set; }
