@@ -161,6 +161,9 @@ namespace ValidicCSharpApp.ViewModels
             if (result == null)
                 return;
 
+            if (result.Object == null)
+                return;
+
             foreach (var me in result.Object)
                 MeData.Add(new MeViewModel {Me = me, RefreshToken = new RefreshToken()});
 
