@@ -1,0 +1,1 @@
+﻿Install NUnit Test Adapter such that you can run NUnit tests from within Visual Studio  https://marketplace.visualstudio.com/items?itemName=NUnitDevelopers.NUnitTestAdapter
