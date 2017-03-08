@@ -14,7 +14,11 @@ namespace ValidicCSharpTests
     {
         public static CustomerModel Acme = new CustomerModel
         {
-            Credentials = new OrganizationAuthenticationCredentials{ OrganizationId = "51aca5a06dedda916400002b", AccessToken = "ENTERPRISE_KEY"},
+            Credentials = new OrganizationAuthenticationCredentials
+            {
+                OrganizationId = "51aca5a06dedda916400002b",
+                AccessToken = "ENTERPRISE_KEY"
+            },
             Organization = new Organization{Name = "ACME Corp"},
             Profile = new Profile { Uid = "52ffcb4bf1f70eefba000004", Gender = GenderType.M}
         };
@@ -69,16 +73,15 @@ namespace ValidicCSharpTests
         public void CanAddUser()
         {
             var response = Customer.AddUser(MakeRandom().ToString());
-            Assert.IsTrue(response.user._id != null);
-            Assert.IsTrue(response.code == (int)StatusCode.Created);
+            AssertUserCreated(response);
         }
+
         [Test]
         public void AddUserWithSameId()
         {
             var uid = MakeRandom().ToString();
             var response1 = Customer.AddUser(uid);
-            Assert.IsTrue(response1.user._id != null);
-            Assert.IsTrue(response1.code == (int)StatusCode.Created);
+            AssertUserCreated(response1);
             var response2 = Customer.AddUser(uid);
             Assert.IsTrue(response2.user == null);
             Assert.IsTrue(response2.code == (int)StatusCode.Conflict);
@@ -89,8 +92,7 @@ namespace ValidicCSharpTests
         {
             var profile = new Profile { Country = "United States", Gender = GenderType.M, Weight = 125 };
             var response = Customer.AddUser(MakeRandom().ToString(), profile);
-            Assert.IsTrue(response.user._id != null);
-            Assert.IsTrue(response.code == (int)StatusCode.Created);
+            AssertUserCreated(response);
             Assert.IsTrue(response.user.profile.Gender == GenderType.M);
         }
 
@@ -284,6 +286,12 @@ namespace ValidicCSharpTests
 
             var weight = json.ToResult<List<Weight>>();
             Assert.True(weight.Object.First().Id != null);
+        }
+
+        private static void AssertUserCreated(AddUserResponse response)
+        {
+            Assert.AreEqual((int)StatusCode.Created, response.code, "response.code");
+            Assert.IsNotNull(response.user._id, "response.user._id");
         }
     }
 }
