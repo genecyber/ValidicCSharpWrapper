@@ -1,17 +1,18 @@
-using System;
-
 namespace ValidicCSharp.Interfaces
 {
     public interface ICommandFilter
     {
-        String ToString();
         FilterType Type { get; set; }
+        void Add(string value);
+        string ToString();
     }
 
     public enum FilterType
     {
         Source = 0,
         FromDate,
-        ToDate
+        ToDate,
+        AuthenticationToken,
+        AccessToken
     }
 }

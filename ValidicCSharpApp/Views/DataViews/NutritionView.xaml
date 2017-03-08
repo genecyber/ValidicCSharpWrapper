@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="ValidicCSharpApp.Views.DataViews.NutritionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <ListView Margin="10" ItemsSource="{Binding Path=NutritionData}">
+            <ListView.CommandBindings>
+                <CommandBinding Command="Copy" CanExecute="CommandBinding_OnCanExecute"
+                                Executed="CommandBinding_OnExecuted" />
+            </ListView.CommandBindings>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" Width="170" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Time" Width="145"
+                                    DisplayMemberBinding="{Binding Time, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
+                    <GridViewColumn Header="Timestamp" Width="145"
+                                    DisplayMemberBinding="{Binding Timestamp, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
+                    <GridViewColumn Header="UtcOffset" Width="70" DisplayMemberBinding="{Binding UtcOffset}" />
+                    <GridViewColumn Header="LastUpdated" Width="145"
+                                    DisplayMemberBinding="{Binding LastUpdated, StringFormat={}{0:MM/dd/yyy hh:mm:ss tt}}" />
+                    <GridViewColumn Header="Source" Width="80" DisplayMemberBinding="{Binding Source}" />
+                    <GridViewColumn Header="SourceName" Width="80" DisplayMemberBinding="{Binding SourceName}" />
+                    <GridViewColumn Header="Extras" Width="70" DisplayMemberBinding="{Binding Extras}" />
+                    <GridViewColumn Header="UserId" Width="170" DisplayMemberBinding="{Binding UserId}" />
+                    <!--Nutrition-->
+                    <GridViewColumn Header="Calories"
+                                    DisplayMemberBinding="{Binding Calories, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Carbohydrates"
+                                    DisplayMemberBinding="{Binding Carbohydrates, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Fat" Width="50"
+                                    DisplayMemberBinding="{Binding Fat, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Fiber" DisplayMemberBinding="{Binding Fiber, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Protein" DisplayMemberBinding="{Binding Protein, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Sodium" DisplayMemberBinding="{Binding Sodium, StringFormat={}{0:0.##}}" />
+                    <GridViewColumn Header="Water" DisplayMemberBinding="{Binding Water}" />
+                    <GridViewColumn Header="Meal" Width="120" DisplayMemberBinding="{Binding Meal}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

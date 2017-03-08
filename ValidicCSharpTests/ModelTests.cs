@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using ValidicCSharp;
 using ValidicCSharp.Model;
@@ -9,29 +10,39 @@ using ValidicCSharp.Utility;
 
 namespace ValidicCSharpTests
 {
-    public class ModelTests
+    public class ModelTests : BaseTests
     {
-        private const string UserUnderTest = "51c7dc676dedda04f9000011";
-        private const string OrganizationUnderTest = "51aca5a06dedda916400002b";
-
-        [Test]
-        public void InitialDeserializationWorks()
+        public static CustomerModel Acme = new CustomerModel
         {
-            var client = new Client { AccessToken = "ENTERPRISE_KEY" };
-            var json = client.ExecuteWebCommand("organizations/51aca5a06dedda916400002b.json?start_date=09-01-01", HttpMethod.GET);
-            var org = json.ToResult<Organization>();
-            
-            Assert.IsTrue(org.Summary.Limit == 100);
-            Assert.IsTrue(org.Object.As<Organization>().Name == "ACME Corp");
+            Credentials = new OrganizationAuthenticationCredentials{ OrganizationId = "51aca5a06dedda916400002b", AccessToken = "ENTERPRISE_KEY"},
+            Organization = new Organization{Name = "ACME Corp"},
+            Profile = new Profile { Uid = "52ffcb4bf1f70eefba000004", Gender = GenderType.M}
+        };
+
+
+        public CustomerModel Customer = Acme;
+
+        #region Support Functions
+
+        private static int MakeRandom(int to = 10000)
+        {
+            var random = new Random();
+            return random.Next(0, to);
         }
+
+
+        #endregion
+
 
         [Test]
         public void AppModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
+            ;
             var command = new Command()
-                .GetInformationType(CommandType.Apps)
-                .FromUser(UserUnderTest);
+                .FromOrganization(Customer.Credentials.OrganizationId)
+                .GetInformationType(CommandType.Apps);
+
             var json = client.PerformCommand(command);
             var applications = json.Objectify<Apps>().AppCollection;
 
@@ -39,145 +50,156 @@ namespace ValidicCSharpTests
         }
 
         [Test]
-        public void ActivitiesModelPopulatesCorrectly()
+        public void BiometricsModelPopulatesCorrectly()
         {
-            var client = new Client() { AccessToken = "DEMO_KEY" };
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
+            ;
             var command = new Command()
-                .GetUser(UserUnderTest);
-
+                .GetInformationType(CommandType.Biometrics)
+                .FromOrganization(Customer.Credentials.OrganizationId)
+                .FromUser(Customer.Profile.Uid)
+                .FromDate("09-01-01");
             var json = client.PerformCommand(command);
-            var user = json.ToResult<List<Activity>>("activities");
 
-            Assert.IsTrue(user.Object.As<List<Activity>>().Count == 100);
-        }
-
-        [Test]
-        public void MyModelPopultesCorrectly()
-        {
-            var client = new Client{ AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5" };
-            var command = new Command()
-                .GetInformationType(CommandType.Me);
-
-            var json = client.PerformCommand(command);
-            var me = json.Objectify<Credentials>().me;
-
-            Assert.IsTrue(me.Id == "5238a4c26deddafb51000001");
+            var biometrics = json.ToResult<List<Biometrics>>();
+            Assert.True(biometrics.Object.First().Id != null);
         }
 
         [Test]
         public void CanAddUser()
         {
-            var client = new Client { AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5" };
-            var command = new Command()
-                .AddUser(new AddUserRequest { access_token = client.AccessToken, user = new UserRequest { uid = MakeRandom().ToString() } })
-                .ToOrganization("5238a4616deddaaefc000001");
-
-            var json = client.PerformCommand(command);
-            var response = json.Objectify<AddUserResponse>();
-
+            var response = Customer.AddUser(MakeRandom().ToString());
             Assert.IsTrue(response.user._id != null);
-            Assert.IsTrue(response.code.Equals(201));
+            Assert.IsTrue(response.code == (int)StatusCode.Created);
+        }
+        [Test]
+        public void AddUserWithSameId()
+        {
+            var uid = MakeRandom().ToString();
+            var response1 = Customer.AddUser(uid);
+            Assert.IsTrue(response1.user._id != null);
+            Assert.IsTrue(response1.code == (int)StatusCode.Created);
+            var response2 = Customer.AddUser(uid);
+            Assert.IsTrue(response2.user == null);
+            Assert.IsTrue(response2.code == (int)StatusCode.Conflict);
         }
 
         [Test]
         public void CanAddUserWithProfile()
         {
-            var client = new Client { AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5" };
-            //make a user request object
-            var newUserWithProfile = new UserRequest {uid = MakeRandom().ToString()};
-            //add a profile opbject to the newly created request object
-            newUserWithProfile.profile = new Profile { Country = "United States", Gender = GenderType.M, Weight = 125 };
-            //create a new command to "add user" and "to organization"
-            var command = new Command()
-                .AddUser(new AddUserRequest { access_token = client.AccessToken, user = newUserWithProfile })
-                .ToOrganization("5238a4616deddaaefc000001");
-            //execute the command
-            var json = client.PerformCommand(command);
-            //deserialize the json into a userresponse object
-            var response = json.Objectify<AddUserResponse>();
-
+            var profile = new Profile { Country = "United States", Gender = GenderType.M, Weight = 125 };
+            var response = Customer.AddUser(MakeRandom().ToString(), profile);
             Assert.IsTrue(response.user._id != null);
-            Assert.IsTrue(response.code.Equals(201));
+            Assert.IsTrue(response.code == (int)StatusCode.Created);
             Assert.IsTrue(response.user.profile.Gender == GenderType.M);
         }
 
+
         [Test]
-        public void ProfileModelPopulatesCorrectly()
+        public void DiabetesModelPopulatesCorrectly()
         {
-            var client = new Client{ AccessToken = "563a65efe369f63803fb022d26d549488730bb858be617ab0264d56e4ad3e2c5" };
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
+            ;
             var command = new Command()
-                .GetInformationType(CommandType.Profile);
-
+                .GetInformationType(CommandType.Diabetes)
+                .FromOrganization(Customer.Credentials.OrganizationId)
+                .FromUser(Customer.Profile.Uid)
+                .FromDate("09-01-01");
             var json = client.PerformCommand(command);
-            var profile = json.ToResult<Profile>();
 
-            Assert.IsTrue(profile.Object.As<Profile>().Gender == GenderType.F);
-
+            var diabetes = json.ToResult<List<Diabetes>>();
+            Assert.True(diabetes.Object.First().Id != null);
         }
 
         [Test]
         public void FitnessModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
+            ;
             var command = new Command()
+                .FromOrganization(Customer.Credentials.OrganizationId)
                 .GetInformationType(CommandType.Fitness)
-                .FromUser(UserUnderTest);
+                .FromUser(Customer.Profile.Uid);
 
             var json = client.PerformCommand(command);
             var fitness = json.ToResult<List<Fitness>>();
 
-            Assert.IsTrue(fitness.Object.As<List<Fitness>>().First().calories != null);
+            Assert.IsTrue(fitness.Object.As<List<Fitness>>().First().Calories != null);
             Assert.IsTrue(fitness.Summary.Status == StatusCode.Ok);
-
-
         }
 
         [Test]
         public void FitnessModelPopulatesFromEnterpriseCall()
         {
-            var client = new Client { AccessToken = "ENTERPRISE_KEY" };
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
             var command = new Command()
-                .FromOrganization(OrganizationUnderTest)
+                .FromOrganization(Customer.Credentials.OrganizationId)
                 .GetInformationType(CommandType.Fitness)
-                .GetUser(UserUnderTest);
+                .GetUser(Customer.Profile.Uid);
+
             var json = client.PerformCommand(command);
             var fitness = json.ToResult<List<Fitness>>();
-            Assert.IsTrue(fitness.Object.First()._id != null);
+            Assert.IsTrue(fitness.Object.First().Id != null);
         }
+
+        [Test]
+        public async Task InitialDeserializationWorksAsync()
+        {
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
+            var command = new Command().
+                FromOrganization(Customer.Credentials.OrganizationId).
+                FromDate("09-01-01");
+
+            var json = await client.PerformCommandAsync(command);
+            var org = json.ToResult<Organization>();
+            
+            Assert.IsTrue(org.Summary.Limit == 100);
+            Assert.IsTrue(org.Object.As<Organization>().Name == Customer.Organization.Name);
+        }
+
+
 
         [Test]
         public void ListOfUsersFromOrganizationParsesCorrectly()
         {
-            var client = new Client { AccessToken = "ENTERPRISE_KEY" };
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
             var command = new Command()
-               .GetUsers()
-               .FromOrganization(OrganizationUnderTest);
+                .FromOrganization(Customer.Credentials.OrganizationId)
+                .GetUsers();
             var json = client.PerformCommand(command);
-
             var users = json.ToResult<List<Me>>("users");
+
             Assert.True(users.Object.Count > 0);
         }
 
         [Test]
-        public void RoutineModelPopulatesCorrectly()
+        public async void MyModelPopultesCorrectlyAsync()
         {
-            var client = new Client();
-            var command = new Command()
-                .GetInformationType(CommandType.Routine)
-                .FromUser(UserUnderTest);
-               var json = client.PerformCommand(command);
+            var client = new Client { AccessToken = Customer.Credentials.AccessToken };
+            // 1. Get user "authentication_token"
+            var refreshToken = await client.GetUserRefreshTokenAsync(Customer.Profile.Uid, Customer.Credentials.OrganizationId);
 
-               var routine = json.ToResult<List<Routine>>();
-               Assert.True(routine.Object.First()._id != null);
+            // 2
+            client = new Client{AccessToken = null};
+            var command = new Command()
+                .GetInformationType(CommandType.Me)
+                .AuthenticationToken(refreshToken.Object.AuthenticationToken);
+
+            var json = client.PerformCommand(command);
+            var me = json.Objectify<Credentials>().me;
+
+            Assert.IsTrue(me.Id == Customer.Profile.Uid);
         }
 
         [Test]
         public void NutritionModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
+            ;
             var command = new Command()
+                .FromOrganization(Customer.Credentials.OrganizationId)
                 .GetInformationType(CommandType.Nutrition)
-                .FromUser(UserUnderTest);
+                .FromUser(Customer.Profile.Uid);
             var json = client.PerformCommand(command);
 
             var nutrition = json.ToResult<List<Nutrition>>();
@@ -185,80 +207,83 @@ namespace ValidicCSharpTests
         }
 
         [Test]
+        public async Task ProfileModelPopulatesCorrectly()
+        {
+            var client = new Client { AccessToken = Customer.Credentials.AccessToken };
+
+            // 1. Get user "authentication_token"
+            var refreshToken = await client.GetUserRefreshTokenAsync(Customer.Profile.Uid, Customer.Credentials.OrganizationId);
+
+            // 2
+            client = new Client { AccessToken = null };
+            var command = new Command()
+                .AuthenticationToken(refreshToken.Object.AuthenticationToken)
+                .GetInformationType(CommandType.Profile);
+
+            var json = client.PerformCommand(command);
+            var profile = json.ToResult<Profile>();
+
+            Assert.IsTrue(profile.Object.As<Profile>().Gender == Customer.Profile.Gender);
+        }
+
+        [Test]
+        public void RoutineModelPopulatesCorrectly()
+        {
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
+            ;
+            var command = new Command()
+                .FromOrganization(Customer.Credentials.OrganizationId)
+                .GetInformationType(CommandType.Routine)
+                .FromUser(Customer.Profile.Uid);
+            var json = client.PerformCommand(command);
+
+            var routine = json.ToResult<List<Routine>>();
+            Assert.True(routine.Object.First().Id != null);
+        }
+
+        [Test]
         public void SleepModelPopulatesCorrectly()
         {
-            var client = new Client();
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
             var command = new Command()
+                .FromOrganization(Customer.Credentials.OrganizationId)
+                .FromUser(Customer.Profile.Uid)
                 .GetInformationType(CommandType.Sleep)
-                .FromUser(UserUnderTest)
                 .FromDate("09-01-01");
             var json = client.PerformCommand(command);
 
             var sleep = json.ToResult<List<Sleep>>();
-            Assert.True(sleep.Object.First()._id != null);
-        }
-
-        [Test]
-        public void WeightModelPopulatesCorrectly()
-        {
-            var client = new Client();
-            var command = new Command()
-                .GetInformationType(CommandType.Weight)
-                .FromUser(UserUnderTest)
-                .FromDate("09-01-01");
-            var json = client.PerformCommand(command);
-
-            var weight = json.ToResult<List<Weight>>();
-            Assert.True(weight.Object.First()._id != null);
-        }
-
-        [Test]
-        public void DiabetesModelPopulatesCorrectly()
-        {
-            var client = new Client();
-            var command = new Command()
-                .GetInformationType(CommandType.Diabetes)
-                .FromUser(UserUnderTest)
-                .FromDate("09-01-01");
-            var json = client.PerformCommand(command);
-
-            var diabetes = json.ToResult<List<Diabetes>>();
-            Assert.True(diabetes.Object.First()._id != null);
-        }
-
-        [Test]
-        public void BiometricsModelPopulatesCorrectly()
-        {
-            var client = new Client();
-            var command = new Command()
-                .GetInformationType(CommandType.Biometrics)
-                .FromUser(UserUnderTest)
-                .FromDate("09-01-01");
-            var json = client.PerformCommand(command);
-
-            var biometrics = json.ToResult<List<Biometrics>>();
-            Assert.True(biometrics.Object.First()._id != null);
+            Assert.True(sleep.Object.First().Id != null);
         }
 
         [Test]
         public void TobaccoOrgModelPopulatesCorrectly()
         {
-            var client = new Client { AccessToken = "ENTERPRISE_KEY" };
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
             var command = new Command()
                 .GetInformationType(CommandType.Tobacco_Cessation)
-                .FromOrganization(OrganizationUnderTest)
+                .FromOrganization(Customer.Credentials.OrganizationId)
                 .FromDate("09-01-01");
             var json = client.PerformCommand(command);
 
             var tobacco = json.ToResult<List<Tobacco_Cessation>>();
-            Assert.True(tobacco.Object.First()._id != null);
+            Assert.True(tobacco.Object.First().Id != null);
         }
 
-        private int MakeRandom(int to = 10000)
+        [Test]
+        public void WeightModelPopulatesCorrectly()
         {
-            Random random = new Random();
-            return random.Next(0, to);
-        }
+            var client = new Client {AccessToken = Customer.Credentials.AccessToken};
+            ;
+            var command = new Command()
+                .FromOrganization(Customer.Credentials.OrganizationId)
+                .FromUser(Customer.Profile.Uid)
+                .GetInformationType(CommandType.Weight)
+                .GetLatest();
+            var json = client.PerformCommand(command);
 
+            var weight = json.ToResult<List<Weight>>();
+            Assert.True(weight.Object.First().Id != null);
+        }
     }
 }

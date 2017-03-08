@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="ValidicCSharpApp.Views.DataViews.MeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:ValidicCSharpApp.Helpers"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <UserControl.Resources>
+        <helpers:IndexConverter x:Key="IndexConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ToolBar Grid.Row="0">
+            <Button Command="{Binding CommandMeUpdate}" Content="Update"/>
+            <Button Command="{Binding CommandMeUpdateAll}" Content="Update All"/>
+        </ToolBar>
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ListView Margin="10" ItemsSource="{Binding Path=MeData}" SelectedItem="{Binding Path=SelectedMeRecord}" Grid.Column="0">
+                <ListView.CommandBindings>
+                    <CommandBinding Command="Copy" CanExecute="CommandBinding_OnCanExecute" Executed="CommandBinding_OnExecuted" />
+                </ListView.CommandBindings>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Number" DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}},Converter={StaticResource IndexConverter}}" />
+                        <GridViewColumn Header="Me Id" Width="170" DisplayMemberBinding="{Binding Me.Id}" />
+                        <GridViewColumn Header="Id" Width="170" DisplayMemberBinding="{Binding RefreshToken.Id}" />
+                        <GridViewColumn Header="Uid" Width="170" DisplayMemberBinding="{Binding RefreshToken.Uid}" />
+                        <GridViewColumn Header="Id" Width="170" DisplayMemberBinding="{Binding RefreshToken.AuthenticationToken}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>

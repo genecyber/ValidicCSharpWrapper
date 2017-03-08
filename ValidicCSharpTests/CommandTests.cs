@@ -1,35 +1,29 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
-using ValidicCSharp;
-using ValidicCSharp.Interfaces;
+﻿using NUnit.Framework;
 using ValidicCSharp.Request;
 using ValidicCSharp.Utility;
 
 namespace ValidicCSharpTests
 {
-    public class CommandTests
+    public class CommandTests : BaseTests
     {
         [Test]
-        public void GetDataWithSingleSourceFilter()
+        public void GetAllOrganizations()
         {
-
             var command = new Command()
-                .GetInformationType(CommandType.Fitness)
-                    .AddSourceFilter("SingleSource");
-            
-            Assert.IsTrue(command.ToString() == "/fitness.json?nocache="+command.NoCache.ToString()+"&source=SingleSource");
+                .GetOrganizations();
+
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "organizations.json");
         }
 
         [Test]
-        public void GetDataWithMultipleSourceFilters()
+        public void GetAllUsers()
         {
             var command = new Command()
-                .GetInformationType(CommandType.Biometrics)
-                    .AddSourceFilter("FirstSource")
-                    .AddSourceFilter("SecondSource")
-                    .AddSourceFilter("ThirdSource");
+                .GetUsers();
 
-            Assert.IsTrue(command.ToString() == "/biometrics.json?nocache=" + command.NoCache.ToString() + "&source=FirstSource SecondSource ThirdSource");
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "/users.json");
         }
 
         [Test]
@@ -39,59 +33,9 @@ namespace ValidicCSharpTests
                 .GetInformationType(CommandType.Tobacco_Cessation)
                 .FromUser("bar")
                 .FromOrganization("foo");
-                
-                
-                
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/organizations/foo/users/bar/tobacco_cessation.json");
-         }
 
-        [Test]
-        public void GetAllOrganizations()
-        {
-            var command = new Command()
-                .GetOrganizations();
-
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/organizations/");
-
-        }
-
-        [Test]
-        public void GetAllUsers()
-        {
-            var command = new Command()
-                .GetUsers();
-
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/users/");
-        }
-
-        [Test]
-        public void GetOrganizationsUsers()
-        {
-            var command = new Command()
-                .GetUsers()
-                .FromOrganization("foo");
-                
-
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/organizations/foo/users/");
-        }
-
-        [Test]
-        public void GetSpecificUserFromOrganization()
-        {
-            var command = new Command()
-                .GetUser("User1")
-                .FromOrganization("foo");
-
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/organizations/foo/users/User1.json");
-        }
-
-        [Test]
-        public void GetMe()
-        {
-            var command = new Command()
-                .GetInformationType(CommandType.Me);
-
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/UserObject.json");
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "organizations/foo/users/bar/tobacco_cessation.json");
         }
 
         [Test]
@@ -101,7 +45,65 @@ namespace ValidicCSharpTests
                 .FromOrganization("foo")
                 .GetInformationType(CommandType.Fitness);
 
-            Assert.IsTrue(command.GetStringAndStripRandom() == "/organizations/foo/fitness.json");
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "organizations/foo/fitness.json");
+        }
+
+        [Test]
+        public void GetDataWithMultipleSourceFilters()
+        {
+            var command = new Command()
+                .GetInformationType(CommandType.Biometrics)
+                .AddSourceFilter("FirstSource")
+                .AddSourceFilter("SecondSource")
+                .AddSourceFilter("ThirdSource");
+
+            Assert.IsTrue(command.ToString() ==
+                          "/biometrics.json?nocache=" + command.NoCache +
+                          "&source=FirstSource SecondSource ThirdSource");
+        }
+
+        [Test]
+        public void GetDataWithSingleSourceFilter()
+        {
+            var command = new Command()
+                .GetInformationType(CommandType.Fitness)
+                .AddSourceFilter("SingleSource");
+
+            Assert.IsTrue(command.ToString() ==
+                          "/fitness.json?nocache=" + command.NoCache + "&source=SingleSource");
+        }
+
+        [Test]
+        public void GetMe()
+        {
+            var command = new Command()
+                .GetInformationType(CommandType.Me);
+
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "/me.json");
+        }
+
+        [Test]
+        public void GetOrganizationsUsers()
+        {
+            var command = new Command()
+                .GetUsers()
+                .FromOrganization("foo");
+
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "organizations/foo/users.json");
+        }
+
+        [Test]
+        public void GetSpecificUserFromOrganization()
+        {
+            var command = new Command()
+                .GetUser("User1")
+                .FromOrganization("foo");
+
+            var text = command.GetStringAndStripRandom();
+            Assert.IsTrue(text == "organizations/foo/users/User1.json");
         }
     }
 }

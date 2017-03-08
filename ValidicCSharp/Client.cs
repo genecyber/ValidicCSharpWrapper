@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ValidicCSharp.Interfaces;
 using ValidicCSharp.Model;
@@ -11,73 +13,162 @@ namespace ValidicCSharp
 {
     public class Client
     {
+        public static bool EnableLogging = false;
+        public static string ApplicationId;
+        public static Action<LogItem> AddLine = null;
         private readonly Uri _baseUrl = new Uri("https://api.validic.com/v1/");
-        public String AccessToken = "DEMO_KEY";
-        public static String ApplicationId;
+        public string AccessToken = "DEMO_KEY";
+
+        private static void OnAddLine(LogItem l)
+        {
+            var tmp = AddLine;
+            if (tmp != null)
+                tmp(l);
+        }
+        private static string GetFunctionName(int skipFrames)
+        {
+            var s1 = new StackFrame(1, true).GetMethod().Name;
+            var s2 = new StackFrame(2, true).GetMethod().Name;
+            var s3 = new StackFrame(3, true).GetMethod().Name;
+            var s4 = new StackFrame(4, true).GetMethod().Name;
+            var s5 = new StackFrame(5, true).GetMethod().Name;
+            var s6 = new StackFrame(6, true).GetMethod().Name;
+
+            return new StackFrame(skipFrames, true).GetMethod().Name;
+        }
+
+        private static string GetAddUserResponseFromExeption(WebException ex)
+        {
+            var addUserResponse = new AddUserResponse();
+            if (ex.Status == WebExceptionStatus.ProtocolError)
+            {
+                var response = ex.Response as HttpWebResponse;
+                if (response != null)
+                {
+                    addUserResponse.code = (int)response.StatusCode;
+                    addUserResponse.message = response.StatusDescription;
+                }
+                else
+                {
+                    // no http status code available
+                }
+            }
+            else
+            {
+                // no http status code available
+            }
+            var json = JsonConvert.SerializeObject(addUserResponse);
+            return json;
+        }
+
+        private static void AddHeader(WebClient client)
+        {
+            client.Headers.Add("Content-Type", "application/json; charset=utf-8");
+        }
+
 
         public string ExecuteWebCommand(string command, HttpMethod method, object payload = null)
         {
-            String json = null;
+            string json = null;
+            var address = _baseUrl + command;
+            if (EnableLogging)
+            {
+                Debug.WriteLine(address);
+            }
             using (var client = new WebClient())
             {
-                string address = _baseUrl + command + AppendAuth();
-                if (method == HttpMethod.GET)
-                    json = client.DownloadString(address);
-                if (method == HttpMethod.POST && payload != null)
+                AddHeader(client);
+                try
                 {
-                    client.Headers.Add("Content-Type", "application/json");
-                    try
+                    if (method == HttpMethod.GET)
+                        json = client.DownloadString(address);
+                    if (method == HttpMethod.POST && payload != null)
                     {
                         json = client.UploadString(address, JsonConvert.SerializeObject(payload));
                     }
-                    catch (WebException ex)
-                    {
-                        return JsonConvert.SerializeObject(new AddUserResponse());
-                    }
+                }
+                catch (WebException ex)
+                {
+                    json = GetAddUserResponseFromExeption(ex);
                 }
             }
+
+            if (EnableLogging)
+            {
+                var logItem = new LogItem {Address = address, Json = json};
+                OnAddLine(logItem);
+            }
+
             return json;
         }
-        public string PerformHttpRequest(String targetUrl)
+
+        public async Task<string> ExecuteWebCommandAsync(string command, HttpMethod method, object payload = null)
         {
-            String json;
+            string json = null;
+            var address = _baseUrl + command;
+            if (EnableLogging)
+            {
+                Debug.WriteLine(address);
+            }
+            using (var client = new WebClient())
+            {
+                AddHeader(client);
+                try
+                {
+                    if (method == HttpMethod.GET)
+                        json = await client.DownloadStringTaskAsync(address);
+                    if (method == HttpMethod.POST && payload != null)
+                    {
+                        json = await client.UploadStringTaskAsync(new Uri(address), JsonConvert.SerializeObject(payload));
+                    }
+                }
+                catch (WebException ex)
+                {
+                    json = GetAddUserResponseFromExeption(ex);
+                }
+            }
+
+            if (EnableLogging)
+            {
+                var logItem = new LogItem { Address = address, Json = json };
+                OnAddLine(logItem);
+            }
+
+            return json;
+        }
+
+        public static string PerformHttpRequest(string targetUrl)
+        {
+            string json;
             using (var client = new WebClient())
             {
                 json = client.DownloadString(targetUrl);
             }
             return json;
         }
+
         public string PerformCommand(Command command)
         {
-            return ExecuteWebCommand(command.ToString(), command.Method, command.Payload);
+            AppendAuth(command);
+            var commandText = command.ToString();
+            return ExecuteWebCommand(commandText, command.Method, command.Payload);
         }
-        private string AppendAuth()
+        public async Task<string> PerformCommandAsync(Command command)
         {
-            return "&access_token=" + AccessToken;
+            AppendAuth(command);
+            var commandText = command.ToString();
+            return await ExecuteWebCommandAsync(commandText, command.Method, command.Payload);
         }
 
-        //Standard User Data
-        public ValidicResult<List<Activity>> GetUserActivities(string userId, List<ICommandFilter> filters = null)
+        public void AppendAuth(Command command)
         {
-            var command = new Command()
-                .GetUser(userId);
-            if (filters != null) command.Filters = filters;
-            var json = PerformCommand(command);
-            var userActivities = json.ToResult<List<Activity>>("activities");
-            return userActivities;
+            if (string.IsNullOrEmpty(AccessToken))
+                return;
+
+            command.AccessToken(AccessToken);
         }
 
-        public List<App> GetUserApplications(string userId, List<ICommandFilter> filters = null)
-        {
-            var command = new Command()
-                .GetInformationType(CommandType.Apps)
-                .FromUser(userId);
-            if (filters != null) command.Filters = filters;
-            var json = PerformCommand(command);
-            var applications = json.Objectify<Apps>().AppCollection;
-
-            return applications;
-        }
+        #region Standard User Data
 
         public Me GetUserContextId()
         {
@@ -99,6 +190,22 @@ namespace ValidicCSharp
             var profile = json.ToResult<Profile>();
 
             return profile;
+        }
+
+        #endregion
+
+        #region Enterprise User Data
+
+        public List<App> GetUserApplications(string userId, List<ICommandFilter> filters = null)
+        {
+            var command = new Command()
+                .GetInformationType(CommandType.Apps)
+                .FromUser(userId);
+            if (filters != null) command.Filters = filters;
+            var json = PerformCommand(command);
+            var applications = json.Objectify<Apps>().AppCollection;
+
+            return applications;
         }
 
         public ValidicResult<List<Fitness>> GetUserFitnessData(string userId, List<ICommandFilter> filters = null)
@@ -188,17 +295,23 @@ namespace ValidicCSharp
             return biometrics;
         }
 
-        //Enterprise User Data
-        public ValidicResult<List<Activity>> GetEnterpriseUserActivities(string userId, string orgId, List<ICommandFilter> filters = null)
+        public async Task<ValidicResult<RefreshToken>> GetUserRefreshTokenAsync(string userId, string orgId, List<ICommandFilter> filters = null)
         {
             var command = new Command()
-                .FromOrganization(orgId)
-                .GetUser(userId);
+               .FromOrganization(orgId)
+               .GetInformationType(CommandType.refresh_token)
+               .FromUser(userId);
+
             if (filters != null) command.Filters = filters;
-            var json = PerformCommand(command);
-            var userActivities = json.ToResult<List<Activity>>("activities");
-            return userActivities;
+
+            var json = await PerformCommandAsync(command);
+            var result = json.ToResult<RefreshToken>("user");
+            return result;
         }
+
+        #endregion
+
+        #region Enterprise User Data
 
         public List<App> GetEnterpriseUserApplications(string userId, string orgId, List<ICommandFilter> filters = null)
         {
@@ -213,7 +326,8 @@ namespace ValidicCSharp
             return applications;
         }
 
-        public ValidicResult<List<Fitness>> GetEnterpriseUserFitnessData(string userId, string orgId, List<ICommandFilter> filters = null)
+        public ValidicResult<List<Fitness>> GetEnterpriseUserFitnessData(string userId, string orgId,
+            List<ICommandFilter> filters = null)
         {
             var command = new Command()
                 .GetInformationType(CommandType.Fitness)
@@ -268,7 +382,8 @@ namespace ValidicCSharp
             return sleep;
         }
 
-        public ValidicResult<List<Weight>> GetEnterpriseUserWeightData(string userId, string orgId, List<ICommandFilter> filters = null)
+        public ValidicResult<List<Weight>> GetEnterpriseUserWeightData(string userId, string orgId,
+            List<ICommandFilter> filters = null)
         {
             var command = new Command()
                 .GetInformationType(CommandType.Weight)
@@ -281,7 +396,8 @@ namespace ValidicCSharp
             return weight;
         }
 
-        public ValidicResult<List<Diabetes>> GetEnterpriseUserDiabetesData(string userId, string orgId, List<ICommandFilter> filters = null)
+        public ValidicResult<List<Diabetes>> GetEnterpriseUserDiabetesData(string userId, string orgId,
+            List<ICommandFilter> filters = null)
         {
             var command = new Command()
                 .GetInformationType(CommandType.Diabetes)
@@ -294,7 +410,8 @@ namespace ValidicCSharp
             return diabetes;
         }
 
-        public ValidicResult<List<Biometrics>> GetEnterpriseUserBiometricsData(string userId, string orgId, List<ICommandFilter> filters = null)
+        public ValidicResult<List<Biometrics>> GetEnterpriseUserBiometricsData(string userId, string orgId,
+            List<ICommandFilter> filters = null)
         {
             var command = new Command()
                 .GetInformationType(CommandType.Biometrics)
@@ -307,26 +424,19 @@ namespace ValidicCSharp
             return biometrics;
         }
 
+        #endregion
+
+        #region Enterprise Data
+
         public ValidicResult<List<Me>> GetEnterpriseUsers(string orgId, List<ICommandFilter> filters = null)
         {
             var command = new Command()
-               .GetUsers()
-               .FromOrganization(orgId);
+                .GetUsers()
+                .FromOrganization(orgId);
             var json = PerformCommand(command);
 
             var users = json.ToResult<List<Me>>("users");
             return users;
-        } 
-
-        //Enterprise Bulk Data
-        public ValidicResult<List<Activity>> GetEnterpriseActivities(string orgId, List<ICommandFilter> filters = null)
-        {
-            var command = new Command()
-                .FromOrganization(orgId);
-            if (filters != null) command.Filters = filters;
-            var json = PerformCommand(command);
-            var userActivities = json.ToResult<List<Activity>>("activities");
-            return userActivities;
         }
 
         public List<App> GetEnterpriseApplications(string orgId, List<ICommandFilter> filters = null)
@@ -421,6 +531,7 @@ namespace ValidicCSharp
             var command = new Command()
                 .GetInformationType(CommandType.Biometrics)
                 .FromOrganization(orgId);
+
             if (filters != null) command.Filters = filters;
             var json = PerformCommand(command);
 
@@ -428,5 +539,6 @@ namespace ValidicCSharp
             return biometrics;
         }
 
+        #endregion
     }
 }

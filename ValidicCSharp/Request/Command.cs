@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using ValidicCSharp.Interfaces;
 using ValidicCSharp.Model;
 using ValidicCSharp.Utility;
@@ -13,27 +15,42 @@ namespace ValidicCSharp.Request
         {
             NoCache = Utilities.GenerateRandom();
             Filters = new List<ICommandFilter>();
+            Payload = Formatting.Indented;
         }
 
         public CommandType Type { get; set; }
         public List<ICommandFilter> Filters { get; set; }
         public int NoCache { get; set; }
 
+        //Pieces of the request
+        public string OrganizationId { get; set; }
+        public bool Organization { get; set; }
+        public bool User { get; set; }
+        public string UserId { get; set; }
+
+        public HttpMethod Method { get; set; }
+        public object Payload { get; set; }
+        public bool Latest { get; set; }
+
         public override string ToString()
         {
             var target = "";
 
+            // User
             if (UserId != null)
                 target = "/" + UserId + target;
             if (User)
                 target = "/users" + target;
+
+            // Organization
             if (OrganizationId != null)
                 target = "/" + OrganizationId + target;
             if (Organization)
-                target = "/organizations" + target;
+                target = "organizations" + target;
 
             if (Type != CommandType.None)
-                target += "/" + Type.ToString().ToLower() + ".json";
+                target += "/" + Type.ToString().ToLower() + (Latest ? "/latest" : "") + ".json";
+
             else if (Type == CommandType.None && (UserId != null || Payload != null)) target += ".json";
             else target += "/";
 
@@ -43,14 +60,6 @@ namespace ValidicCSharp.Request
 
             return target;
         }
-
-        //Pieces of the request
-        public string OrganizationId { get; set; }
-        public bool Organization { get; set; }
-        public bool User { get; set; }
-        public string UserId { get; set; }
-        public HttpMethod Method { get; set; }
-        public object Payload { get; set; }
     }
 
     public enum CommandType
@@ -67,10 +76,11 @@ namespace ValidicCSharp.Request
         Weight,
         Diabetes,
         Biometrics,
-        [DataMember(Name = "tobacco_cessation")]
+        refresh_token,
+        [DataMember(Name = "tobacco_cessation")] 
         Tobacco_Cessation,
         Custom
-    }
+         }
 
     public enum ClassType
     {
@@ -94,14 +104,12 @@ namespace ValidicCSharp.Request
 
         public static Command GetOrganization(this Command command, string organizationId)
         {
-
             command.Method = HttpMethod.GET;
             return command.FromOrganization(organizationId);
         }
 
         public static Command GetOrganizations(this Command command)
         {
-
             command.Method = HttpMethod.GET;
             command.Organization = true;
             return command;
@@ -121,7 +129,6 @@ namespace ValidicCSharp.Request
 
         public static Command GetUser(this Command command, string userId)
         {
-
             command.Method = HttpMethod.GET;
             return command.FromUser(userId);
         }
@@ -141,11 +148,20 @@ namespace ValidicCSharp.Request
             return command;
         }
 
-       public static string GetStringAndStripRandom(this Command command)
+        public static Command GetLatest(this Command command)
         {
-            return command.ToString().Split('?')[0];
+            command.Latest = true;
+            return command;
+        }
+
+        public static string GetStringAndStripRandom(this Command command)
+        {
+            var text = command.ToString();
+            var split = text.Split('?');
+            return split[0];
         }
     }
+
     public enum HttpMethod
     {
         GET = 0,

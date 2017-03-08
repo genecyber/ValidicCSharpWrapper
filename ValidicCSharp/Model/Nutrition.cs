@@ -1,22 +1,31 @@
-﻿using ValidicCSharp.Interfaces;
+﻿using Newtonsoft.Json;
 
 namespace ValidicCSharp.Model
 {
-    public class Nutrition : IValidic
+    public class Nutrition : Measurement
     {
-        public string _id { get; set; }
-        public string timestamp { get; set; }
-        public string utc_offset { get; set; }
-        public double calories { get; set; }
-        public double? carbohydrates { get; set; }
-        public double? fat { get; set; }
-        public double? fiber { get; set; }
-        public double? protein { get; set; }
-        public double? sodium { get; set; }
-        public object water { get; set; }
-        public string meal { get; set; }
-        public string source { get; set; }
-        public string source_name { get; set; }
-        public string last_updated { get; set; }
+        [JsonProperty("calories")]
+        public double? Calories { get; set; }
+
+        [JsonProperty("carbohydrates")]
+        public double? Carbohydrates { get; set; }
+
+        [JsonProperty("fat")]
+        public double? Fat { get; set; }
+
+        [JsonProperty("fiber")]
+        public double? Fiber { get; set; }
+
+        [JsonProperty("protein")]
+        public double? Protein { get; set; }
+
+        [JsonProperty("sodium")]
+        public double? Sodium { get; set; }
+
+        [JsonProperty("water")]
+        public object Water { get; set; }
+
+        [JsonProperty("meal")]
+        public string Meal { get; set; }
     }
 }

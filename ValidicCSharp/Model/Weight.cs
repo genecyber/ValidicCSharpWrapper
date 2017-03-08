@@ -1,20 +1,25 @@
-﻿using ValidicCSharp.Interfaces;
+﻿using Newtonsoft.Json;
 
 namespace ValidicCSharp.Model
 {
-    public class Weight : IValidic
+    public class Weight : Measurement
     {
-        public string _id { get; set; }
-        public string timestamp { get; set; }
-        public string utc_offset { get; set; }
-        public double weight { get; set; }
-        public double? height { get; set; }
-        public double? free_mass { get; set; }
-        public double? fat_percent { get; set; }
-        public double? mass_weight { get; set; }
-        public double? bmi { get; set; }
-        public string source { get; set; }
-        public string source_name { get; set; }
-        public string last_updated { get; set; }
+        [JsonProperty("weight")]
+        public double? Value { get; set; }
+
+        [JsonProperty("height")]
+        public double? Height { get; set; }
+
+        [JsonProperty("free_mass")]
+        public double? FreeMass { get; set; }
+
+        [JsonProperty("fat_percent")]
+        public double? FatPercent { get; set; }
+
+        [JsonProperty("mass_weight")]
+        public double? MassWeight { get; set; }
+
+        [JsonProperty("bmi")]
+        public double? Bmi { get; set; }
     }
 }

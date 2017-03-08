@@ -4,11 +4,8 @@ namespace ValidicCSharp.Model
 {
     public enum GenderType
     {
+        [JsonProperty("M")] M = 0,
 
-        [JsonProperty("M")]
-        M = 0,
-
-        [JsonProperty("F")]
-        F
+        [JsonProperty("F")] F
     }
 }

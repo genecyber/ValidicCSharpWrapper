@@ -30,11 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,8 +45,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="LogItem.cs" />
     <Compile Include="Model\AddUserResponse.cs" />
     <Compile Include="Model\AddUserRequest.cs" />
+    <Compile Include="Model\Application.cs" />
+    <Compile Include="Model\Credentials.cs" />
+    <Compile Include="Model\Measurement.cs" />
+    <Compile Include="Model\OrganizationAuthenticationCredentials.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\RefreshToken.cs" />
+    <Compile Include="Model\UserRequest.cs" />
+    <Compile Include="Request\AccessTokenFilter.cs" />
+    <Compile Include="Request\AuthenticationTokenFilter.cs" />
+    <Compile Include="Request\BaseFilter.cs" />
     <Compile Include="Request\Command.cs" />
     <Compile Include="Request\FromDateFilter.cs" />
     <Compile Include="Request\SourceFilter.cs" />
@@ -71,9 +80,9 @@
     <Compile Include="Model\StatusCode.cs" />
     <Compile Include="Model\Summary.cs" />
     <Compile Include="Model\Tobacco_Cessation.cs" />
-    <Compile Include="Model\Activity.cs" />
     <Compile Include="Model\Weight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\ValueFilter.cs" />
     <Compile Include="Utility\Extensions.cs" />
     <Compile Include="Utility\Utilities.cs" />
   </ItemGroup>

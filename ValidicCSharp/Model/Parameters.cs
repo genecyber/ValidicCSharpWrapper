@@ -19,7 +19,7 @@ namespace ValidicCSharp.Model
 
         [DataMember(Name = "limit")]
         public int? Limit { get; set; }
-        
+
         [DataMember(Name = "source")]
         public object Source { get; set; }
     }

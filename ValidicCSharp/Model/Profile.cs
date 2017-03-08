@@ -1,24 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using ValidicCSharp.Interfaces;
 
 namespace ValidicCSharp.Model
 {
-    public class Application
-    {
-        public string name { get; set; }
-    }
-
-    public class Profile
+    public class Profile : Me
     {
         [JsonProperty("uid")]
-        public string uid { get; set; }
-
-        [JsonProperty("_id")]
-        public string Id { get; set; }
+        public string Uid { get; set; }
 
         [JsonProperty("gender")]
         public GenderType Gender { get; set; }

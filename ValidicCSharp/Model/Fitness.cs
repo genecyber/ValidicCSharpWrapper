@@ -1,20 +1,26 @@
-﻿using ValidicCSharp.Interfaces;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace ValidicCSharp.Model
 {
-    public class Fitness : IValidic
+    public class Fitness : Measurement
     {
-        public string _id { get; set; }
-        public string timestamp { get; set; }
-        public string utc_offset { get; set; }
-        public string type { get; set; }
-        public string intensity { get; set; }
-        public string start_time { get; set; }
-        public double? distance { get; set; }
-        public double? duration { get; set; }
-        public double? calories { get; set; }
-        public string source { get; set; }
-        public string source_name { get; set; }
-        public string last_updated { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("intensity")]
+        public string Intensity { get; set; }
+
+        [JsonProperty("start_time")]
+        public DateTime? StartTime { get; set; }
+
+        [JsonProperty("distance")]
+        public double? Distance { get; set; }
+
+        [JsonProperty("duration")]
+        public double? Duration { get; set; }
+
+        [JsonProperty("calories")]
+        public double? Calories { get; set; }
     }
 }
