@@ -154,7 +154,13 @@ namespace ValidicCSharp.Request
             return command;
         }
 
-        public static string GetStringAndStripRandom(this Command command)
+        public static Command DeleteUser(this Command command, string userId)
+        {
+            command.Method = HttpMethod.DELETE;
+            return command.FromUser(userId);
+        }
+
+    public static string GetStringAndStripRandom(this Command command)
         {
             var text = command.ToString();
             var split = text.Split('?');
