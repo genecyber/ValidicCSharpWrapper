@@ -14,7 +14,7 @@ namespace ValidicCSharpTests
     {
         public static CustomerModel Acme = new CustomerModel
         {
-            Credentials = new OrganizationAuthenticationCredentials{ OrganizationId = "51aca5a06dedda916400002b", AccessToken = "ENTERPRISE_KEY"},
+            Credentials = new OrganizationAuthenticationCredentials { OrganizationId = "51aca5a06dedda916400002b", AccessToken = "ENTERPRISE_KEY" },
             Organization = new Organization{Name = "ACME Corp"},
             Profile = new Profile { Uid = "52ffcb4bf1f70eefba000004", Gender = GenderType.M}
         };
@@ -72,6 +72,7 @@ namespace ValidicCSharpTests
             Assert.IsTrue(response.user._id != null);
             Assert.IsTrue(response.code == (int)StatusCode.Created);
         }
+
         [Test]
         public void AddUserWithSameId()
         {
@@ -92,6 +93,23 @@ namespace ValidicCSharpTests
             Assert.IsTrue(response.user._id != null);
             Assert.IsTrue(response.code == (int)StatusCode.Created);
             Assert.IsTrue(response.user.profile.Gender == GenderType.M);
+        }
+
+        [Test]
+        public void CanAddAndDeleteUser()
+        {
+            var response = Customer.AddUser(MakeRandom().ToString());
+            Assert.IsTrue(response.user._id != null);
+            Assert.AreEqual((int)StatusCode.Created, response.code);
+            var deleteResponse = Customer.DeleteUser(response.user._id);
+            Assert.AreEqual((int)StatusCode.Ok, (int)deleteResponse.code);
+        }
+        
+        [Test]
+        public void DeleteNonExistantUser()
+        {
+            var deleteResponse = Customer.DeleteUser(MakeRandom().ToString());
+            Assert.AreEqual((int)StatusCode.NotFound, (int)deleteResponse.code);
         }
 
 

@@ -27,5 +27,15 @@ namespace ValidicCSharpTests
             var response = json.Objectify<AddUserResponse>();
             return response;
         }
-    }
+
+        
+        public BaseResponse DeleteUser(string validicId)
+        {
+            var client = new Client() { AccessToken = Credentials.AccessToken };
+            var command = new Command().DeleteUser(validicId).FromOrganization(Credentials.OrganizationId);
+            var json = client.PerformCommand(command);
+            var response = json.Objectify<BaseResponse>();
+            return response;
+        }
+}
 }

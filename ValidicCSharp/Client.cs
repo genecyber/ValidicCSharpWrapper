@@ -81,10 +81,16 @@ namespace ValidicCSharp
                 try
                 {
                     if (method == HttpMethod.GET)
+                    {
                         json = client.DownloadString(address);
-                    if (method == HttpMethod.POST && payload != null)
+                    }
+                    else if (method == HttpMethod.POST && payload != null)
                     {
                         json = client.UploadString(address, JsonConvert.SerializeObject(payload));
+                    }
+                    else if (method == HttpMethod.DELETE)
+                    {
+                        json = client.UploadString(address, HttpMethod.DELETE.ToString(), string.Empty);
                     }
                 }
                 catch (WebException ex)
